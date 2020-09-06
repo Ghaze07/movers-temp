@@ -1,0 +1,389 @@
+// Mixins
+@mixin asaheeb-box-shadow($offsetH, $offsetV, $color, $blurRadius:0, $spreadRadius:0) {
+    box-shadow: $offsetH $offsetV $blurRadius $spreadRadius $color;
+    -webkit-box-shadow: $offsetH $offsetV $blurRadius $spreadRadius $color;
+    -o-radial-box-shadow: $offsetH $offsetV $blurRadius $spreadRadius $color;
+    -moz-box-shadow: $offsetH $offsetV $blurRadius $spreadRadius $color;
+}
+
+
+@mixin asaheeb-border-radius($radius) {
+    border-radius: $radius;
+    -webkit-border-radius: $radius;
+    -o-border-radius: $radius;
+    -moz-border-radius: $radius;
+}
+
+@mixin asaheeb-border-radius2($top, $right, $bottom, $left) {
+    border-radius: $top $right $bottom $left;
+    -webkit-border-radius: $top $right $bottom $left;
+    -o-border-radius: $top $right $bottom $left;
+    -moz-border-radius: $top $right $bottom $left;
+}
+
+// Custom Style
+*{
+    outline: none;
+}
+
+/* Header */
+header {
+    nav.navbar {
+        padding: 0px 1rem;
+        a.navbar-brand {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+    }
+}
+
+/* Banner */
+section#banner {
+    div.wrapper {
+        background: #F4F4F4;
+        div.container {
+            background-image: url('/../pix/bg_water_lake.png');
+            background-repeat: no-repeat;
+            background-size: 49%;
+            background-position: center 20px;
+
+            div.content {
+                height: 300px;
+                background-image: url('/../pix/bg_panga.png');
+                background-repeat: no-repeat;
+                background-size: 49%;
+                background-position: 135px 20px;
+                h1 {
+                    font-size: 2.02rem;
+                }
+                h6 {
+                    font-size: 0.72rem;
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(md) {
+    section#banner {
+        div.wrapper {
+            div.container {
+                background-size: 49%;
+                background-position: 120px 20px;
+                div.content {
+                    height: 350px;
+                    background-size: 49%;
+                    background-position: 160px 20px;
+                    h1 {
+                        font-size: 2.25rem;
+                    }
+                    h6 {
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    section#banner {
+        div.wrapper {
+            div.container {
+                background-size: 49%;
+                background-position: 150px center;
+                div.content {
+                    height: 400px;
+                    background-size: 49%;
+                    background-position: 185px center;
+                }
+            }
+        }
+    }
+}
+
+
+/* Delivery */
+section#delivery {
+    div.wrapper {
+        background: #191A24;
+        div.content {
+            span#tag {
+                display: block;
+                font-size: 1rem;
+                margin-top: 8px;
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    section#delivery {
+        div.wrapper {
+            div.content {
+                span#tag {
+                    font-size: 1.3rem;
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(md) {
+    section#delivery {
+        div.wrapper {
+            div.content {
+                span#tag {
+                    font-size: 1.1rem;
+                    display: inline;
+                    padding: 0px;
+                }
+            }
+        }
+    }
+}
+
+section#ordernow {
+    div.wrapper {
+        background: #fff;
+        div.content {
+            div#order {
+                background: #F7DE6A;
+                @include asaheeb-border-radius(5px);
+                padding: 30px 10px;
+            }
+            div#orderSummary {
+                border: dashed 2px #F7DE6A;
+                @include asaheeb-border-radius(5px);
+                padding: 10px;
+                font-size: 80%;
+                div#order_items {
+                    border: solid 1px #838383;
+                    @include asaheeb-border-radius(5px);
+                    padding: 10px;
+                    div.order_item {
+                        div.desc {
+                            text-align: left;
+                        }
+                        div.quantity {
+                            text-align: center;
+                        }
+                        div.price {
+                            text-align: right;
+                        }
+                    }
+                }
+                div#grandtotal {
+                    border-top: solid 1px #838383;
+                    border-bottom: solid 1px #838383;
+                }
+            }
+        }
+    }
+}
+
+/* Track your Order */
+section#tracking {
+    div.wrapper {
+        background: #FFF6E1;
+        div.content {
+            height: auto;
+            div.bg_tracking {
+                height: 120px;
+                background-image: url('/../pix/icon_track.png');
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: 90px;
+            }
+            input[type=text]{
+                width: 100%;
+                background: transparent;
+                border: none;
+                border-bottom: solid 1px #000;
+                color: #000;
+                @include asaheeb-border-radius(0px);
+            }
+        }
+    }
+}
+
+/* About */
+section#about {
+    div.wrapper {
+        background: #fff;
+        div.content{
+        }
+    }
+}
+
+/* Pangasius Fish */
+section#pangasius {
+    div.wrapper {
+        background: #DDF6FF;
+        div.content {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    }
+}
+
+/* Contact Us */
+section#contactus {
+    div.wrapper {
+        background: #F4F4F4;
+        div.content {
+            ul#contacts {
+                list-style: none;
+                li.contact {
+                    a.icon {
+                        display: block;
+                        margin: 10px auto;
+                        padding: 3px 0px 3px 35px;
+                        background-position: left center;
+                        background-repeat: no-repeat;
+                        background-size: 25px 25px;
+                        &.mobile {
+                            background-image: url('/../pix/icon_mobile.png');
+                        }
+                        &.email {
+                            background-image: url('/../pix/icon_email.png');
+                        }
+                        &.whatsapp {
+                            background-image: url('/../pix/icon_whatsapp.png');
+                        }
+                        &.map {
+                            background-image: url('/../pix/icon_map.png');
+                        }
+                        &.facebook {
+                            background-image: url('/../pix/icon_facebook.png');
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Sign Up Now */
+section#signup {
+    div.wrapper {
+        background: linear-gradient(15deg, rgba(31, 192, 223, 1) 0%, rgba(19, 155, 189, 1) 100%);
+        div.content {
+            height: auto;
+            div.bg_arrow {
+                height: 120px;
+                background-image: url('/../pix/bg_arrow.png');
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: 120px;
+            }
+            input[type=text],
+            input[type=email]{
+                width: 100%;
+                background: transparent;
+                border: solid 1px #fff;
+                color: #fff;
+
+                &::placeholder {
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(md) {
+    section#signup {
+        div.wrapper {
+            div.content {
+                height: 120px;
+
+                div.bg_arrow {
+                    background-position: left center;
+                    background-size: 120px;
+                }
+            }
+        }
+    }
+}
+/* Footer */
+footer {
+    div.wrapper {
+        background-color: #fff;
+        font-size: 0.75rem;
+        div.content {
+            height: 70px;
+        }
+    }
+}
+
+@include media-breakpoint-up(md) {
+    footer {
+        div.wrapper {
+            div.content {
+                height: 100px;
+            }
+        }
+    }
+}
+
+/* Back to Top */
+.cd-top {
+    display: inline-block;
+    @include asaheeb-border-radius(40px);
+    height: 40px;
+    width: 40px;
+    position: fixed;
+    bottom: 40px;
+    right: 10px;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    /* image replacement properties */
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    background: rgba(0, 155, 192, 0.8) url('/../svg/top-arrow.svg') no-repeat center 50%;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: opacity .3s 0s, visibility 0s .3s, background-color .3s 0s;
+    transition: opacity .3s 0s, visibility 0s .3s, background-color .3s 0s;
+
+    &.cd-top--show,
+    &.cd-top--fade-out,
+    &:hover {
+        -webkit-transition: opacity .3s 0s, visibility 0s 0s, background-color .3s 0s;
+        transition: opacity .3s 0s, visibility 0s 0s, background-color .3s 0s;
+    }
+
+    &.cd-top--show {
+        /* the button becomes visible */
+        visibility: visible;
+        opacity: 1;
+    }
+
+    &.cd-top--fade-out {
+        /* if the user keeps scrolling down, the button is out of focus and becomes less visible */
+        opacity: .5;
+    }
+
+    &:hover {
+        background-color: #e86256;
+        opacity: 1;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .cd-top {
+        right: 20px;
+        bottom: 20px;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .cd-top {
+        height: 60px;
+        width: 60px;
+        right: 30px;
+        bottom: 30px;
+    }
+}
