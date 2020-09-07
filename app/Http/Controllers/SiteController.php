@@ -8,9 +8,11 @@ class SiteController extends Controller
 {
     public function index()
     {
-        return view('site.index')->with([
-            'hasHeader' => true,
-            'hasFooter' => true,
-        ]);
+        return view('site.index');
+    }
+
+    public function dashboard()
+    {
+        return view('site.dashboard');
     }
 }

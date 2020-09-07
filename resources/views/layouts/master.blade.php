@@ -54,7 +54,12 @@
 
 </head>
 <body>
-    @if(isset($hasHeader) && $hasHeader)
+    @php
+        $hasHeader = isset($hasHeader) ? $hasHeader : true;
+        $hasFooter = isset($hasFooter) ? $hasFooter : true;
+    @endphp
+
+    @if( $hasHeader )
         @include('sections.header')
     @endif
 
@@ -64,7 +69,7 @@
         </div>
     </main>
 
-    @if(isset($hasFooter) && $hasFooter)
+    @if( $hasFooter )
         @include('sections.footer')
     @endif
 
