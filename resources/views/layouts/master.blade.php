@@ -16,7 +16,7 @@
     <meta name="twitter:image" content="{{ asset('pix/logo_full.png') }}">
 
     <!-- Facebook -->
-    <meta property="og:url" content="http://zaynabfishfarm.com">
+    <meta property="og:url" content="https://zaynabfishfarm.com">
     <meta property="og:site_name" content="Zaynab Fish Farm">
     <meta property="og:title" content="Zaynab Fish Farm">
     <meta property="og:description" content="Zaynab Fish Farm - Hassan Abdal. The organic farm fresh Pangasius fish producer in Pakistan.">
