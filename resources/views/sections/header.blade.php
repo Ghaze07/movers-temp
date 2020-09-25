@@ -8,6 +8,12 @@
 
             <div class="expand navbar-expand" id="navbarNav">
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('blogs') }}" style="color: #E6001F;">
+                            <i class="fas fa-bullhorn"></i><span class="pl-2">Blog</span>
+                        </a>
+                    </li>
+                    <li class="nav-item"><span class="nav-link">|</span></li>
                     @guest
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">Sign In</a>

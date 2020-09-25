@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'SiteController@index');
 Auth::routes();
+Route::get('/', 'SiteController@index');
+Route::get('/blog', 'BlogController@index')->name('blogs');
+Route::get('/blog/{blog}', 'BlogController@show')->name('blog');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', 'SiteController@dashboard')->name('home');

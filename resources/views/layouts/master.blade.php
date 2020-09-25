@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Zaynab Fish Farm - Hassan Abdal. The organic farm fresh Pangasius fish producer in Pakistan.">
+    <meta name="description" content="@yield('description', 'Zaynab Fish Farm - Hassan Abdal. The organic farm fresh Pangasius fish producer in Pakistan.')">
     <meta name="author" content="Asaheeb Est, Riyadh">
 
     <!-- Twitter -->
@@ -12,14 +12,14 @@
     <meta name="twitter:site" content="@buypangasiusfish">
     <meta name="twitter:creator" content="@buypangasiusfish">
     <meta name="twitter:title" content="Zaynab Fish Farm">
-    <meta name="twitter:description" content="Zaynab Fish Farm - Hassan Abdal. The organic farm fresh Pangasius fish producer in Pakistan.">
+    <meta name="twitter:description" content="@yield('description', 'Zaynab Fish Farm - Hassan Abdal. The organic farm fresh Pangasius fish producer in Pakistan.')">
     <meta name="twitter:image" content="{{ asset('pix/logo_full.png') }}">
 
     <!-- Facebook -->
     <meta property="og:url" content="https://zaynabfishfarm.com">
     <meta property="og:site_name" content="Zaynab Fish Farm">
     <meta property="og:title" content="Zaynab Fish Farm">
-    <meta property="og:description" content="Zaynab Fish Farm - Hassan Abdal. The organic farm fresh Pangasius fish producer in Pakistan.">
+    <meta property="og:description" content="@yield('description', 'Zaynab Fish Farm - Hassan Abdal. The organic farm fresh Pangasius fish producer in Pakistan.')">
     <meta property="og:type" content="website">
     <meta property="og:image" itemprop="image" content="{{ asset('pix/logo_full.png') }}">
     <meta property="og:image:type" content="image/png">
@@ -27,18 +27,28 @@
     <meta property="og:image:height" content="500">
 
     <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicons/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicons/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicons/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicons/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicons/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('favicons/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicons/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicons/apple-icon-152x152.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-icon-180x180.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicons/favicon-16x16.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('favicons/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicons/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('favicons/manifest.json') }}">
-    <link rel="mask-icon" href="{{ asset('favicons/favicon.svg') }}" color="#328af1">
-    <link rel="shortcut icon" href="{{ asset('favicons/favicon-96x96.png') }}">
-    <meta name="msapplication-config" content="{{ asset('favicons/browserconfig.xml') }}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Zaynab Fish Farm') }}</title>
+    <title>@yield('title', config('app.name', 'Zaynab Fish Farm'))</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
