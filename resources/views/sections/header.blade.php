@@ -3,7 +3,7 @@
     <nav class="navbar navbar-light" style="background-color: #fff;">
         <div class="container">
             <a href="{{ config('app.url') }}" class="navbar-brand">
-                <img src="{{ asset('svg/logo.svg') }}" height="70" />
+                <img src="{{ asset('svg/logo.svg') }}" style="height: 70px; width: 158px;" />
             </a>
 
             <div class="expand navbar-expand" id="navbarNav">
