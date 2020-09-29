@@ -4,7 +4,9 @@
     @include('sections.banner')
     @include('sections.delivery')
     @include('sections.about')
-    @include('sections.signup')
+    @guest()
+        @include('sections.signup')
+    @endguest
     @include('sections.contacts')
     @include('sections.pangasius')
 @endsection

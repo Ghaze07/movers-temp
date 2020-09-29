@@ -6,8 +6,9 @@
 
 require('./bootstrap');
 window.AOS = require('./aos.js');
-
 window.Vue = require('vue');
+
+import router from './router/router.js';
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,6 +21,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 Vue.component('modal', require('./components/modal.vue').default);
+Vue.component('quick-sign-up', require('./components/SignUpQuick.vue').default);
 Vue.component('auth-menu', require('./components/AuthMenu.vue').default);
 
 /**
@@ -30,4 +32,5 @@ Vue.component('auth-menu', require('./components/AuthMenu.vue').default);
 
 const app = new Vue({
     el: '#app',
+    router
 });

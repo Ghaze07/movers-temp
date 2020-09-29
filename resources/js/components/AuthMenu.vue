@@ -2,19 +2,19 @@
     <div class="expand navbar-expand" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/blogs" style="color: #E6001F;">
+                <a class="nav-link" href="/blog" style="color: #E6001F;">
                     <i class="fas fa-bullhorn"></i><span class="pl-2">Blog</span>
                 </a>
             </li>
             <li class="nav-item"><span class="nav-link">|</span></li>
             <li class="nav-item" v-if="guest">
-                <router-link class="nav-link" to="login"><span @click="showModal = true">Sign In</span></router-link>
+                <router-link class="nav-link" to="login"><span @click="showModal">Sign In</span></router-link>
             </li>
 
             <li class="nav-item" v-if="guest"><span class="nav-link">|</span></li>
 
             <li class="nav-item" v-if="guest">
-                <router-link class="nav-link" to="register"><span @click="showModal = true">Sign Up</span></router-link>
+                <router-link class="nav-link" to="register"><span @click="showModal">Sign Up</span></router-link>
             </li>
 
             <li class="nav-item dropdown" v-if="!guest">
@@ -37,52 +37,45 @@
                 enter-active-class="animate__animated animate__slideInRight"
                 leave-active-class="animate__animated animate__slideOutRight"
         >
-            <modal v-show="showModal" @stopEditing="stopEditing"></modal>
+            <modal v-show="displayModal" @stopEditing="hideModal"></modal>
         </transition>
     </div>
 </template>
 
 <script>
-    import VueRouter from 'vue-router';
-    import SignIn from './SignIn';
-    import SignUp from './SignUp';
-
-    const routes = [
-        {
-            path: '/login',
-            name: 'signin',
-            component: SignIn
-        },
-        {
-            path: '/register',
-            name: 'signup',
-            component: SignUp
-        }
-    ];
-
     export default {
         props: {
             visitor: {
                 type: String
             }
         },
-        router: new VueRouter({
-            routes: routes,
-        }),
         data() {
             return {
-                showModal: false,
+                displayModal: false,
                 csrf: document.head.querySelector('meta[name="csrf-token"]').content,
                 guest: true
             }
         },
         created() {
             this.guest = ( typeof(this.visitor) == "undefined" ) || (this.visitor == "guest");
-            console.log(this.visitor);
+            //console.log(this.visitor);
+        },
+        mounted() {
+            this.$root.$on('showModal', () => {
+                this.showModal();
+            });
+            this.$root.$on('hideModal', () => {
+                this.hideModal();
+            });
         },
         methods: {
-            stopEditing() {
-                this.showModal = false;
+            hideModal() {
+                this.displayModal = false;
+                document.getElementById("app").style = "margin-right: 0;";
+            },
+            showModal() {
+                this.displayModal = true;
+                document.getElementById("app").style = "margin-right: 30%;";
             }
         }
     }

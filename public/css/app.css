@@ -16156,6 +16156,10 @@ body[data-aos-easing=ease-in-out-quart] [data-aos],
   direction: rtl !important;
 }
 
+#app {
+  transition: all 0.8s ease-in-out;
+}
+
 /* Header */
 
 header nav.navbar {
@@ -16174,7 +16178,7 @@ header nav.navbar.navbar-light .navbar-nav .nav-link {
 /* Banner Blog */
 
 section#banner-pages div.banner-blog {
-  background: url("/../pix/fish_pangasius.jpg") center center no-repeat;
+  background: url("/../pix/backgrounds/fish_pangasius.jpg") center center no-repeat;
   background-size: cover;
   width: 100%;
   height: 250px;
