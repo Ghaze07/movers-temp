@@ -83,19 +83,19 @@
         props: {
             name: {
                 type: String,
-                default: 'Khyam Shahzad'
+                default: ''
             },
             email: {
                 type: String,
-                default: 'khyam.shahzad@gmail.com'
+                default: ''
             }
         },
         data() {
             return {
                 form: {
-                    mobile: '3215791372',
-                    password: 'abcdef',
-                    password_confirmation: 'abcdef',
+                    mobile: '',
+                    password: '',
+                    password_confirmation: '',
                     csrf: document.head.querySelector('meta[name="csrf-token"]').content,
                 },
                 disableSignUp: false,
