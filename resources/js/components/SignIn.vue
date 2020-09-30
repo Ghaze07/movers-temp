@@ -4,10 +4,16 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="mb-3">Sign In</h3>
-                    <p v-show="hasError" class="alert alert-danger">{{ errorMessage }}</p>
-                    <form method="POST" action="/login" @submit.prevent="login">
-                        <input type="hidden" name="_token" :value="form.csrf" />
+                    <div v-show="hasError">
+                        <p class="text-danger"><small>{{ errorMessage }}</small></p>
+                        <p v-for="(error) in errors.email" class="text-danger">
+                            <small>{{ error }}</small>
+                        </p>
+                    </div>
 
+                    <div v-show="emailErrors"></div>
+
+                    <form @submit.prevent="signIn">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
@@ -53,14 +59,20 @@
                 disableSignIn: false,
                 signInLabel: "Sign In",
                 hasError: false,
+                errors: {},
                 errorMessage: '',
+            }
+        },
+        computed: {
+            emailErrors: function() {
+                return ( this.hasError && this.errors.email && this.errors.email.length );
             }
         },
         mounted() {
 
         },
         methods: {
-            login() {
+            signIn() {
                 this.signInLabel = "Signing you in...";
                 this.disableSignIn = true;
 
@@ -70,17 +82,16 @@
                             window.location.reload();
                         }
                     }).catch( (error) => {
-                        this.hasError = true;
                         if( error.response.data.message )
                             this.errorMessage = error.response.data.message;
                         else
-                            error.response.data.message = "Something went wrong whilie processing your request.";
+                            this.errorMessage = "Something went wrong while processing your request.";
 
+                        this.hasError = true;
                         this.disableSignIn = false;
                         this.signInLabel = "Sign In Again";
-                        console.log();
+                        this.errors = error.response.data.errors;
                     });
-                //console.log("form submitted");
             }
         }
     }

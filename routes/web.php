@@ -31,5 +31,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 
 // Authenticated Users
 Route::group(['middleware' => 'auth'], function() {
+    Route::get('register/resendOtp', 'UserController@resendOtp');
+    Route::post('register/verify', 'UserController@verifyMobile');
     Route::get('/dashboard', 'SiteController@dashboard')->name('home');
 });

@@ -4,7 +4,10 @@
             <!-- Close Button -->
             <div id="close_button" @click="$emit('stopEditing')"><i class="far fa-times-circle"></i></div>
         </div>
-        <router-view></router-view>
+        <transition enter-active-class="animate__animated animate__slideInRight"
+                    leave-active-class="animate__animated animate__slideOutLeft quickSlideOutLeft">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
@@ -19,6 +22,9 @@
 </script>
 
 <style>
+    .quickSlideOutLeft {
+        animation-duration: 0.1s;
+    }
     #editing_pane {
         background: #6c9ea9;
         color: black;
@@ -40,9 +46,17 @@
         cursor: pointer;
     }
 
-    @media (max-width: 805px) {
+    @media (max-width: 768px) {
         #editing_pane {
-            width: 60%;
+            width: 70%;
         }
     }
+
+    @media (max-width: 500px) {
+        #editing_pane {
+            width: 100%;
+        }
+    }
+
+
 </style>

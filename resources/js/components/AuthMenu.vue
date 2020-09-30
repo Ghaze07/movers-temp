@@ -8,19 +8,20 @@
             </li>
             <li class="nav-item"><span class="nav-link">|</span></li>
             <li class="nav-item" v-if="guest">
-                <router-link class="nav-link" to="login"><span @click="showModal">Sign In</span></router-link>
+                <router-link class="nav-link" to="signin"><span @click="showModal">Sign In</span></router-link>
             </li>
 
             <li class="nav-item" v-if="guest"><span class="nav-link">|</span></li>
 
             <li class="nav-item" v-if="guest">
-                <router-link class="nav-link" to="register"><span @click="showModal">Sign Up</span></router-link>
+                <router-link class="nav-link" to="signup"><span @click="showModal">Sign Up</span></router-link>
             </li>
 
             <li class="nav-item dropdown" v-if="!guest">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ visitor }}</a>
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ visitor.name }}</a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <router-link v-show="!visitor.is_verified" class="dropdown-item" :to="{name: 'mobile_verification', params: {mobile: visitor.mobile}}"><span @click="showModal">Verify Mobile Number</span></router-link>
                     <a class="dropdown-item" href="/logout"
                        onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
@@ -46,7 +47,7 @@
     export default {
         props: {
             visitor: {
-                type: String
+                type: Object
             }
         },
         data() {
@@ -57,8 +58,9 @@
             }
         },
         created() {
-            this.guest = ( typeof(this.visitor) == "undefined" ) || (this.visitor == "guest");
-            //console.log(this.visitor);
+            this.guest = ( this.visitor.role == "guest" );
+            // This is required to initiate with an empty modal so that the router links with parameters can pass the props.
+            this.$router.push('/');
         },
         mounted() {
             this.$root.$on('showModal', () => {
