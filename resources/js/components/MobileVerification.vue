@@ -6,7 +6,7 @@
                     <h2 class="text-center text-success">Verification Code</h2>
                     <p class="text-center">We have send you a verification code on your moibile number +92 {{ mobile }} </p>
                     <div class="text-center">
-                        <input @keyup="onKeyUp" :disabled="disabled" class="animate__animated" :class="{'animate__shakeX border border-warning': wrongCode}" id="verification_code" autocomplete="off" type="number" v-model="form.otp" />
+                        <input @keyup="onKeyUp" :disabled="disabled" class="animate__animated" :class="{'animate__shakeX border border-danger': wrongCode}" id="verification_code" autocomplete="off" type="number" v-model="form.otp" />
                     </div>
                     <div class="mt-2" v-show="allowResend">
                         <small>I didn't receive the notification code. <a class="btn btn-sm text-success" @click="resend_verification_code">{{ resendCodeLabel }}</a></small>

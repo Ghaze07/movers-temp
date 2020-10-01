@@ -38961,7 +38961,7 @@ var render = function() {
                 }
               ],
               staticClass: "animate__animated",
-              class: { "animate__shakeX border border-warning": _vm.wrongCode },
+              class: { "animate__shakeX border border-danger": _vm.wrongCode },
               attrs: {
                 disabled: _vm.disabled,
                 id: "verification_code",
@@ -39798,7 +39798,7 @@ var staticRenderFns = [
         _c("p", { staticClass: "mb-3 mb-md-0" }, [
           _c("small", { staticClass: "text-warning font-italic" }, [
             _vm._v(
-              "*Sign up now and get flat Rs. 200/- discount on your first order."
+              "*Sign up now and get flat 10% discount on your first order."
             )
           ])
         ])

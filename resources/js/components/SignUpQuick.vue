@@ -22,7 +22,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <p class="mb-3 mb-md-0"><small class="text-warning font-italic">*Sign up now and get flat Rs. 200/- discount on your first order.</small></p>
+                                    <p class="mb-3 mb-md-0"><small class="text-warning font-italic">*Sign up now and get flat 10% discount on your first order.</small></p>
                                 </div>
                             </div>
                         </div>

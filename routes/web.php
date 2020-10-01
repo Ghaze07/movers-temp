@@ -21,8 +21,8 @@ Route::get('/blog/{blog}', 'BlogController@show')->name('blog');
 //Auth::routes();
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-Route::post('register', 'Auth\RegisterController@register');
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('register', 'Auth\RegisterController@register')->name('register');
+//Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::get('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
