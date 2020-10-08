@@ -60,7 +60,8 @@
         created() {
             this.guest = ( this.visitor.role == "guest" );
             // This is required to initiate with an empty modal so that the router links with parameters can pass the props.
-            this.$router.push('/');
+            if( this.$router.currentRoute.path != '/')
+                this.$router.push('/');
         },
         mounted() {
             this.$root.$on('showModal', () => {

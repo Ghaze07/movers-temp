@@ -17,21 +17,25 @@
     <section id="blogs" class="pb-3 pt-3">
         <div class="container-fluid wrapper">
             <div class="container">
-                <h2>Read Articles:</h2>
-                @foreach($blogs as $blog)
-                    <div class="card mt-3 mb-3 {{ $blog->language == 'UR' ? 'rtl' : '' }}">
-                        <div class="card-header">
-                            {{ $blog->title }}
-                        </div>
+                @foreach ($blogs as $blog)
+                    <div class="card mb-3 {{ $blog->language == 'UR' ? 'rtl' : '' }}">
                         <div class="card-body">
+                            <p class="h3">{{ $blog->title }}</p>
+                            <p class="card-text">
                             <div class="pt-2 pb-2">
-                                {{ Str::words(strip_tags($blog->content), 50) }}
+                                {{ Str::words(strip_tags($blog->content), 100) }}
                             </div>
-                            <a href="{{ route('blog', ['blog' => $blog->slug]) }}" class="btn btn-primary">
+                            </p>
+                            <span class="text-black font-weight-bold d-block">{{ ($blog->language == "UR") ? $blog->author()->first()->name_ur : $blog->author()->first()->name_en }}</span>
+                            @php
+                                $temp = explode(' ',$blog->created_at);
+                            @endphp
+                            <p class="card-text"><small class="text-muted">Last updated: {{ $temp[0] }}</small></p>
+                            <a href="{{ route('blog', ['blog' => $blog->slug]) }}" class="btn btn-outline-success btn-sm" style="color: black">
                                 @if($blog->language == "UR")
                                     مزید پڑھئے۔۔۔
                                 @else
-                                    Continue Reading...
+                                    Read more...
                                 @endif
                             </a>
                         </div>

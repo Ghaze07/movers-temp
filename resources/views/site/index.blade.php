@@ -9,6 +9,7 @@
     @endguest
     @include('sections.contacts')
     @include('sections.pangasius')
+    @include('sections.showblogs')
 @endsection
 
 @section('comment')

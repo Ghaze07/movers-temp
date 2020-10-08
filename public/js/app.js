@@ -1969,7 +1969,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.guest = this.visitor.role == "guest"; // This is required to initiate with an empty modal so that the router links with parameters can pass the props.
 
-    this.$router.push('/');
+    if (this.$router.currentRoute.path != '/') this.$router.push('/');
   },
   mounted: function mounted() {
     var _this = this;
