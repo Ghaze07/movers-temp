@@ -23,7 +23,7 @@
 
 <style>
     .quickSlideOutLeft {
-        animation-duration: 0.1s;
+        animation-duration: 0s;
     }
     #editing_pane {
         background: #6c9ea9;
