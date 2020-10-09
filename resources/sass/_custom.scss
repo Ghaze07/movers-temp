@@ -26,6 +26,10 @@
     outline: none;
 }
 
+body {
+    background: #fff;
+}
+
 .rtl {
     text-align: right !important;
     direction: rtl !important;
@@ -41,12 +45,41 @@ header {
         a.navbar-brand {
             padding-top: 0px;
             padding-bottom: 0px;
+            img {
+                position: absolute;
+                height: 80px;
+                padding: 15px;
+                @include asaheeb-border-radius2(0px, 0px, 15px, 15px);
+                background: #fff;
+                padding-top: 20px;
+                top: -15px;
+            }
         }
 
         &.navbar-light {
             .navbar-nav {
                 .nav-link {
                     color: rgba(0,0,0,1);
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(md) {
+    header {
+        nav.navbar {
+            a.navbar-brand {
+                img {
+                    height: 100px;
+                }
+            }
+
+            &.navbar-light {
+                .navbar-nav {
+                    .nav-link {
+                        color: rgba(0,0,0,1);
+                    }
                 }
             }
         }

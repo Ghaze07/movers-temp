@@ -16151,6 +16151,10 @@ body[data-aos-easing=ease-in-out-quart] [data-aos],
   outline: none;
 }
 
+body {
+  background: #fff;
+}
+
 .rtl {
   text-align: right !important;
   direction: rtl !important;
@@ -16171,8 +16175,31 @@ header nav.navbar a.navbar-brand {
   padding-bottom: 0px;
 }
 
+header nav.navbar a.navbar-brand img {
+  position: absolute;
+  height: 80px;
+  padding: 15px;
+  border-radius: 0px 0px 15px 15px;
+  -webkit-border-radius: 0px 0px 15px 15px;
+  -o-border-radius: 0px 0px 15px 15px;
+  -moz-border-radius: 0px 0px 15px 15px;
+  background: #fff;
+  padding-top: 20px;
+  top: -15px;
+}
+
 header nav.navbar.navbar-light .navbar-nav .nav-link {
   color: black;
+}
+
+@media (min-width: 768px) {
+  header nav.navbar a.navbar-brand img {
+    height: 100px;
+  }
+
+  header nav.navbar.navbar-light .navbar-nav .nav-link {
+    color: black;
+  }
 }
 
 /* Banner Blog */

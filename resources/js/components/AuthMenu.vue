@@ -2,7 +2,7 @@
     <div class="expand navbar-expand" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/blog" style="color: #E6001F;">
+                <a class="nav-link text-white" href="/blog">
                     <i class="fas fa-bullhorn"></i><span class="pl-2">Blog</span>
                 </a>
             </li>
@@ -74,11 +74,9 @@
         methods: {
             hideModal() {
                 this.displayModal = false;
-                document.getElementById("app").style = "margin-right: 0;";
             },
             showModal() {
                 this.displayModal = true;
-                document.getElementById("app").style = "margin-right: 30%;";
             }
         }
     }

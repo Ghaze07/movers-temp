@@ -1984,11 +1984,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     hideModal: function hideModal() {
       this.displayModal = false;
-      document.getElementById("app").style = "margin-right: 0;";
     },
     showModal: function showModal() {
       this.displayModal = true;
-      document.getElementById("app").style = "margin-right: 30%;";
     }
   }
 });
@@ -38892,11 +38890,7 @@ var staticRenderFns = [
     return _c("li", { staticClass: "nav-item" }, [
       _c(
         "a",
-        {
-          staticClass: "nav-link",
-          staticStyle: { color: "#E6001F" },
-          attrs: { href: "/blog" }
-        },
+        { staticClass: "nav-link text-white", attrs: { href: "/blog" } },
         [
           _c("i", { staticClass: "fas fa-bullhorn" }),
           _c("span", { staticClass: "pl-2" }, [_vm._v("Blog")])
