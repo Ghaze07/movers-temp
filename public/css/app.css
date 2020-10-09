@@ -16461,17 +16461,23 @@ section#signup div.wrapper div.content input[type=email]::placeholder {
 /* Footer */
 
 footer div.wrapper {
-  background-color: #fff;
+  margin-top: 100px;
+  background-color: #000;
   font-size: 0.75rem;
 }
 
 footer div.wrapper div.content {
-  height: 70px;
+  min-height: 70px;
+  padding-bottom: 10px;
+}
+
+footer div.wrapper div.content #copyright {
+  text-align: center;
 }
 
 @media (min-width: 768px) {
-  footer div.wrapper div.content {
-    height: 100px;
+  footer div.wrapper div.content #copyright {
+    text-align: right;
   }
 }
 

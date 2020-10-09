@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="card-deck">
                     @foreach($blogs as $key=>$blog)
-                        <div class="card mt-3 mb-3 text-center border-dark {{ $blog->language == 'UR' ? 'rtl' : '' }}">
+                        <div class="card mt-3 mb-3 text-center border-dark {{ $blog->language == 'UR' ? 'rtl' : '' }}" style="border-color: #e0e0e0 !important;">
                             <img src="{{ asset('pix/backgrounds/bg_image.jpg') }}" class="card-img-top" width="100%" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title {{ ($blog->language == "UR") ? 'text-right' : 'text-left' }}">

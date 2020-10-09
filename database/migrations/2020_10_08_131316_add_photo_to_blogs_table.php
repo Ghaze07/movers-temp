@@ -14,9 +14,7 @@ class AddPhotoToBlogsTable extends Migration
     public function up()
     {
         Schema::table('blogs', function (Blueprint $table) {
-            Schema::table('forms', function (Blueprint $table) {
-                $table->string('photo')->default('default.png')->after('views');
-            });
+            $table->string('photo')->default('default.png')->after('views');
         });
     }
 

@@ -338,10 +338,15 @@ section#signup {
 /* Footer */
 footer {
     div.wrapper {
-        background-color: rgb(12, 12, 12);
+        margin-top: 100px;
+        background-color: #000;
         font-size: 0.75rem;
         div.content {
-            height: 70px;
+            min-height: 70px;
+            padding-bottom: 10px;
+            #copyright {
+                text-align: center;
+            }
         }
     }
 }
@@ -350,7 +355,9 @@ footer {
     footer {
         div.wrapper {
             div.content {
-                height: 100px;
+                #copyright {
+                    text-align: right;
+                }
             }
         }
     }
