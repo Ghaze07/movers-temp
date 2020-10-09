@@ -4,7 +4,7 @@
             <!-- Close Button -->
             <div id="close_button" @click="$emit('stopEditing')"><i class="far fa-times-circle"></i></div>
         </div>
-        <transition enter-active-class="animate__animated animate__slideInRight"
+        <transition enter-active-class="animate__animated animate__slideInRight quickSlideInRight"
                     leave-active-class="animate__animated animate__slideOutLeft quickSlideOutLeft">
             <router-view></router-view>
         </transition>
@@ -24,6 +24,9 @@
 <style>
     .quickSlideOutLeft {
         animation-duration: 0s;
+    }
+    .quickSlideInRight {
+        animation-duration: 0.1s;
     }
     #editing_pane {
         background: #6c9ea9;

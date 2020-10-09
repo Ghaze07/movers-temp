@@ -16179,10 +16179,15 @@ header nav.navbar a.navbar-brand img {
   position: absolute;
   height: 80px;
   padding: 15px;
+  border: solid 1px #e0e0e0;
   border-radius: 0px 0px 15px 15px;
   -webkit-border-radius: 0px 0px 15px 15px;
   -o-border-radius: 0px 0px 15px 15px;
   -moz-border-radius: 0px 0px 15px 15px;
+  box-shadow: 1px 1px 0 0 #e0e0e0;
+  -webkit-box-shadow: 1px 1px 0 0 #e0e0e0;
+  -o-radial-box-shadow: 1px 1px 0 0 #e0e0e0;
+  -moz-box-shadow: 1px 1px 0 0 #e0e0e0;
   background: #fff;
   padding-top: 20px;
   top: -15px;

@@ -6889,7 +6889,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.quickSlideOutLeft {\n    -webkit-animation-duration: 0s;\n            animation-duration: 0s;\n}\n#editing_pane {\n    background: #6c9ea9;\n    color: black;\n    top: 0px;\n    right: 0px;\n    position: fixed;\n    width: 30%;\n    height: 100vh;\n    max-height: 100vh;\n    overflow: scroll;\n    z-index: 100;\n}\n#close_button {\n    position: absolute;\n    top: 5px;\n    right: 15px;\n    font-size: 30px;\n    cursor: pointer;\n}\n@media (max-width: 768px) {\n#editing_pane {\n        width: 70%;\n}\n}\n@media (max-width: 500px) {\n#editing_pane {\n        width: 100%;\n}\n}\n\n\n", ""]);
+exports.push([module.i, "\n.quickSlideOutLeft {\n    -webkit-animation-duration: 0s;\n            animation-duration: 0s;\n}\n.quickSlideInRight {\n    -webkit-animation-duration: 0.1s;\n            animation-duration: 0.1s;\n}\n#editing_pane {\n    background: #6c9ea9;\n    color: black;\n    top: 0px;\n    right: 0px;\n    position: fixed;\n    width: 30%;\n    height: 100vh;\n    max-height: 100vh;\n    overflow: scroll;\n    z-index: 100;\n}\n#close_button {\n    position: absolute;\n    top: 5px;\n    right: 15px;\n    font-size: 30px;\n    cursor: pointer;\n}\n@media (max-width: 768px) {\n#editing_pane {\n        width: 70%;\n}\n}\n@media (max-width: 500px) {\n#editing_pane {\n        width: 100%;\n}\n}\n\n\n", ""]);
 
 // exports
 
@@ -39844,7 +39844,8 @@ var render = function() {
         "transition",
         {
           attrs: {
-            "enter-active-class": "animate__animated animate__slideInRight",
+            "enter-active-class":
+              "animate__animated animate__slideInRight quickSlideInRight",
             "leave-active-class":
               "animate__animated animate__slideOutLeft quickSlideOutLeft"
           }
