@@ -16,13 +16,18 @@ class CreateBlogsTable extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->nullable(false);
-            $table->integer('author_id')->nullable(false);
+            $table->unsignedBigInteger('author_id')->nullable(false);
             $table->string('language')->default('EN');
             $table->string('title');
             $table->text('content');
             $table->boolean('published')->default(true);
             $table->integer('views')->default(0);
             $table->timestamps();
+
+            $table->foreign('author_id')
+                ->refernces('id')
+                ->on('authors')
+                ->onDelete('cascade');
         });
     }
 
