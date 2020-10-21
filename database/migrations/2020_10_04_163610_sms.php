@@ -15,7 +15,7 @@ class Sms extends Migration
     {
         Schema::create('sms', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->foreignId('user_id')->constrained('users');
             $table->bigInteger('to');
             $table->string('body')->default("");
             $table->string('status')->default("Pending");

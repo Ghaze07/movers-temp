@@ -6,9 +6,9 @@
                 <div class="col-sm-6 col-lg-4">
                     <h2 class="mt-3 mb-3">Contact Us</h2>
                     <ul id="contacts">
-                        <li class="contact"><a class="icon mobile" href="tel:+92 342 5538 615">+92 342 5538 615</a></li>
+                        <li class="contact"><a class="icon mobile" href="tel:+92 343 9296 224">+92 342 5538 615</a></li>
                         <li class="contact"><a class="icon mobile" href="tel:+92 321 5791 372">+92 321 5791 372</a></li>
-                        <li class="contact"><a class="icon whatsapp" href="https://wa.me/923429296252?text=Hi%2C+I+am+interested+in+buying+fish+and+would+like+to+place+my+order+through+WhatsApp." target="_blank">Send a WhatsApp Message</a></li>
+                        <li class="contact"><a class="icon whatsapp" href="https://wa.me/923429296252?text=Hi!" target="_blank">Send a WhatsApp Message</a></li>
                         <li class="contact"><a class="icon email" href="mailto:info@zaynabfishfarm.com">info@zaynabfishfarm.com</a></li>
                         <li class="contact"><a class="icon facebook" href="https://www.fb.com/ZaynabFishFarm" target="_blank">Visit Our Facebook Page</a></li>
                         <li class="contact"><a class="icon map" href="https://goo.gl/maps/Bg7Nw2zjMj62" target="_blank">Farm Location</a></li>

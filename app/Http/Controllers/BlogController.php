@@ -15,6 +15,14 @@ class BlogController extends Controller
         ]);
     }
 
+    public function list()
+    {
+        $blogs = Blog::with('author')->orderBy('created_at', 'desc')->paginate(20);
+        return view('blog.list')->with([
+            'blogs' => $blogs
+        ]);
+    }
+
     public function show($blog)
     {
         $blog = Blog::where(['id' => $blog])

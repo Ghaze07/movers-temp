@@ -16,7 +16,7 @@ class FarmSeeder extends Seeder
                 'name' => 'Zaynab Fish Farm',
                 'manager' => 'Muhammad Imran',
                 'address' => 'Near Girls Primary School, Ganga Pind',
-                'city' => 3,
+                'city_id' => 3,
                 'email' => 'info@zaynabfishfarm.com',
                 'mobile1' => '03215791371',
                 'mobile2' => '03215791372',

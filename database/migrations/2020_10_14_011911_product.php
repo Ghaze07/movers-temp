@@ -16,14 +16,9 @@ class Product extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name')->default("");
-            $table->unsignedBigInteger('product_category_id')->default(1);
+            $table->foreignId('product_category_id')->constrained('product_categories')->onDelete('cascade')->default(1);
             $table->boolean('status')->default(true);
             $table->timestamps();
-
-            $table->foreign('product_category_id')
-                ->references('id')
-                ->on('product_categories')
-                ->onDelete('cascade');
         });
     }
 

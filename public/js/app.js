@@ -1963,11 +1963,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       displayModal: false,
       csrf: document.head.querySelector('meta[name="csrf-token"]').content,
-      guest: true
+      guest: true,
+      isAdmin: false
     };
   },
   created: function created() {
-    this.guest = this.visitor.role == "guest"; // This is required to initiate with an empty modal so that the router links with parameters can pass the props.
+    this.guest = this.visitor.role == "guest";
+    this.isAdmin = this.visitor.role == 'admin'; // This is required to initiate with an empty modal so that the router links with parameters can pass the props.
 
     if (this.$router.currentRoute.path != '/') this.$router.push('/');
   },
@@ -38821,6 +38823,23 @@ var render = function() {
                   _c(
                     "a",
                     {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isAdmin,
+                          expression: "isAdmin"
+                        }
+                      ],
+                      staticClass: "dropdown-item",
+                      attrs: { href: "/dashboard" }
+                    },
+                    [_vm._v("Dashboard")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
                       staticClass: "dropdown-item",
                       attrs: {
                         href: "/logout",
@@ -39823,7 +39842,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "p-4 pt-5", attrs: { id: "editing_pane" } },
+    { staticClass: "p-4 pt-5 text-left", attrs: { id: "editing_pane" } },
     [
       _c("div", { staticClass: "row" }, [
         _c(

@@ -15,7 +15,7 @@ class FarmProductSeeder extends Seeder
             [
                 'farm_id' => 1,
                 'product_id' => 1,
-                'product_source_id' => 1,
+                'product_source_id' => 2,
                 'unit_price' => '450',
                 'measuring_unit_id' => 3,
                 'status' => true,

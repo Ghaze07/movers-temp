@@ -25,7 +25,7 @@ class CreateBlogsTable extends Migration
             $table->timestamps();
 
             $table->foreign('author_id')
-                ->refernces('id')
+                ->references('id')
                 ->on('authors')
                 ->onDelete('cascade');
         });

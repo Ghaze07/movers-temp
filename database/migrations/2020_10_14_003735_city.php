@@ -16,14 +16,9 @@ class City extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('region_id')->default(2);
+            $table->foreignId('region_id')->constrained('regions')->onDelete('cascade')->default(2);
             $table->boolean('status')->default(true);
             $table->timestamps();
-
-            $table->foreign('region_id')
-                ->references('id')
-                ->on('regions')
-                ->onDelete('cascade');
         });
     }
 

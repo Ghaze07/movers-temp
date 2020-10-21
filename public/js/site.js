@@ -94,7 +94,11 @@
 /***/ (function(module, exports) {
 
 // Custom JS for the Site.
-$(document).ready(function () {});
+$(document).ready(function () {
+  $('#sidebarCollapse').on('click', function () {
+    $('#sidebar').toggleClass('active');
+  });
+});
 /* Animate on Scroll Init */
 
 AOS.init();

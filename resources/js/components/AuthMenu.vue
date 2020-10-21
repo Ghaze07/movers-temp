@@ -19,9 +19,9 @@
 
             <li class="nav-item dropdown" v-if="!guest">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ visitor.name }}</a>
-
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <router-link v-show="!visitor.is_verified" class="dropdown-item" :to="{name: 'mobile_verification', params: {mobile: visitor.mobile}}"><span @click="showModal">Verify Mobile Number</span></router-link>
+                    <a class="dropdown-item" href="/dashboard" v-show="isAdmin">Dashboard</a>
                     <a class="dropdown-item" href="/logout"
                        onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
@@ -54,11 +54,13 @@
             return {
                 displayModal: false,
                 csrf: document.head.querySelector('meta[name="csrf-token"]').content,
-                guest: true
+                guest: true,
+                isAdmin: false
             }
         },
         created() {
             this.guest = ( this.visitor.role == "guest" );
+            this.isAdmin = ( this.visitor.role == 'admin');
             // This is required to initiate with an empty modal so that the router links with parameters can pass the props.
             if( this.$router.currentRoute.path != '/')
                 this.$router.push('/');

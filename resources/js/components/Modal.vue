@@ -1,5 +1,5 @@
 <template>
-    <div id="editing_pane" class="p-4 pt-5">
+    <div id="editing_pane" class="p-4 pt-5 text-left">
         <div class="row">
             <!-- Close Button -->
             <div id="close_button" @click="$emit('stopEditing')"><i class="far fa-times-circle"></i></div>

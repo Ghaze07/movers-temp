@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -17,5 +18,13 @@ class UserController extends Controller
         }else{
             return json_encode(['status' => false, 'message' => 'Invalid OTP.']);
         }
+    }
+
+    public function index()
+    {
+        $users = User::orderBy('name', 'asc')->paginate(20);
+        return view('user.index')->with([
+            'users' => $users
+        ]);
     }
 }

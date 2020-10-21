@@ -15,9 +15,9 @@ class FarmProduct extends Migration
     {
         Schema::create('farm_products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('farm_id');
-            $table->unsignedBigInteger('product_id');
-            $table->integer('product_source_id');
+            $table->foreignId('farm_id')->constrained('farms')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('product_source_id')->constrained('product_sources');
             $table->boolean('in_stock')->default(true);
             $table->float('minimum_order_quantity')->default(3);
             $table->float('maximum_order_quantity')->default(20);
@@ -25,16 +25,6 @@ class FarmProduct extends Migration
             $table->integer('measuring_unit_id')->default(1);
             $table->boolean('status')->default(true);
             $table->timestamps();
-
-            $table->foreign('farm_id')
-                ->references('id')
-                ->on('farms')
-                ->onDelete('cascade');
-
-            $table->foreign('product_id')
-                ->references('id')
-                ->on('products')
-                ->onDelete('cascade');
         });
     }
 

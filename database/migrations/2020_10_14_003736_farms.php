@@ -18,7 +18,7 @@ class Farms extends Migration
             $table->string('name');
             $table->string('manager');
             $table->string('address')->default("");
-            $table->integer('city')->default(1);
+            $table->foreignId('city_id')->constrained('cities')->default(1);
             $table->string('email')->default("");
             $table->string('mobile1');
             $table->string('mobile2')->default("");

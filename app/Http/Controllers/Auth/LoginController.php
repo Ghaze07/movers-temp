@@ -41,10 +41,9 @@ class LoginController extends Controller
 
     protected function credentials(Request $request)
     {
-        if(is_numeric($request->get('email'))){
-            return ['mobile'=>$request->get('email'),'password'=>$request->get('password')];
-        }
-        else {
+        if( is_numeric($request->get('email')) ) {
+            return ['mobile'=>ltrim($request->get('email'), '0'),'password'=>$request->get('password')];
+        } else {
             return ['email' => $request->get('email'), 'password'=>$request->get('password')];
         }
     }

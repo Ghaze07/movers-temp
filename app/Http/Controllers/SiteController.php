@@ -13,7 +13,6 @@ class SiteController extends Controller
         return view('site.index')->with([
             'blogs' => $blogs,
         ]);
-        return view('site.index');
     }
 
     public function dashboard()

@@ -16,14 +16,9 @@ class Region extends Migration
         Schema::create('regions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('country_id')->default(1);
+            $table->foreignId('country_id')->constrained('countries')->onDelete('cascade')->default(1);
             $table->boolean('status')->default(true);
             $table->timestamps();
-
-            $table->foreign('country_id')
-                ->references('id')
-                ->on('countries')
-                ->onDelete('cascade');
         });
     }
 

@@ -8,6 +8,6 @@ class ProductSource extends Model
 {
     public function farmProducts()
     {
-        return $this->hasMany('App\FarmProduct', 'id', 'product_source_id');
+        return $this->hasMany('App\FarmProduct', 'product_source_id', 'id');
     }
 }
