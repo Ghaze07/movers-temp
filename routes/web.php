@@ -33,18 +33,21 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 Route::group(['middleware' => 'auth'], function() {
     Route::get('register/resendOtp', 'UserController@resendOtp');
     Route::post('register/verify', 'UserController@verifyMobile');
-    Route::get('/dashboard', 'SiteController@dashboard')->name('home');
-    Route::get('/farms', 'FarmController@index')->name('farms');
-    Route::get('/farm/{id}', 'FarmController@show')->name('farm');
-    Route::get('/farm/products/{farm}', 'FarmController@products')->name('farm.products');
-    Route::get('/authors', 'AuthorController@index')->name('authors');
-    Route::get('/blogs', 'BlogController@list')->name('blogs.list');
-    Route::get('/users', 'UserController@index')->name('users');
-    Route::get('/countries', 'CountryController@index')->name('countries');
-    Route::get('/regions', 'RegionController@index')->name('regions');
-    Route::get('/cities', 'CityController@index')->name('cities');
-    Route::get('/measuring_units', 'MeasuringUnitController@index')->name('measuringUnits');
-    Route::get('/products', 'ProductsController@index')->name('products');
-    Route::get('/product/categories', 'ProductCategoriesController@index')->name('product.categories');
-    Route::get('/product/sources', 'ProductSourcesController@index')->name('product.sources');
+
+    Route::group(['middleware' => 'admin'], function() {
+        Route::get('/dashboard', 'SiteController@dashboard')->name('home');
+        Route::get('/farms', 'FarmController@index')->name('farms');
+        Route::get('/farm/{id}', 'FarmController@show')->name('farm');
+        Route::get('/farm/products/{farm}', 'FarmController@products')->name('farm.products');
+        Route::get('/authors', 'AuthorController@index')->name('authors');
+        Route::get('/blogs', 'BlogController@list')->name('blogs.list');
+        Route::get('/users', 'UserController@index')->name('users');
+        Route::get('/countries', 'CountryController@index')->name('countries');
+        Route::get('/regions', 'RegionController@index')->name('regions');
+        Route::get('/cities', 'CityController@index')->name('cities');
+        Route::get('/measuring_units', 'MeasuringUnitController@index')->name('measuringUnits');
+        Route::get('/products', 'ProductsController@index')->name('products');
+        Route::get('/product/categories', 'ProductCategoriesController@index')->name('product.categories');
+        Route::get('/product/sources', 'ProductSourcesController@index')->name('product.sources');
+    });
 });
