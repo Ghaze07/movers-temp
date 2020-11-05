@@ -2,7 +2,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a href="{{ config('app.url') }}" class="navbar-brand">
+            <a href="{{ url('/') }}" class="navbar-brand">
                 <img src="{{ asset('svg/logo.svg') }}" />
             </a>
             <div class="text-right">

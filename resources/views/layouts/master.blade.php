@@ -14,6 +14,7 @@
         <main>
             <div id="app">
                 @yield('content')
+                @yield('comment')
             </div>
         </main>
 

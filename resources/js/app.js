@@ -23,6 +23,7 @@ import router from './router/router.js';
 Vue.component('modal', require('./components/modal.vue').default);
 Vue.component('quick-sign-up', require('./components/SignUpQuick.vue').default);
 Vue.component('auth-menu', require('./components/AuthMenu.vue').default);
+Vue.component('order-now', require('./components/OrderNow.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
