@@ -51,4 +51,12 @@ class User extends Authenticatable
             $sms->save();
         });
     }
+
+    /**
+     * Get the cartItems for the user.
+     */
+    public function cartItems()
+    {
+        return $this->hasMany('App\CartItem');
+    }
 }

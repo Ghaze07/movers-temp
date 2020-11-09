@@ -20,4 +20,12 @@ class FarmProduct extends Model
     {
         return $this->belongsTo('App\MeasuringUnit', 'measuring_unit_id', 'id');
     }
+
+    /**
+     * Get the cartItems for the FarmProduct.
+     */
+    public function cartItems()
+    {
+        return $this->hasMany('App\CartItem');
+    }
 }

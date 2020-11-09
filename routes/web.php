@@ -29,6 +29,8 @@ Route::get('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')
 Route::get('password/reset{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
+Route::post('cartItem','CartItemController@store')->name('cartItem.store');
+
 // Authenticated Users
 Route::group(['middleware' => 'auth'], function() {
     Route::get('register/resendOtp', 'UserController@resendOtp');
