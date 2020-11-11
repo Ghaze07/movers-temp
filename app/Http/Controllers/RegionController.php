@@ -15,4 +15,9 @@ class RegionController extends Controller
             'regions' => $regions
         ]);
     }
+
+    public function setCities(Region $region)
+    {
+        return $region->cities;
+    }
 }

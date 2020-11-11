@@ -4,7 +4,7 @@
     @include('sections.banner')
     @include('sections.delivery')
     
-<order-now :farm-products="{{ json_encode( $farmProducts ) }}" :cart-items="{{ json_encode( $cartItems ) }}" :authenticated="{{ $authenticated }}" :session-items="{{ json_encode( $sessionItems ) }}"></order-now>
+<order-now :farm-products="{{ json_encode( $farmProducts ) }}" :cart-items="{{ json_encode( $cartItems ) }}" :authenticated="{{ $authenticated }}" :session-items="{{ json_encode( $sessionItems ) }}" :regions="{{ json_encode( $regions ) }}"></order-now>
 
     @include('sections.about')
     @guest()

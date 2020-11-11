@@ -18,12 +18,13 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('farm_id')->constrained();
             $table->foreignId('address_id')->constrained();
-            $table->float('delivery_charges', 5, 2);
+            $table->foreignId('order_status_id')->constrained();
+            $table->float('order_total');
+            $table->float('delivery_charges');
             $table->string('processing_option');
-            $table->string('further_instructions');
+            $table->string('further_instructions')->nullable();
             $table->string('receiver_name');
-            $table->string('receiver_phone');
-            $table->string('phone');
+            $table->string('receiver_mobile');
             $table->timestamps();
         });
     }

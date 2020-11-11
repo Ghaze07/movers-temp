@@ -30,6 +30,13 @@ Route::get('password/reset{token}', 'Auth\ResetPasswordController@showResetForm'
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 Route::post('cartItem','CartItemController@store')->name('cartItem.store');
+Route::get('setCities/{region}', 'RegionController@setCities')->name('setCities');
+Route::post('address', 'AddressController@store')->name('address.store');
+Route::get('setSavedAddresses', 'AddressController@setSavedAddresses')->name('setSavedAddresses');
+Route::post('processingOptions', 'OrderController@processingOptions')->name('processingOptions');
+Route::get('setReceiver', 'OrderController@setReceiver')->name('setReceiver');
+Route::post('placeOrder', 'OrderController@placeOrder')->name('placeOrder');
+// Route::get('', '@')->name('');
 
 // Authenticated Users
 Route::group(['middleware' => 'auth'], function() {
