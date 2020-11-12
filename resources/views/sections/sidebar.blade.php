@@ -52,21 +52,21 @@
         </li>
 
         <li class="{{ ( in_array($requestPath, [
-                                        route('countries', [], false),
-                                        route('regions', [], false),
-                                        route('cities', [], false),
+                                        route('countries.index', [], false),
+                                        route('regions.index', [], false),
+                                        route('cities.index', [], false),
                                         route('measuringUnits', [], false)
                                     ]) ) ? 'active' : '' }}">
             <a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
             <ul class="collapse list-unstyled" id="settingsSubmenu">
                 <li>
-                    <a href="{{ route('countries') }}">Countries</a>
+                    <a href="{{ route('countries.index') }}">Countries</a>
                 </li>
                 <li>
-                    <a href="{{ route('regions') }}">Regions</a>
+                    <a href="{{ route('regions.index') }}">Regions</a>
                 </li>
                 <li>
-                    <a href="{{ route('cities') }}">Cities</a>
+                    <a href="{{ route('cities.index') }}">Cities</a>
                 </li>
                 <li>
                     <a href="{{ route('measuringUnits') }}">Measuring Units</a>

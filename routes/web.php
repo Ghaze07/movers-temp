@@ -51,9 +51,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/authors', 'AuthorController@index')->name('authors');
         Route::get('/blogs', 'BlogController@list')->name('blogs.list');
         Route::get('/users', 'UserController@index')->name('users');
-        Route::get('/countries', 'CountryController@index')->name('countries');
-        Route::get('/regions', 'RegionController@index')->name('regions');
-        Route::get('/cities', 'CityController@index')->name('cities');
+        Route::resource('/countries', 'CountryController');
+        Route::resource('/regions', 'RegionController');
+        Route::resource('/cities', 'CityController');
         Route::get('/measuring_units', 'MeasuringUnitController@index')->name('measuringUnits');
         Route::get('/products', 'ProductsController@index')->name('products');
         Route::get('/product/categories', 'ProductCategoriesController@index')->name('product.categories');
