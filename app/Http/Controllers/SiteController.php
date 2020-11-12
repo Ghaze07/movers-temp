@@ -6,6 +6,7 @@ use App\Blog;
 use App\CartItem;
 use App\Product;
 use App\FarmProduct;
+use App\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,7 @@ class SiteController extends Controller
         $farmProducts = FarmProduct::with('product')->where('status', 1)->where('in_stock', 1)->get();
         $cartItems = array();
         $sessionItems = array();
-
+        $regions = Region::where('status', 1)->get();
         if (Auth::user()) {
             $authenticated = 1;
             // not checking where not checkout yet
@@ -41,7 +42,8 @@ class SiteController extends Controller
             'farmProducts' => $farmProducts,
             'cartItems' => $cartItems,
             'authenticated' => $authenticated,
-            'sessionItems' => $sessionItems
+            'sessionItems' => $sessionItems,
+            'regions' => $regions
         ]);
     }
 
