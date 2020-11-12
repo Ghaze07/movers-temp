@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\CartItem;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -46,5 +48,56 @@ class LoginController extends Controller
         } else {
             return ['email' => $request->get('email'), 'password'=>$request->get('password')];
         }
+    }
+
+        /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if (method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        if ($this->attemptLogin($request)) {
+
+            // store cartItems in DB from session
+            if (session('cartItems')) {
+                $cart_items = CartItem::where('user_id', Auth::user()->id)->get();
+                foreach ($cart_items as $key => $cart_item) {
+                    $cart_item->delete();
+                }
+                foreach (session('cartItems') as $key => $cartItem) {
+                    foreach ($cartItem as $farm_product_id => $quantity) {
+                        CartItem::create([
+                            'quantity' => $quantity,
+                            'farm_product_id' => $farm_product_id,
+                            'user_id' => Auth::user()->id
+                        ]);
+                    }
+                }
+            }
+            return $this->sendLoginResponse($request);
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);
     }
 }
