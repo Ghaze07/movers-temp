@@ -79,21 +79,24 @@
                     :key="index"
                     class="row order_item"
                   >
-                    <div class="col-4 desc">
+                    <div class="col-3 desc align-self-center">
                       {{ cartItem.farm_product.product.name }}
                     </div>
-                    <div class="col-4 quantity">
+                    <div class="col-3 quantity align-self-center">
                       {{
                         cartItem.quantity +
                         " * " +
                         cartItem.farm_product.unit_price
                       }}
                     </div>
-                    <div class="col-4 price">
+                    <div class="col-3 price align-self-center">
                       {{
                         "RS ." +
                         cartItem.quantity * cartItem.farm_product.unit_price
                       }}
+                    </div>
+                    <div class="col-3 remove align-self-center">
+                      <button class="btn btn-danger btn-sm float-right mb-1" @click="removeFromCart(cartItem.id)">{{ buttons.removeFromCart.text }}</button>
                     </div>
                   </div>
                 </div>
@@ -103,22 +106,25 @@
                     :key="index"
                     class="row order_item"
                   >
-                    <div class="col-4 desc">
+                    <div class="col-3 desc align-self-center">
                       {{ session_item.farm_product.product.name }}
                     </div>
-                    <div class="col-4 quantity">
+                    <div class="col-3 quantity align-self-center">
                       {{
                         session_item.quantity +
                         " * " +
                         session_item.farm_product.unit_price
                       }}
                     </div>
-                    <div class="col-4 price">
+                    <div class="col-3 price align-self-center">
                       {{
                         "RS ." +
                         session_item.quantity *
                           session_item.farm_product.unit_price
                       }}
+                    </div>
+                    <div class="col-3 remove align-self-center">
+                      <button class="btn btn-danger btn-sm float-right mb-1" @click="removeFromCart(session_item.farm_product.id)">{{ buttons.removeFromCart.text }}</button>
                     </div>
                   </div>
                 </div>
@@ -372,10 +378,12 @@
           <button class="btn btn-primary float-right" @click="placeOrder">
             <i class="fas fa-hand-holding-usd"></i> Place Order
           </button>
-          <h3 class="text-success" v-if="order_placed_message">{{order_placed_message}}</h3>
+          
         </div>
       </div>
-
+      <div class="container">
+        <h3 class="text-success text-center" v-if="order_placed_message">{{ order_placed_message }}</h3>
+      </div>
       <!-- Modal -->
       <div
         class="modal fade"
@@ -452,6 +460,10 @@ export default {
           text: "Add to Cart",
           disable: false,
         },
+        removeFromCart:{
+          text: "Remove",
+          disable: false,
+        }
       },
 
       displayModal: false,
@@ -518,7 +530,7 @@ export default {
     setQuantities() {
       var minimum = "";
       var maximum = "";
-
+      var quantity_added = 0;
       if (this.authenticated) {
         var quantity_added = this.sumQuantities(this.cartItems);
       } else {
@@ -526,7 +538,10 @@ export default {
       }
       this.farmProducts.forEach((farmProduct) => {
         if (farmProduct.product.name == this.item.name) {
-          minimum = farmProduct.minimum_order_quantity;
+          minimum = farmProduct.minimum_order_quantity - quantity_added;
+          if (farmProduct.minimum_order_quantity <= quantity_added) {
+             minimum = 1;
+          }
           maximum = farmProduct.maximum_order_quantity - quantity_added;
         }
       });
@@ -612,6 +627,34 @@ export default {
           // console.error(error);
         });
     },
+    removeFromCart(id){
+      this.buttons.removeFromCart.disable = true;
+      console.log(id);
+      axios.delete('cartItem/' + id).then((response) => {
+        if (response.status == 200) {
+          console.log(response.data);
+          if (this.authenticated) {
+            this.cartItems.forEach((item , index, object) => {
+              if (item.id == id) {
+                object.splice(index, 1);
+              }
+            });
+            this.setSessionItems();
+          } else {
+            this.sessionItems.forEach((item , index, object) => {
+              if (item.farm_product.id == id) {
+                object.splice(index, 1);
+              }
+            });
+            this.setSessionItems();
+          }
+        } else {
+          console.warn(response.data);
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
     updateOrderSummary(items, new_item, already_exist = false) {
       items.forEach((item) => {
         // update quantity of already exist item
@@ -631,24 +674,11 @@ export default {
       if (this.cartItems.length > 0 || this.sessionItems.length > 0) {
         if (this.authenticated) {
           this.proceed_checkout = true;
-
+          this.order_placed_message = '';
           this.setSavedAddresses();
           this.setReceiver();
-          // ask address
-          // ask reciever at that address
-          // ask processing option
-          // ask additional note optional
-          // thankyou message & sms sent to user and site farm official about order
         } else {
           $("#signupOrlogin").modal("show");
-          // open popup signup or signin
-          // do signup or signin aand move session cartitems in db
-          // then
-          // ask address
-          // ask reciever at that address
-          // ask processing option
-          // ask additional note optional
-          // thankyou message & sms sent to user and site farm official about order
         }
       } else {
         this.cartEmptyMessage = "Please add something in Cart.";
@@ -659,6 +689,7 @@ export default {
     },
     showModal() {
       this.displayModal = true;
+      $("#signupOrlogin").modal("hide");
     },
     setCities() {
       axios
@@ -706,7 +737,12 @@ export default {
           if (response.status == 200) {
             console.log(response.data);
             this.order_placed_message = response.data.message;
-            this.cart_items = [];
+
+            // resets
+            this.proceed_checkout = false;
+            this.cartItems = [];
+            this.setCartItems();
+            this.setQuantities();
           } else {
             console.warn(response.data);
           }

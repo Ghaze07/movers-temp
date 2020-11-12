@@ -7,6 +7,7 @@ use App\FarmProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CartItemController extends Controller
 {
@@ -68,4 +69,26 @@ class CartItemController extends Controller
         }
     }
 
+
+    public function destroy(Request $request, $id)
+    {
+        if (Auth::user()) {
+            $cartItem = CartItem::find($id);
+            $cartItem->delete();
+        } else {
+            $cartItems = session('cartItems');
+            foreach ($cartItems as $key => $cartItem) {
+                foreach ($cartItem as $farm_product_id => $product_quantity) {
+                    if ($farm_product_id == $id) {
+                        unset($cartItems[$key]);
+                    }
+                }
+            }
+            // updating session
+            $request->session()->put('cartItems', $cartItems);
+            Session::save();
+            $cartItems = session('cartItems');
+        }
+        return response()->json(['message' => 'Cart Item Deleted.']);
+    }
 }

@@ -2512,6 +2512,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     farmProducts: Array,
@@ -2536,6 +2544,10 @@ __webpack_require__.r(__webpack_exports__);
       buttons: {
         addToCart: {
           text: "Add to Cart",
+          disable: false
+        },
+        removeFromCart: {
+          text: "Remove",
           disable: false
         }
       },
@@ -2602,6 +2614,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var minimum = "";
       var maximum = "";
+      var quantity_added = 0;
 
       if (this.authenticated) {
         var quantity_added = this.sumQuantities(this.cartItems);
@@ -2611,7 +2624,12 @@ __webpack_require__.r(__webpack_exports__);
 
       this.farmProducts.forEach(function (farmProduct) {
         if (farmProduct.product.name == _this2.item.name) {
-          minimum = farmProduct.minimum_order_quantity;
+          minimum = farmProduct.minimum_order_quantity - quantity_added;
+
+          if (farmProduct.minimum_order_quantity <= quantity_added) {
+            minimum = 1;
+          }
+
           maximum = farmProduct.maximum_order_quantity - quantity_added;
         }
       });
@@ -2705,6 +2723,39 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {// console.error(error);
       });
     },
+    removeFromCart: function removeFromCart(id) {
+      var _this6 = this;
+
+      this.buttons.removeFromCart.disable = true;
+      console.log(id);
+      axios["delete"]('cartItem/' + id).then(function (response) {
+        if (response.status == 200) {
+          console.log(response.data);
+
+          if (_this6.authenticated) {
+            _this6.cartItems.forEach(function (item, index, object) {
+              if (item.id == id) {
+                object.splice(index, 1);
+              }
+            });
+
+            _this6.setSessionItems();
+          } else {
+            _this6.sessionItems.forEach(function (item, index, object) {
+              if (item.farm_product.id == id) {
+                object.splice(index, 1);
+              }
+            });
+
+            _this6.setSessionItems();
+          }
+        } else {
+          console.warn(response.data);
+        }
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
     updateOrderSummary: function updateOrderSummary(items, new_item) {
       var already_exist = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       items.forEach(function (item) {
@@ -2723,21 +2774,11 @@ __webpack_require__.r(__webpack_exports__);
       if (this.cartItems.length > 0 || this.sessionItems.length > 0) {
         if (this.authenticated) {
           this.proceed_checkout = true;
+          this.order_placed_message = '';
           this.setSavedAddresses();
-          this.setReceiver(); // ask address
-          // ask reciever at that address
-          // ask processing option
-          // ask additional note optional
-          // thankyou message & sms sent to user and site farm official about order
+          this.setReceiver();
         } else {
-          $("#signupOrlogin").modal("show"); // open popup signup or signin
-          // do signup or signin aand move session cartitems in db
-          // then
-          // ask address
-          // ask reciever at that address
-          // ask processing option
-          // ask additional note optional
-          // thankyou message & sms sent to user and site farm official about order
+          $("#signupOrlogin").modal("show");
         }
       } else {
         this.cartEmptyMessage = "Please add something in Cart.";
@@ -2748,13 +2789,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     showModal: function showModal() {
       this.displayModal = true;
+      $("#signupOrlogin").modal("hide");
     },
     setCities: function setCities() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get("setCities/" + this.address.region).then(function (response) {
         if (response.status == 200) {
-          _this6.cities = response.data;
+          _this7.cities = response.data;
         } else {
           console.warn(response.data);
         }
@@ -2763,12 +2805,12 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     setSavedAddresses: function setSavedAddresses() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.get("setSavedAddresses").then(function (response) {
         if (response.status == 200) {
           console.log(response.data);
-          _this7.addresses = response.data;
+          _this8.addresses = response.data;
         } else {
           console.warn(response.data);
         }
@@ -2777,7 +2819,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     placeOrder: function placeOrder() {
-      var _this8 = this;
+      var _this9 = this;
 
       if (this.address.complete_address) {
         var data = {
@@ -2793,8 +2835,14 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("placeOrder", data).then(function (response) {
         if (response.status == 200) {
           console.log(response.data);
-          _this8.order_placed_message = response.data.message;
-          _this8.cart_items = [];
+          _this9.order_placed_message = response.data.message; // resets
+
+          _this9.proceed_checkout = false;
+          _this9.cartItems = [];
+
+          _this9.setCartItems();
+
+          _this9.setQuantities();
         } else {
           console.warn(response.data);
         }
@@ -39942,37 +39990,82 @@ var render = function() {
                             "div",
                             { key: index, staticClass: "row order_item" },
                             [
-                              _c("div", { staticClass: "col-4 desc" }, [
-                                _vm._v(
-                                  "\n                    " +
-                                    _vm._s(cartItem.farm_product.product.name) +
-                                    "\n                  "
-                                )
-                              ]),
+                              _c(
+                                "div",
+                                { staticClass: "col-3 desc align-self-center" },
+                                [
+                                  _vm._v(
+                                    "\n                    " +
+                                      _vm._s(
+                                        cartItem.farm_product.product.name
+                                      ) +
+                                      "\n                  "
+                                  )
+                                ]
+                              ),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-4 quantity" }, [
-                                _vm._v(
-                                  "\n                    " +
-                                    _vm._s(
-                                      cartItem.quantity +
-                                        " * " +
-                                        cartItem.farm_product.unit_price
-                                    ) +
-                                    "\n                  "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-4 price" }, [
-                                _vm._v(
-                                  "\n                    " +
-                                    _vm._s(
-                                      "RS ." +
-                                        cartItem.quantity *
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "col-3 quantity align-self-center"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    " +
+                                      _vm._s(
+                                        cartItem.quantity +
+                                          " * " +
                                           cartItem.farm_product.unit_price
-                                    ) +
-                                    "\n                  "
-                                )
-                              ])
+                                      ) +
+                                      "\n                  "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "col-3 price align-self-center"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    " +
+                                      _vm._s(
+                                        "RS ." +
+                                          cartItem.quantity *
+                                            cartItem.farm_product.unit_price
+                                      ) +
+                                      "\n                  "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "col-3 remove align-self-center"
+                                },
+                                [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-sm float-right mb-1",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.removeFromCart(cartItem.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.buttons.removeFromCart.text)
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
                             ]
                           )
                         }),
@@ -39989,39 +40082,84 @@ var render = function() {
                             "div",
                             { key: index, staticClass: "row order_item" },
                             [
-                              _c("div", { staticClass: "col-4 desc" }, [
-                                _vm._v(
-                                  "\n                    " +
-                                    _vm._s(
-                                      session_item.farm_product.product.name
-                                    ) +
-                                    "\n                  "
-                                )
-                              ]),
+                              _c(
+                                "div",
+                                { staticClass: "col-3 desc align-self-center" },
+                                [
+                                  _vm._v(
+                                    "\n                    " +
+                                      _vm._s(
+                                        session_item.farm_product.product.name
+                                      ) +
+                                      "\n                  "
+                                  )
+                                ]
+                              ),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-4 quantity" }, [
-                                _vm._v(
-                                  "\n                    " +
-                                    _vm._s(
-                                      session_item.quantity +
-                                        " * " +
-                                        session_item.farm_product.unit_price
-                                    ) +
-                                    "\n                  "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-4 price" }, [
-                                _vm._v(
-                                  "\n                    " +
-                                    _vm._s(
-                                      "RS ." +
-                                        session_item.quantity *
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "col-3 quantity align-self-center"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    " +
+                                      _vm._s(
+                                        session_item.quantity +
+                                          " * " +
                                           session_item.farm_product.unit_price
-                                    ) +
-                                    "\n                  "
-                                )
-                              ])
+                                      ) +
+                                      "\n                  "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "col-3 price align-self-center"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    " +
+                                      _vm._s(
+                                        "RS ." +
+                                          session_item.quantity *
+                                            session_item.farm_product.unit_price
+                                      ) +
+                                      "\n                  "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "col-3 remove align-self-center"
+                                },
+                                [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-sm float-right mb-1",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.removeFromCart(
+                                            session_item.farm_product.id
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.buttons.removeFromCart.text)
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
                             ]
                           )
                         }),
@@ -40573,16 +40711,18 @@ var render = function() {
                     _c("i", { staticClass: "fas fa-hand-holding-usd" }),
                     _vm._v(" Place Order\n        ")
                   ]
-                ),
-                _vm._v(" "),
-                _vm.order_placed_message
-                  ? _c("h3", { staticClass: "text-success" }, [
-                      _vm._v(_vm._s(_vm.order_placed_message))
-                    ])
-                  : _vm._e()
+                )
               ])
             ])
           : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "container" }, [
+          _vm.order_placed_message
+            ? _c("h3", { staticClass: "text-success text-center" }, [
+                _vm._v(_vm._s(_vm.order_placed_message))
+              ])
+            : _vm._e()
+        ]),
         _vm._v(" "),
         _c(
           "div",
