@@ -381,9 +381,6 @@
           
         </div>
       </div>
-      <div class="container">
-        <h3 class="text-success text-center" v-if="order_placed_message">{{ order_placed_message }}</h3>
-      </div>
       <!-- Modal -->
       <div
         class="modal fade"
@@ -488,8 +485,7 @@ export default {
       addresses: [],
       cities: [],
 
-      add_new_address: false,
-      order_placed_message: ''
+      add_new_address: false
     };
   },
   created() {
@@ -674,7 +670,6 @@ export default {
       if (this.cartItems.length > 0 || this.sessionItems.length > 0) {
         if (this.authenticated) {
           this.proceed_checkout = true;
-          this.order_placed_message = '';
           this.setSavedAddresses();
           this.setReceiver();
         } else {
@@ -736,8 +731,13 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             console.log(response.data);
-            this.order_placed_message = response.data.message;
-
+            swal({
+              title: "Order Placed!",
+              text: response.data.message,
+              icon: "success",
+              buttons: false,
+              timer: 3000
+            });
             // resets
             this.proceed_checkout = false;
             this.cartItems = [];

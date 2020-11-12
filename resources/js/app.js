@@ -8,6 +8,8 @@ require('./bootstrap');
 window.AOS = require('./aos.js');
 window.Vue = require('vue');
 
+import swal from 'sweetalert';
+
 import router from './router/router.js';
 
 /**
