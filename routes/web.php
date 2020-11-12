@@ -30,6 +30,8 @@ Route::get('password/reset{token}', 'Auth\ResetPasswordController@showResetForm'
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 Route::post('cartItem','CartItemController@store')->name('cartItem.store');
+Route::delete('cartItem/{cartItem}','CartItemController@destroy')->name('cartItem.destroy');
+
 Route::get('setCities/{region}', 'RegionController@setCities')->name('setCities');
 Route::post('address', 'AddressController@store')->name('address.store');
 Route::get('setSavedAddresses', 'AddressController@setSavedAddresses')->name('setSavedAddresses');
