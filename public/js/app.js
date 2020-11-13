@@ -2471,52 +2471,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     farmProducts: Array,
@@ -2534,18 +2488,18 @@ __webpack_require__.r(__webpack_exports__);
         name: "Pangasius Fish",
         quantity: ""
       },
-      subTotal: 0,
-      firstOrderDiscount: 0,
-      deliveryFee: 0,
-      grandTotal: 0,
+      cartTotal: 0,
       buttons: {
         addToCart: {
           text: "Add to Cart",
-          disable: false
+          disabled: false
         },
         removeFromCart: {
-          text: "Remove",
-          disable: false
+          text: "Remove"
+        },
+        order: {
+          text: "Place Order",
+          disabled: false
         }
       },
       displayModal: false,
@@ -2557,6 +2511,13 @@ __webpack_require__.r(__webpack_exports__);
         city: 5,
         complete_address: ""
       },
+      processing_options: [{
+        text: 'Simply Clean and Pack'
+      }, {
+        text: 'Clean and Deep cuts for Grill'
+      }, {
+        text: 'Clean and Make Regular Slices'
+      }],
       order: {
         receiver: {
           name: "",
@@ -2575,8 +2536,7 @@ __webpack_require__.r(__webpack_exports__);
     this.setCartItems();
     this.setSessionItems();
     this.setQuantities();
-    this.setSubTotal();
-    this.setGrandTotal();
+    this.setCartTotal();
   },
   methods: {
     setReceiver: function setReceiver() {
@@ -2604,6 +2564,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     setSessionItems: function setSessionItems() {
       this.session_items = this.sessionItems;
+    },
+    productQuantities: function productQuantities(min, max) {
+      var quantities = [];
+
+      for (var index = min; index <= max; index++) {
+        quantities.push(index);
+      }
+
+      return quantities;
     },
     setQuantities: function setQuantities() {
       var _this2 = this;
@@ -2649,25 +2618,22 @@ __webpack_require__.r(__webpack_exports__);
       });
       return quantity_added;
     },
-    setSubTotal: function setSubTotal() {
-      this.subTotal = 0;
-
-      if (this.authenticated) {
-        this.doSubtotal(this.cartItems);
-      } else {
-        this.doSubtotal(this.sessionItems);
-      }
-    },
-    doSubtotal: function doSubtotal(items) {
+    doCartTotal: function doCartTotal(items) {
       var _this4 = this;
 
       items.forEach(function (item) {
         var total = item.farm_product.unit_price * item.quantity;
-        _this4.subTotal += total;
+        _this4.cartTotal += total;
       });
     },
-    setGrandTotal: function setGrandTotal() {
-      this.grandTotal = this.subTotal + this.firstOrderDiscount + this.deliveryFee;
+    setCartTotal: function setCartTotal() {
+      this.cartTotal = 0;
+
+      if (this.authenticated) {
+        this.doCartTotal(this.cartItems);
+      } else {
+        this.doCartTotal(this.sessionItems);
+      }
     },
     addToCart: function addToCart() {
       var _this5 = this;
@@ -2710,9 +2676,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this5.setQuantities();
 
-          _this5.setSubTotal();
-
-          _this5.setGrandTotal();
+          _this5.setCartTotal();
         } else {
           console.warn(response.data);
         }
@@ -2735,7 +2699,7 @@ __webpack_require__.r(__webpack_exports__);
               }
             });
 
-            _this6.setSessionItems();
+            _this6.setCartItems();
           } else {
             _this6.sessionItems.forEach(function (item, index, object) {
               if (item.farm_product.id == id) {
@@ -2745,6 +2709,10 @@ __webpack_require__.r(__webpack_exports__);
 
             _this6.setSessionItems();
           }
+
+          _this6.setQuantities();
+
+          _this6.setCartTotal();
         } else {
           console.warn(response.data);
         }
@@ -2816,6 +2784,9 @@ __webpack_require__.r(__webpack_exports__);
     placeOrder: function placeOrder() {
       var _this9 = this;
 
+      this.buttons.order.text = "Processing Order...";
+      this.buttons.order.disabled = true;
+
       if (this.address.complete_address) {
         var data = {
           address: this.address,
@@ -2828,6 +2799,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       axios.post("placeOrder", data).then(function (response) {
+        _this9.buttons.order.text = "Place Order";
+        _this9.buttons.order.disabled = false;
+
         if (response.status == 200) {
           console.log(response.data);
           swal({
@@ -2844,10 +2818,21 @@ __webpack_require__.r(__webpack_exports__);
           _this9.setCartItems();
 
           _this9.setQuantities();
+
+          _this9.setCartTotal();
         } else {
           console.warn(response.data);
         }
       })["catch"](function (error) {
+        _this9.buttons.order.text = "Place Order";
+        _this9.buttons.order.disabled = false;
+        swal({
+          title: "Fields Missing!",
+          text: error.response.data.message,
+          icon: "error",
+          buttons: false,
+          timer: 3000
+        });
         console.error(error);
       });
     }
@@ -39973,7 +39958,7 @@ var render = function() {
                       {
                         staticClass: "btn mt-2",
                         staticStyle: { background: "#16add6" },
-                        attrs: { disabled: _vm.buttons.addToCart.disable },
+                        attrs: { disabled: _vm.buttons.addToCart.disabled },
                         on: { click: _vm.addToCart }
                       },
                       [
@@ -40024,12 +40009,71 @@ var render = function() {
                                     "col-3 quantity align-self-center"
                                 },
                                 [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: cartItem.quantity,
+                                          expression: "cartItem.quantity"
+                                        }
+                                      ],
+                                      on: {
+                                        change: [
+                                          function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              cartItem,
+                                              "quantity",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          },
+                                          _vm.setCartTotal
+                                        ]
+                                      }
+                                    },
+                                    _vm._l(
+                                      _vm.productQuantities(
+                                        cartItem.farm_product
+                                          .minimum_order_quantity,
+                                        cartItem.farm_product
+                                          .maximum_order_quantity
+                                      ),
+                                      function(product_quantity) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            domProps: {
+                                              value: product_quantity
+                                            }
+                                          },
+                                          [_vm._v(_vm._s(product_quantity))]
+                                        )
+                                      }
+                                    ),
+                                    0
+                                  ),
                                   _vm._v(
                                     "\n                    " +
                                       _vm._s(
-                                        cartItem.quantity +
-                                          " * " +
-                                          cartItem.farm_product.unit_price
+                                        " * " + cartItem.farm_product.unit_price
                                       ) +
                                       "\n                  "
                                   )
@@ -40181,17 +40225,17 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "p-2", attrs: { id: "grandtotal" } },
+                    { staticClass: "p-2", attrs: { id: "cartTotal" } },
                     [
                       _c("div", { staticClass: "row" }, [
                         _c("div", { staticClass: "col-6 text-left desc" }, [
-                          _vm._v("Grand Total")
+                          _vm._v("Cart Total")
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-6 text-right price" }, [
                           _vm._v(
                             "\n                    Rs. " +
-                              _vm._s(_vm.grandTotal) +
+                              _vm._s(_vm.cartTotal) +
                               "\n                  "
                           )
                         ])
@@ -40547,135 +40591,67 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
-                _vm._m(8),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-check form-check-inline" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.order.processing_option,
-                        expression: "order.processing_option"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: {
-                      type: "radio",
-                      id: "simple",
-                      value: "Simply Clean and Pack"
-                    },
-                    domProps: {
-                      checked: _vm._q(
-                        _vm.order.processing_option,
-                        "Simply Clean and Pack"
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "input-group mb-2" }, [
+                      _vm._m(8),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.order.processing_option,
+                              expression: "order.processing_option"
+                            }
+                          ],
+                          staticClass: "custom-select",
+                          attrs: { id: "processing_options" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.order,
+                                "processing_option",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.processing_options, function(
+                          processing_option,
+                          index
+                        ) {
+                          return _c(
+                            "option",
+                            {
+                              key: index,
+                              domProps: { value: processing_option.text }
+                            },
+                            [
+                              _vm._v(
+                                "\n                  " +
+                                  _vm._s(processing_option.text) +
+                                  "\n                "
+                              )
+                            ]
+                          )
+                        }),
+                        0
                       )
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(
-                          _vm.order,
-                          "processing_option",
-                          "Simply Clean and Pack"
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label",
-                      attrs: { for: "simple" }
-                    },
-                    [_vm._v("Simply Clean and Pack")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-check form-check-inline" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.order.processing_option,
-                        expression: "order.processing_option"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: {
-                      type: "radio",
-                      id: "grill",
-                      value: "Clean and Deep cuts for Grill"
-                    },
-                    domProps: {
-                      checked: _vm._q(
-                        _vm.order.processing_option,
-                        "Clean and Deep cuts for Grill"
-                      )
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(
-                          _vm.order,
-                          "processing_option",
-                          "Clean and Deep cuts for Grill"
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label",
-                      attrs: { for: "grill" }
-                    },
-                    [_vm._v("Clean and Deep cuts for Grill")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-check form-check-inline" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.order.processing_option,
-                        expression: "order.processing_option"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: {
-                      type: "radio",
-                      id: "slice",
-                      value: "Clean and Make Regular Slices"
-                    },
-                    domProps: {
-                      checked: _vm._q(
-                        _vm.order.processing_option,
-                        "Clean and Make Regular Slices"
-                      )
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(
-                          _vm.order,
-                          "processing_option",
-                          "Clean and Make Regular Slices"
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label",
-                      attrs: { for: "slice" }
-                    },
-                    [_vm._v("Clean and Make Regular Slices")]
-                  )
+                    ])
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -40718,11 +40694,12 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary float-right",
+                    attrs: { disabled: _vm.buttons.order.disabled },
                     on: { click: _vm.placeOrder }
                   },
                   [
                     _c("i", { staticClass: "fas fa-hand-holding-usd" }),
-                    _vm._v(" Place Order\n        ")
+                    _vm._v(" " + _vm._s(_vm.buttons.order.text) + "\n        ")
                   ]
                 )
               ])
@@ -40854,7 +40831,7 @@ var staticRenderFns = [
         "label",
         { staticClass: "input-group-text", attrs: { for: "saved_addresses" } },
         [
-          _c("i", { staticClass: "fas fa-map-marked" }),
+          _c("i", { staticClass: "fas fa-save" }),
           _vm._v("   Saved\n                Addresses")
         ]
       )
@@ -40924,10 +40901,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("label", { staticClass: "font-weight-bold" }, [
-        _vm._v("Processing Options")
-      ])
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c(
+        "label",
+        {
+          staticClass: "input-group-text",
+          attrs: { for: "processing_options" }
+        },
+        [
+          _c("i", { staticClass: "fas fa-box-open" }),
+          _vm._v("   Processing Options")
+        ]
+      )
     ])
   },
   function() {

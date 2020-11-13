@@ -28,6 +28,6 @@ class RegionController extends Controller
 
     public function setCities(Region $region)
     {
-        return $region->cities;
+        return $region->citiesOrderByNameASC;
     }
 }
