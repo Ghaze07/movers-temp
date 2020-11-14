@@ -61,7 +61,7 @@
                     class="btn mt-2"
                     style="background: #16add6"
                     @click="addToCart"
-                    :disabled="buttons.addToCart.disable"
+                    :disabled="buttons.addToCart.disabled"
                   >
                     <i class="fas fa-shopping-basket text-white"></i>
                     <span class="pl-2">{{ buttons.addToCart.text }}</span>
@@ -83,8 +83,11 @@
                       {{ cartItem.farm_product.product.name }}
                     </div>
                     <div class="col-3 quantity align-self-center">
+                      <select v-model="cartItem.quantity" @change="updateQuantity(cartItem)">
+                        <option :value="product_quantity" v-for="product_quantity in productQuantities(cartItem.farm_product.minimum_order_quantity, cartItem.farm_product.maximum_order_quantity)">{{ product_quantity }}</option>
+                      </select>
                       {{
-                        cartItem.quantity +
+                       
                         " * " +
                         cartItem.farm_product.unit_price
                       }}
@@ -110,8 +113,10 @@
                       {{ session_item.farm_product.product.name }}
                     </div>
                     <div class="col-3 quantity align-self-center">
+                      <select v-model="session_item.quantity" @change="updateQuantity(session_item)">
+                        <option :value="product_quantity" v-for="product_quantity in productQuantities(session_item.farm_product.minimum_order_quantity, session_item.farm_product.maximum_order_quantity)">{{ product_quantity }}</option>
+                      </select>
                       {{
-                        session_item.quantity +
                         " * " +
                         session_item.farm_product.unit_price
                       }}
@@ -128,45 +133,11 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- <div id="subtotal" class="p-2">
-                                    <div class="row">
-                                        <div class="col-6 text-left desc">
-                                            Subtotal
-                                        </div>
-                                        <div class="col-6 text-right price">
-                                            Rs. {{ subTotal }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="balance" class="p-2">
-                                    <div class="row">
-                                        <div class="col-6 text-left desc">
-                                            First Order Discount
-                                        </div>
-                                        <div class="col-6 text-right price">
-                                            Rs. {{ firstOrderDiscount }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="deliverycharges" class="p-2">
-                                    <div class="row">
-                                        <div class="col-6 text-left desc">
-                                            Delivery Fee
-                                        </div>
-                                        <div class="col-6 text-right price">
-                                            Rs. {{ deliveryFee }}
-                                        </div>
-                                    </div>
-                                </div> -->
-
-                <div id="grandtotal" class="p-2">
+                <div id="cartTotal" class="p-2">
                   <div class="row">
-                    <div class="col-6 text-left desc">Grand Total</div>
+                    <div class="col-6 text-left desc">Cart Total</div>
                     <div class="col-6 text-right price">
-                      Rs. {{ grandTotal }}
+                      Rs. {{ cartTotal }}
                     </div>
                   </div>
                 </div>
@@ -195,7 +166,7 @@
             <div class="input-group mb-2">
               <div class="input-group-prepend">
                 <label class="input-group-text" for="saved_addresses"
-                  ><i class="fas fa-map-marked"></i> &nbsp; Saved
+                  ><i class="fas fa-save"></i> &nbsp; Saved
                   Addresses</label
                 >
               </div>
@@ -325,44 +296,29 @@
           </div>
         </div>
         <div class="mb-3">
-          <div>
-            <label class="font-weight-bold">Processing Options</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              v-model="order.processing_option"
-              id="simple"
-              value="Simply Clean and Pack"
-            />
-            <label class="form-check-label" for="simple"
-              >Simply Clean and Pack</label
-            >
-          </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              v-model="order.processing_option"
-              id="grill"
-              value="Clean and Deep cuts for Grill"
-            />
-            <label class="form-check-label" for="grill"
-              >Clean and Deep cuts for Grill</label
-            >
-          </div>
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              v-model="order.processing_option"
-              id="slice"
-              value="Clean and Make Regular Slices"
-            />
-            <label class="form-check-label" for="slice"
-              >Clean and Make Regular Slices</label
-            >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="processing_options"
+                    ><i class="fas fa-box-open"></i> &nbsp; Processing Options</label
+                  >
+                </div>
+                <select
+                  class="custom-select"
+                  id="processing_options"
+                  v-model="order.processing_option"
+                >
+                  <option
+                    v-for="(processing_option, index) in processing_options"
+                    :key="index"
+                    :value="processing_option.text"
+                  >
+                    {{ processing_option.text }}
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
         <div class="mb-3">
@@ -375,8 +331,8 @@
         </div>
 
         <div class="mb-3">
-          <button class="btn btn-primary float-right" @click="placeOrder">
-            <i class="fas fa-hand-holding-usd"></i> Place Order
+          <button class="btn btn-primary float-right" @click="placeOrder" :disabled="buttons.order.disabled">
+            <i class="fas fa-hand-holding-usd"></i> {{ buttons.order.text }}
           </button>
           
         </div>
@@ -447,19 +403,19 @@ export default {
         quantity: "",
       },
 
-      subTotal: 0,
-      firstOrderDiscount: 0,
-      deliveryFee: 0,
-      grandTotal: 0,
+      cartTotal: 0,
 
       buttons: {
         addToCart: {
           text: "Add to Cart",
-          disable: false,
+          disabled: false,
         },
         removeFromCart:{
           text: "Remove",
-          disable: false,
+        },
+        order: {
+          text: "Place Order",
+          disabled: false
         }
       },
 
@@ -472,6 +428,17 @@ export default {
         city: 5,
         complete_address: "",
       },
+      processing_options: [
+        {
+          text: 'Simply Clean and Pack'
+        },
+        {
+          text: 'Clean and Deep cuts for Grill'
+        },
+        {
+          text: 'Clean and Make Regular Slices'
+        },
+      ],
       order: {
         receiver: {
           name: "",
@@ -492,8 +459,7 @@ export default {
     this.setCartItems();
     this.setSessionItems();
     this.setQuantities();
-    this.setSubTotal();
-    this.setGrandTotal();
+    this.setCartTotal();
   },
   methods: {
     setReceiver() {
@@ -522,6 +488,13 @@ export default {
     },
     setSessionItems() {
       this.session_items = this.sessionItems;
+    },
+    productQuantities (min, max) {
+      let quantities = [];
+      for (let index = min; index <= max; index++) {
+        quantities.push(index);
+      }
+      return quantities;
     },
     setQuantities() {
       var minimum = "";
@@ -556,24 +529,19 @@ export default {
       });
       return quantity_added;
     },
-    setSubTotal() {
-      this.subTotal = 0;
-
-      if (this.authenticated) {
-        this.doSubtotal(this.cartItems);
-      } else {
-        this.doSubtotal(this.sessionItems);
-      }
-    },
-    doSubtotal(items) {
+    doCartTotal(items) {
       items.forEach((item) => {
         let total = item.farm_product.unit_price * item.quantity;
-        this.subTotal += total;
+        this.cartTotal += total;
       });
     },
-    setGrandTotal() {
-      this.grandTotal =
-        this.subTotal + this.firstOrderDiscount + this.deliveryFee;
+    setCartTotal() {
+      this.cartTotal = 0;
+      if (this.authenticated) {
+        this.doCartTotal(this.cartItems);
+      } else {
+        this.doCartTotal(this.sessionItems);
+      }
     },
     addToCart() {
       this.buttons.addToCart.text = "Adding...";
@@ -613,14 +581,23 @@ export default {
             }
 
             this.setQuantities();
-            this.setSubTotal();
-            this.setGrandTotal();
+            this.setCartTotal();
           } else {
             console.warn(response.data);
           }
         })
         .catch((error) => {
           // console.error(error);
+        });
+    },
+    updateQuantity(cartItem){
+      this.setCartTotal();
+      axios.put("/cartItem", {
+          cartItem: cartItem,
+        }).then((response) => {
+          console.log(response.data);
+        }).catch((error) => {
+          console.error(error);
         });
     },
     removeFromCart(id){
@@ -635,7 +612,7 @@ export default {
                 object.splice(index, 1);
               }
             });
-            this.setSessionItems();
+            this.setCartItems();
           } else {
             this.sessionItems.forEach((item , index, object) => {
               if (item.farm_product.id == id) {
@@ -644,6 +621,8 @@ export default {
             });
             this.setSessionItems();
           }
+          this.setQuantities();
+          this.setCartTotal();
         } else {
           console.warn(response.data);
         }
@@ -716,6 +695,9 @@ export default {
         });
     },
     placeOrder() {
+      this.buttons.order.text = "Processing Order...";
+      this.buttons.order.disabled = true;
+
       if (this.address.complete_address) {
         var data = {
           address: this.address,
@@ -729,6 +711,8 @@ export default {
       axios
         .post("placeOrder", data)
         .then((response) => {
+          this.buttons.order.text = "Place Order";
+          this.buttons.order.disabled = false;
           if (response.status == 200) {
             console.log(response.data);
             swal({
@@ -743,11 +727,21 @@ export default {
             this.cartItems = [];
             this.setCartItems();
             this.setQuantities();
+            this.setCartTotal();
           } else {
             console.warn(response.data);
           }
         })
         .catch((error) => {
+          this.buttons.order.text = "Place Order";
+          this.buttons.order.disabled = false;
+          swal({
+              title: "Fields Missing!",
+              text: error.response.data.message,
+              icon: "error",
+              buttons: false,
+              timer: 3000
+            });
           console.error(error);
         });
     }

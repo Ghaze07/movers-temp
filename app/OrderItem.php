@@ -13,4 +13,14 @@ class OrderItem extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function order()
+    {
+        return $this->belongsTo('App\Order');
+    }
+
+    public function farmProduct()
+    {
+        return $this->belongsTo('App\FarmProduct');
+    }
 }

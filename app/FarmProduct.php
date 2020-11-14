@@ -28,4 +28,9 @@ class FarmProduct extends Model
     {
         return $this->hasMany('App\CartItem');
     }
+
+    public function orderItems()
+    {
+        return $this->hasMany('App\OrderItem');
+    }
 }

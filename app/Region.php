@@ -15,4 +15,9 @@ class Region extends Model
     {
         return $this->hasMany('App\City');
     }
+
+    public function citiesOrderByNameASC()
+    {
+        return $this->hasMany('App\City')->orderBy('name', 'ASC');
+    }
 }

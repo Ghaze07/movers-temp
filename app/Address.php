@@ -13,4 +13,12 @@ class Address extends Model
      */
     protected $guarded = [];
 
+    public function orders()
+    {
+        return $this->hasMany('App\Order');
+    }
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
 }

@@ -69,6 +69,34 @@ class CartItemController extends Controller
         }
     }
 
+    public function update(Request $request)
+    {
+        # code...
+        if (Auth::user()) {
+            $cartItem = CartItem::find($request->cartItem['id']);
+            $cartItem->update([
+                'quantity' => $request->cartItem['quantity']
+            ]);
+        } else {
+            if ($request->session()->exists('cartItems')) {
+                $cartItems = session('cartItems');
+                foreach ($cartItems as $key => $cartItem) {
+                    foreach ($cartItem as $farm_product_id => $product_quantity) {
+                        // if product exist and match
+                        if ($farm_product_id == $request->cartItem['farm_product']['id']) {
+                            // updating array of array
+                            $cartItem[$farm_product_id] = $request->cartItem['quantity'];
+                            // updating array
+                            $cartItems[$key] = $cartItem;
+                        }
+                    }
+                }
+                // updating session
+                $request->session()->put('cartItems', $cartItems);
+                Session::save();
+            }
+        }
+    }
 
     public function destroy(Request $request, $id)
     {
@@ -87,7 +115,6 @@ class CartItemController extends Controller
             // updating session
             $request->session()->put('cartItems', $cartItems);
             Session::save();
-            $cartItems = session('cartItems');
         }
         return response()->json(['message' => 'Cart Item Deleted.']);
     }
