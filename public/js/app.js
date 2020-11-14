@@ -41781,9 +41781,7 @@ var render = function() {
                   ],
                   1
                 )
-              ]),
-              _vm._v(" "),
-              _vm._m(0)
+              ])
             ])
           ])
         ])
@@ -41791,24 +41789,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col" }, [
-        _c("p", { staticClass: "mb-3 mb-md-0" }, [
-          _c("small", { staticClass: "text-warning font-italic" }, [
-            _vm._v(
-              "*Sign up now and get flat 10% discount on your first order."
-            )
-          ])
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

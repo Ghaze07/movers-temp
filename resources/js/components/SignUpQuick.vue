@@ -20,11 +20,11 @@
                                     <router-link class="btn btn-warning btn-block btn-lg" :to="url" @click.native="showDialog">Sign Up</router-link>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col">
                                     <p class="mb-3 mb-md-0"><small class="text-warning font-italic">*Sign up now and get flat 10% discount on your first order.</small></p>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </form>
