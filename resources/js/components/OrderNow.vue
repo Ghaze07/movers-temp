@@ -83,7 +83,7 @@
                       {{ cartItem.farm_product.product.name }}
                     </div>
                     <div class="col-3 quantity align-self-center">
-                      <select v-model="cartItem.quantity" @change="setCartTotal">
+                      <select v-model="cartItem.quantity" @change="updateQuantity(cartItem)">
                         <option :value="product_quantity" v-for="product_quantity in productQuantities(cartItem.farm_product.minimum_order_quantity, cartItem.farm_product.maximum_order_quantity)">{{ product_quantity }}</option>
                       </select>
                       {{
@@ -113,8 +113,10 @@
                       {{ session_item.farm_product.product.name }}
                     </div>
                     <div class="col-3 quantity align-self-center">
+                      <select v-model="session_item.quantity" @change="updateQuantity(session_item)">
+                        <option :value="product_quantity" v-for="product_quantity in productQuantities(session_item.farm_product.minimum_order_quantity, session_item.farm_product.maximum_order_quantity)">{{ product_quantity }}</option>
+                      </select>
                       {{
-                        session_item.quantity +
                         " * " +
                         session_item.farm_product.unit_price
                       }}
@@ -295,7 +297,7 @@
         </div>
         <div class="mb-3">
           <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
               <div class="input-group mb-2">
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="processing_options"
@@ -586,6 +588,16 @@ export default {
         })
         .catch((error) => {
           // console.error(error);
+        });
+    },
+    updateQuantity(cartItem){
+      this.setCartTotal();
+      axios.put("/cartItem", {
+          cartItem: cartItem,
+        }).then((response) => {
+          console.log(response.data);
+        }).catch((error) => {
+          console.error(error);
         });
     },
     removeFromCart(id){

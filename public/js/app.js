@@ -2471,6 +2471,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     farmProducts: Array,
@@ -2681,6 +2683,16 @@ __webpack_require__.r(__webpack_exports__);
           console.warn(response.data);
         }
       })["catch"](function (error) {// console.error(error);
+      });
+    },
+    updateQuantity: function updateQuantity(cartItem) {
+      this.setCartTotal();
+      axios.put("/cartItem", {
+        cartItem: cartItem
+      }).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.error(error);
       });
     },
     removeFromCart: function removeFromCart(id) {
@@ -40045,7 +40057,9 @@ var render = function() {
                                                 : $$selectedVal[0]
                                             )
                                           },
-                                          _vm.setCartTotal
+                                          function($event) {
+                                            return _vm.updateQuantity(cartItem)
+                                          }
                                         ]
                                       }
                                     },
@@ -40160,11 +40174,75 @@ var render = function() {
                                     "col-3 quantity align-self-center"
                                 },
                                 [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: session_item.quantity,
+                                          expression: "session_item.quantity"
+                                        }
+                                      ],
+                                      on: {
+                                        change: [
+                                          function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              session_item,
+                                              "quantity",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          },
+                                          function($event) {
+                                            return _vm.updateQuantity(
+                                              session_item
+                                            )
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    _vm._l(
+                                      _vm.productQuantities(
+                                        session_item.farm_product
+                                          .minimum_order_quantity,
+                                        session_item.farm_product
+                                          .maximum_order_quantity
+                                      ),
+                                      function(product_quantity) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            domProps: {
+                                              value: product_quantity
+                                            }
+                                          },
+                                          [_vm._v(_vm._s(product_quantity))]
+                                        )
+                                      }
+                                    ),
+                                    0
+                                  ),
                                   _vm._v(
                                     "\n                    " +
                                       _vm._s(
-                                        session_item.quantity +
-                                          " * " +
+                                        " * " +
                                           session_item.farm_product.unit_price
                                       ) +
                                       "\n                  "
@@ -40592,7 +40670,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
                 _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-6" }, [
+                  _c("div", { staticClass: "col-md-6" }, [
                     _c("div", { staticClass: "input-group mb-2" }, [
                       _vm._m(8),
                       _vm._v(" "),

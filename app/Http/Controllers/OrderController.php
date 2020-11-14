@@ -81,28 +81,13 @@ class OrderController extends Controller
             'order_status_id' => $order_status->id,
             'order_total' => $order_total,
             'delivery_charges' => $farm_city->delivery_rate,
+            'cash_on_delivery' => $order_total + $farm_city->delivery_rate,
             'processing_option' => $request->order['processing_option'],
             'further_instructions' => $request->order['further_instructions'],
             'receiver_name' => $request->order['receiver']['name'],
             'receiver_mobile' => $request->order['receiver']['mobile'],
             'order_number' => $order_number
         ]);
-
-        // create order items against each cart item
-        foreach ($cart_items as $key => $cart_item) {
-            # code...
-            OrderItem::create([
-                'user_id' => $cart_item->user_id,
-                'order_id' => $order->id,
-                'farm_product_id' => $cart_item->farm_product_id,
-                'quantity' => $cart_item->quantity,
-            ]);
-
-            // delete cart items
-            $cart_item->delete();
-        }
-
-        
 
         // sms to user and farm official number
 
