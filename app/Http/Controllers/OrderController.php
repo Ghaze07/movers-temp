@@ -8,6 +8,7 @@ use App\Order;
 use App\Address;
 use App\CartItem;
 use App\FarmCity;
+use App\Http\Requests\OrderRequest;
 use App\OrderItem;
 use App\OrderStatus;
 use Illuminate\Http\Request;
@@ -22,32 +23,19 @@ class OrderController extends Controller
         return response()->json($user);
     }
 
-    public function placeOrder(Request $request)
+    public function placeOrder(OrderRequest $request)
     {
 
         // validation all are required except further instructions
-
+        $request->validated();
         // save or retrieve address
         if ($request->address) {
-            $request->validate([
-                'address.city' => 'required',
-                'address.complete_address' => 'required',
-                'order.receiver.name' => 'required',
-                'order.receiver.mobile' => 'required|numeric',
-                'order.processing_option' => 'required',
-            ]);
             $address = Address::create([
                 'user_id' => Auth::user()->id,
                 'city_id' => $request->address['city'],
                 'complete_address' => $request->address['complete_address']
             ]);
         } else {
-            $request->validate([
-                'order.receiver.name' => 'required',
-                'order.receiver.mobile' => 'required|numeric',
-                'order.address_id' => 'required',
-                'order.processing_option' => 'required',
-            ]);
             $address = Address::find($request->order['address_id']);
         }
         // get all cart items for this user
@@ -69,10 +57,6 @@ class OrderController extends Controller
         // get order_status for order_status_id
         $order_status = OrderStatus::where('status', 'New')->first();
 
-        $city_name_abbreviation =  City::find($address->city_id)->name_abbreviation;  
-
-        $order_number = $city_name_abbreviation.mt_rand(10000,99999).date("Y");
-
         // create order
         $order = Order::create([
             'user_id' => Auth::user()->id,
@@ -86,7 +70,6 @@ class OrderController extends Controller
             'further_instructions' => $request->order['further_instructions'],
             'receiver_name' => $request->order['receiver']['name'],
             'receiver_mobile' => $request->order['receiver']['mobile'],
-            'order_number' => $order_number
         ]);
 
         // sms to user and farm official number

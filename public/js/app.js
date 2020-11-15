@@ -2473,6 +2473,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     farmProducts: Array,
@@ -2529,6 +2535,7 @@ __webpack_require__.r(__webpack_exports__);
         processing_option: "",
         further_instructions: ""
       },
+      orderErrors: {},
       addresses: [],
       cities: [],
       add_new_address: false
@@ -2686,6 +2693,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateQuantity: function updateQuantity(cartItem) {
+      this.setQuantities();
       this.setCartTotal();
       axios.put("/cartItem", {
         cartItem: cartItem
@@ -2796,6 +2804,7 @@ __webpack_require__.r(__webpack_exports__);
     placeOrder: function placeOrder() {
       var _this9 = this;
 
+      this.orderErrors = {};
       this.buttons.order.text = "Processing Order...";
       this.buttons.order.disabled = true;
 
@@ -2838,8 +2847,10 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this9.buttons.order.text = "Place Order";
         _this9.buttons.order.disabled = false;
+        console.log(error.response.data);
+        _this9.orderErrors = error.response.data.errors;
         swal({
-          title: "Fields Missing!",
+          title: "Some Thing Wrong!",
           text: error.response.data.message,
           icon: "error",
           buttons: false,
@@ -40409,7 +40420,13 @@ var render = function() {
                       }),
                       0
                     )
-                  ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.orderErrors["order.address_id"]
+                    ? _c("div", { staticClass: "invalid-feedback d-block" }, [
+                        _vm._v(_vm._s(_vm.orderErrors["order.address_id"][0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-6" }, [
@@ -40542,7 +40559,19 @@ var render = function() {
                             }),
                             0
                           )
-                        ])
+                        ]),
+                        _vm._v(" "),
+                        _vm.orderErrors["address.city"]
+                          ? _c(
+                              "div",
+                              { staticClass: "invalid-feedback d-block" },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.orderErrors["address.city"][0])
+                                )
+                              ]
+                            )
+                          : _vm._e()
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-12" }, [
@@ -40591,7 +40620,23 @@ var render = function() {
                             }),
                             0
                           )
-                        ])
+                        ]),
+                        _vm._v(" "),
+                        _vm.orderErrors["address.complete_address"]
+                          ? _c(
+                              "div",
+                              { staticClass: "invalid-feedback d-block" },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.orderErrors[
+                                      "address.complete_address"
+                                    ][0]
+                                  )
+                                )
+                              ]
+                            )
+                          : _vm._e()
                       ])
                     ])
                   ])
@@ -40628,7 +40673,15 @@ var render = function() {
                           }
                         }
                       })
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.orderErrors["order.receiver.name"]
+                      ? _c("div", { staticClass: "invalid-feedback d-block" }, [
+                          _vm._v(
+                            _vm._s(_vm.orderErrors["order.receiver.name"][0])
+                          )
+                        ])
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-6" }, [
@@ -40646,7 +40699,7 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         attrs: {
-                          type: "text",
+                          type: "number",
                           placeholder: "Receiver's Mobile"
                         },
                         domProps: { value: _vm.order.receiver.mobile },
@@ -40663,7 +40716,15 @@ var render = function() {
                           }
                         }
                       })
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.orderErrors["order.receiver.mobile"]
+                      ? _c("div", { staticClass: "invalid-feedback d-block" }, [
+                          _vm._v(
+                            _vm._s(_vm.orderErrors["order.receiver.mobile"][0])
+                          )
+                        ])
+                      : _vm._e()
                   ])
                 ])
               ]),
@@ -40728,7 +40789,17 @@ var render = function() {
                         }),
                         0
                       )
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.orderErrors["order.processing_option"]
+                      ? _c("div", { staticClass: "invalid-feedback d-block" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm.orderErrors["order.processing_option"][0]
+                            )
+                          )
+                        ])
+                      : _vm._e()
                   ])
                 ])
               ]),

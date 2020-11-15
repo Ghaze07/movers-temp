@@ -184,6 +184,7 @@
                 </option>
               </select>
             </div>
+            <div class="invalid-feedback d-block" v-if="orderErrors['order.address_id']">{{ orderErrors['order.address_id'][0] }}</div>
           </div>
           <div class="col-md-6">
             <button class="btn btn-primary" @click="addNewAddress">
@@ -233,6 +234,7 @@
                   </option>
                 </select>
               </div>
+              <div class="invalid-feedback d-block" v-if="orderErrors['address.city']">{{ orderErrors['address.city'][0] }}</div>
             </div>
             <div class="col-md-12">
               <div class="input-group mb-2">
@@ -257,6 +259,7 @@
                   ></option>
                 </datalist>
               </div>
+              <div class="invalid-feedback d-block" v-if="orderErrors['address.complete_address']">{{ orderErrors['address.complete_address'][0] }}</div>
             </div>
           </div>
         </div>
@@ -277,6 +280,7 @@
                   v-model="order.receiver.name"
                 />
               </div>
+              <div class="invalid-feedback d-block" v-if="orderErrors['order.receiver.name']">{{ orderErrors['order.receiver.name'][0] }}</div>
             </div>
             <div class="col-md-6">
               <div class="input-group mb-2">
@@ -286,12 +290,13 @@
                   >
                 </div>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   placeholder="Receiver's Mobile"
                   v-model="order.receiver.mobile"
                 />
               </div>
+              <div class="invalid-feedback d-block" v-if="orderErrors['order.receiver.mobile']">{{ orderErrors['order.receiver.mobile'][0] }}</div>
             </div>
           </div>
         </div>
@@ -318,6 +323,7 @@
                   </option>
                 </select>
               </div>
+              <div class="invalid-feedback d-block" v-if="orderErrors['order.processing_option']">{{ orderErrors['order.processing_option'][0] }}</div>
             </div>
           </div>
         </div>
@@ -448,7 +454,7 @@ export default {
         processing_option: "",
         further_instructions: "",
       },
-
+      orderErrors: {},
       addresses: [],
       cities: [],
 
@@ -591,6 +597,7 @@ export default {
         });
     },
     updateQuantity(cartItem){
+      this.setQuantities();
       this.setCartTotal();
       axios.put("/cartItem", {
           cartItem: cartItem,
@@ -695,6 +702,7 @@ export default {
         });
     },
     placeOrder() {
+      this.orderErrors = {};
       this.buttons.order.text = "Processing Order...";
       this.buttons.order.disabled = true;
 
@@ -735,8 +743,10 @@ export default {
         .catch((error) => {
           this.buttons.order.text = "Place Order";
           this.buttons.order.disabled = false;
+          console.log(error.response.data);
+          this.orderErrors = error.response.data.errors;
           swal({
-              title: "Fields Missing!",
+              title: "Some Thing Wrong!",
               text: error.response.data.message,
               icon: "error",
               buttons: false,

@@ -21,6 +21,12 @@ class Order extends Model
     {
         parent::boot();
         Order::created(function($order) {
+
+            $order_number = $order->address->city->name_abbreviation.sprintf("%04d", $order->id).sprintf("%03d", $order->farm_id).$order->farm->city->name_abbreviation;
+            $order->update([
+                'order_number' => $order_number
+            ]);
+            
             $sms = new \App\Sms();
             $sms->user_id = Auth::user()->id;
             $sms->to = Auth::user()->mobile;
@@ -64,11 +70,6 @@ class Order extends Model
     public function farm()
     {
         return $this->belongsTo('App\Farm');
-    }
-    
-    public function city()
-    {
-        return $this->belongsTo('App\City');
     }
 
     public function orderStatus()
