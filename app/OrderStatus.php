@@ -18,4 +18,9 @@ class OrderStatus extends Model
     {
         return $this->hasMany('App\Order');
     }
+
+    public function orderTrackings()
+    {
+        return $this->hasMany('App\OrderTracking');
+    }
 }

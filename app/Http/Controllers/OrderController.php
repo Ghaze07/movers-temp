@@ -78,4 +78,11 @@ class OrderController extends Controller
         return response()->json(['message' => 'Your order has been placed Successfully.']);
         
     }
+
+    public function trackOrder(Request $request)
+    {
+        # code...RWP0001001HBD
+        $orderTrackings = Order::where('order_number', $request->order_number)->first()->orderTrackings;
+        return response()->json($orderTrackings);
+    }
 }

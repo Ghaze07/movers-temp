@@ -39,6 +39,7 @@ Route::get('setSavedAddresses', 'AddressController@setSavedAddresses')->name('se
 Route::post('processingOptions', 'OrderController@processingOptions')->name('processingOptions');
 Route::get('setReceiver', 'OrderController@setReceiver')->name('setReceiver');
 Route::post('placeOrder', 'OrderController@placeOrder')->name('placeOrder');
+Route::post('trackOrder', 'OrderController@trackOrder')->name('trackOrder');
 // Route::get('', '@')->name('');
 
 // Authenticated Users

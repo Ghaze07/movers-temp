@@ -91,4 +91,9 @@ class Order extends Model
     {
         return $this->hasMany('App\OrderItem');
     }
+    
+    public function orderTrackings()
+    {
+        return $this->hasMany('App\OrderTracking');
+    }
 }
