@@ -25,7 +25,7 @@ Route::post('register', 'Auth\RegisterController@register')->name('register');
 //Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-Route::get('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
@@ -39,6 +39,7 @@ Route::get('setSavedAddresses', 'AddressController@setSavedAddresses')->name('se
 Route::post('processingOptions', 'OrderController@processingOptions')->name('processingOptions');
 Route::get('setReceiver', 'OrderController@setReceiver')->name('setReceiver');
 Route::post('placeOrder', 'OrderController@placeOrder')->name('placeOrder');
+Route::post('trackOrder', 'OrderController@trackOrder')->name('trackOrder');
 // Route::get('', '@')->name('');
 
 // Authenticated Users

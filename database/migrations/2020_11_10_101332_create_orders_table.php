@@ -24,7 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('processing_option');
             $table->string('further_instructions')->nullable();
             $table->string('receiver_name');
-            $table->string('receiver_mobile');
+            $table->bigInteger('receiver_mobile');
             $table->timestamps();
         });
     }

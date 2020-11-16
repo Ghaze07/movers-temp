@@ -80,10 +80,17 @@
                     <td>{{ $orderItem->quantity * $orderItem->farmProduct->unit_price }}</td>
                 </tr> 
             @endforeach
-            
+            <tr>
+                <td colspan="3">Order Total</td>
+                <td colspan="2">{{ $order_total }}</td>
+            </tr>
+            <tr>
+                <td colspan="3">Delivery Charges</td>
+                <td colspan="2">{{ $delivery_charges }}</td>
+            </tr>
             <tr>
                 <td colspan="3">Grand Total</td>
-                <td colspan="2">{{ $order_total }}</td>
+                <td colspan="2">{{ $cash_on_delivery }}</td>
             </tr>
             
         </tbody>
