@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
         //$this->call(ProductSeeder::class);
         //$this->call(ProductSourceSeeder::class);
         //$this->call(FarmProductSeeder::class);
+        //$this->call(FarmCitySeeder::class);
+        //$this->call(OrderStatusSeeder::class);
     }
 }
