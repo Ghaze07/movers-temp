@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Farm;
-use App\Region;
-use Illuminate\Http\Request;
+use App\Product;
+use App\MeasuringUnit;
+use App\ProductSource;
 
 class FarmController extends Controller
 {
@@ -19,10 +20,14 @@ class FarmController extends Controller
 
     public function products(Farm $farm)
     {
+        $farms=Farm::all();
+        $products=Product::all();
+        $productSources=ProductSource::all();
+        $measuringUnits=MeasuringUnit::all();
         $farmProducts = $farm->farmProducts()->paginate(20);
-        return view('farm.products')->with([
+        return view('farm.products', compact('products','farms','productSources','measuringUnits'))->with([
             'farm' => $farm,
-            'products' => $farmProducts
+            'farmProducts' => $farmProducts
         ]);
     }
 }

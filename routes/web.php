@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'admin'], function() {
         Route::get('/dashboard', 'SiteController@dashboard')->name('home');
         Route::get('/farms', 'FarmController@index')->name('farms');
+        Route::resource('/farmsproduct', 'FarmProductController');
         Route::get('/farm/{id}', 'FarmController@show')->name('farm');
         Route::get('/farm/products/{farm}', 'FarmController@products')->name('farm.products');
         Route::get('/authors', 'AuthorController@index')->name('authors');
@@ -59,8 +60,14 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('/regions', 'RegionController');
         Route::resource('/cities', 'CityController');
         Route::get('/measuring_units', 'MeasuringUnitController@index')->name('measuringUnits');
+
+        Route::resource('/products', 'ProductsController');
         Route::get('/products', 'ProductsController@index')->name('products');
+
+        Route::resource('/product/categories', 'ProductCategoriesController');
         Route::get('/product/categories', 'ProductCategoriesController@index')->name('product.categories');
+
+        Route::resource('/product/sources', 'ProductSourcesController');
         Route::get('/product/sources', 'ProductSourcesController@index')->name('product.sources');
     });
 });
