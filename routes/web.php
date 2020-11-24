@@ -36,10 +36,20 @@ Route::delete('cartItem/{cartItem}','CartItemController@destroy')->name('cartIte
 Route::get('setCities/{region}', 'RegionController@setCities')->name('setCities');
 Route::post('address', 'AddressController@store')->name('address.store');
 Route::get('setSavedAddresses', 'AddressController@setSavedAddresses')->name('setSavedAddresses');
+Route::resource('order', 'OrderController');
 Route::post('processingOptions', 'OrderController@processingOptions')->name('processingOptions');
 Route::get('setReceiver', 'OrderController@setReceiver')->name('setReceiver');
 Route::post('placeOrder', 'OrderController@placeOrder')->name('placeOrder');
 Route::post('trackOrder', 'OrderController@trackOrder')->name('trackOrder');
+Route::get('getCities/{region_id}', 'OrderController@getCities')->name('getCities');
+Route::post('createUser', 'OrderController@createUser')->name('createUser');
+Route::post('createAddress', 'OrderController@createAddress')->name('createAddress');
+Route::get('getAddresses/{user_id}', 'OrderController@getAddresses')->name('getAddresses');
+Route::get('getFarmProducts/{farm_id}', 'OrderController@getFarmProducts')->name('getFarmProducts');
+Route::get('getCartItems/{user_id}', 'OrderController@getCartItems')->name('getCartItems');
+Route::post('addToCart', 'OrderController@addToCart')->name('addToCart');
+Route::delete('removeFromCart/{id}', 'OrderController@removeFromCart')->name('removeFromCart');
+Route::post('adminCreateOrder', 'OrderController@adminCreateOrder')->name('adminCreateOrder');
 // Route::get('', '@')->name('');
 
 // Authenticated Users
