@@ -73,5 +73,8 @@
                 </li>
             </ul>
         </li>
+        <li>
+        <a href="{{ route('order.index') }}">Orders</a>
+        </li>
     </ul>
 </nav>

@@ -28,27 +28,27 @@ class Order extends Model
             ]);
             
             $sms = new \App\Sms();
-            $sms->user_id = Auth::user()->id;
-            $sms->to = Auth::user()->mobile;
+            $sms->user_id = $order->user->id;
+            $sms->to = $order->user->mobile;
             $sms->body = "Thank you for your order! Order ". $order->order_number ." has been placed and will arrive shortly.";
             $sms->save();
             $order->farm_id;
             $farm = Farm::find($order->farm_id);
 
             $sms = new \App\Sms();
-            $sms->user_id = Auth::user()->id;
+            $sms->user_id = $order->user->id;
             $sms->to = $farm->mobile1;
             $sms->body = "A new order ". $order->order_number . " for the amount of ". $order->order_total. " has been placed.";
             $sms->save();
 
             $sms = new \App\Sms();
-            $sms->user_id = Auth::user()->id;
+            $sms->user_id = $order->user->id;
             $sms->to = $farm->mobile2;
             $sms->body = "A new order ". $order->order_number . " for the amount of ". $order->order_total. " has been placed.";
             $sms->save();
 
             // get all cart items for this user
-            $cart_items = CartItem::where('user_id', Auth::user()->id)->with('farmProduct')->get();
+            $cart_items = CartItem::where('user_id', $order->user->id)->with('farmProduct')->get();
 
             // create order items against each cart item
             foreach ($cart_items as $cart_item) {
