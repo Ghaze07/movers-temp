@@ -1,13 +1,13 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createOrder">Create</button>
+            <button type="button" class="btn btn-primary btn-sm mr-1" data-toggle="modal" :data-target="'#editOrder-'+order_prop.id" @click="editOrder">Edit</button> 
               <!-- Modal -->
-            <div class="modal fade" id="createOrder" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" :id="'editOrder-'+order_prop.id" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title">Create Order</h5>
+                    <h5 class="modal-title">Edit Order</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -50,7 +50,7 @@
                                         </div>
                                         <input type="email" class="form-control" id="email" placeholder="Your Email Address" v-model="user.email">
                                     </div>
-                                     <div class="invalid-feedback d-block" v-if="userErrors['user.email']">{{ userErrors['user.email'][0] }}</div>
+                                    <div class="invalid-feedback d-block" v-if="userErrors['user.email']">{{ userErrors['user.email'][0] }}</div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group mb-3">
@@ -178,11 +178,6 @@
                                 </div>
                             </div>
 
-                            <div class="row" v-if="cart_items.length > 0">
-                                <div class="col-md-12">
-                                    <button type="button" class="btn btn-success float-right mb-3" @click="checkOut">Check Out</button>
-                                </div>
-                            </div>
                             <div class="mb-3" v-if="show_receiver">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -237,9 +232,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" v-if="show_place_order">
+                            <div class="row" v-if="show_update_order">
                                 <div class="col-md-12">
-                                     <button type="button" class="btn btn-success float-right" @click="adminCreateOrder" :disabled="buttons.placeOrder.disabled">{{ buttons.placeOrder.text }}</button>
+                                     <button type="button" class="btn btn-success float-right" @click="adminUpdateOrder" :disabled="buttons.updateOrder.disabled">{{ buttons.updateOrder.text }}</button>
                                 </div>
                             </div>
                         </div> <!-- container-fluid -->
@@ -253,6 +248,7 @@
 <script>
 export default {
     props:{
+        order_prop: Object,
         users: Array,
         farms: Array,
         regions: Array
@@ -311,7 +307,7 @@ export default {
             ],
 
             show_further_instructions: false,
-            show_place_order: false,
+            show_update_order: false,
 
             // order
             order: {
@@ -344,8 +340,8 @@ export default {
                     text: "Remove",
                     disabled: false,
                 },
-                placeOrder: {
-                    text: "Place Order",
+                updateOrder: {
+                    text: "Update Order",
                     disabled: false
                 }
             },
@@ -364,6 +360,50 @@ export default {
     },
 
     methods: {
+        editOrder(){
+            this.resetAll();
+            this.order = {
+                user_id: this.order_prop.user_id,
+                farm_id: this.order_prop.farm_id,
+                address_id: this.order_prop.address_id,
+                processing_option: this.order_prop.processing_option,
+                further_instructions: this.order_prop.further_instructions,
+                receiver: {
+                    name: this.order_prop.receiver_name,
+                    mobile: this.order_prop.receiver_mobile
+                }
+            };
+            this.getFarmProducts();
+            this.setCartItems();
+            this.showEditables();
+
+        },
+        setCartItems(){
+            
+            axios.get('orderItems/'+this.order_prop.id).then((response) => {
+                if (response.status == 200) {
+                    this.cart_items = response.data;
+                    if (this.cart_items.length > 0) {
+                        this.buttons.addToCart.text = 'Update Cart';
+                    } else {
+                        this.buttons.addToCart.text = 'Add to Cart';
+                    }
+                } else {
+                    console.warn(response.data);
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+        },
+        showEditables() {
+            this.showAddresses();
+            this.show_farms = true;
+            this.show_farm_products = true;
+            this.show_receiver = true;
+            this.show_processing_options = true;
+            this.show_further_instructions = true;
+            this.show_update_order = true;
+        },
         resetAll(){
             this.show_user_inputs = false;
             this.user = {
@@ -394,7 +434,7 @@ export default {
             this.show_processing_options = false;
 
             this.show_further_instructions = false;
-            this.show_place_order = false;
+            this.show_update_order = false;
 
             // order
             this.order = {
@@ -442,7 +482,6 @@ export default {
         getAddresses() {
             axios.get('getAddresses/'+ this.order.user_id).then((response) => {
                 if (response.status == 200) {
-                    console.log(response.data);
                     this.addresses = response.data;
                 } else {
                     console.warn(response.data);
@@ -505,7 +544,6 @@ export default {
         getFarmProducts() {
             axios.get('getFarmProducts/'+ this.order.farm_id).then((response) => {
                 if (response.status == 200) {
-                    console.log(response.data);
                     this.farmProducts = response.data;
                     this.showFarmProducts();
 
@@ -523,26 +561,7 @@ export default {
             }).catch((error) => {
                 console.error(error);
             });
-            this.getCartItems();
             
-        },
-
-        getCartItems () {
-            axios.get('getCartItems/'+ this.order.user_id).then((response) => {
-                if (response.status == 200) {
-                    console.log(response.data);
-                    this.cart_items = response.data;
-                    if (this.cart_items.length > 0) {
-                        this.buttons.addToCart.text = 'Update Cart';
-                    } else {
-                        this.buttons.addToCart.text = 'Add to Cart';
-                    }
-                } else {
-                    console.warn(response.data);
-                }
-            }).catch((error) => {
-                console.error(error);
-            });
         },
 
         setQuantities() {
@@ -595,10 +614,7 @@ export default {
             });
         },
         removeFromCart (cart_item_id) {
-            axios.delete('removeFromCart/'+ cart_item_id).then((response) => {
-                if (response.status == 200) {
-                    console.log(response.data);
-                    this.cart_items = this.cart_items.filter(function (cart_item) {
+            this.cart_items = this.cart_items.filter(function (cart_item) {
                         return cart_item.id !== cart_item_id;
                     });
 
@@ -607,39 +623,22 @@ export default {
                     } else {
                         this.buttons.addToCart.text = 'Add to Cart';
                     }
-                } else {
-                    console.warn(response.data);
-                }
-            }).catch((error) => {
-                console.error(error);
-            });
         },
-        checkOut () {
-            this.show_receiver = true;
-            this.show_processing_options = true;
-            this.show_further_instructions = true;
-            this.show_place_order = true;
-            this.users.forEach((user) => {
-                if (user.id == this.order.user_id) {
-                    this.order.receiver.name = user.name;
-                    this.order.receiver.mobile = user.mobile;
-                }
-            });
-        },
-        adminCreateOrder () {
-            this.buttons.placeOrder.text = 'Placing...';
-            this.buttons.placeOrder.disabled = true;
-            axios.post('adminCreateOrder', {
+
+        adminUpdateOrder () {
+            this.buttons.updateOrder.text = 'Updating...';
+            this.buttons.updateOrder.disabled = true;
+            axios.put('adminUpdateOrder/'+this.order_prop.id , {
                 order: this.order
             }).then((response) => {
-                this.buttons.placeOrder.text = 'Place Order';
-                this.buttons.placeOrder.disabled = false;
+                this.buttons.updateOrder.text = 'Update Order';
+                this.buttons.updateOrder.disabled = false;
                 if (response.status == 200) {
                     console.log(response.data);
-                    $('#createOrder').modal('hide');
+                    $('#editOrder-'+this.order_prop.id).modal('hide');
                     this.resetAll();
                     swal({
-                        title: "Order Placed!",
+                        title: "Order Updated!",
                         text: response.data.message,
                         icon: "success",
                         buttons: false,
@@ -649,8 +648,8 @@ export default {
                     console.warn(response.data);
                 }
             }).catch((error) => {
-                this.buttons.placeOrder.text = 'Place Order';
-                this.buttons.placeOrder.disabled = false;
+                this.buttons.updateOrder.text = 'Update Order';
+                this.buttons.updateOrder.disabled = false;
                 console.error(error);
                 this.orderErrors = error.response.data.errors;
                 swal({

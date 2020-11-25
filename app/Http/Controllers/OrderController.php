@@ -150,6 +150,60 @@ class OrderController extends Controller
         
     }
 
+    public function adminUpdateOrder(AdminOrderRequest $request, $order_id)
+    {
+
+        // validation all are required except further instructions
+        $request->validated();
+
+        // retrieve address
+        $address = Address::find($request->order['address_id']);
+        
+        // get all cart items for this user
+        $cart_items = CartItem::where('user_id', $request->order['user_id'])->with('farmProduct')->get();
+        if(!$cart_items){
+            $cart_items = OrderItem::where('order_id', $order_id)->with('farmProduct')->get();
+        }
+        // sum up all cart items   
+        $order_total = 0;
+        foreach ($cart_items as $key => $cart_item) {
+            # code...
+            $order_total += $cart_item->quantity * $cart_item->farmProduct->unit_price;
+        }
+
+        // get farm_id
+        $farm_id = $request->order['farm_id'];
+
+        // get delivery_rate for delivery_charges
+        $farm_city = FarmCity::where('farm_id', $farm_id)->where('city_id', $address->city_id)->first();
+
+        // get order_status for order_status_id 
+        // later can be update and for order tracking
+        // $order_status = OrderStatus::where('status', 'New')->first();
+
+        // create order
+        $order = Order::find($order_id);
+
+        $order->update([
+            'user_id' => $request->order['user_id'],
+            'farm_id' => $farm_id,
+            'address_id' => $address->id,
+            'order_total' => $order_total,
+            'delivery_charges' => $farm_city->delivery_rate,
+            'cash_on_delivery' => $order_total + $farm_city->delivery_rate,
+            'processing_option' => $request->order['processing_option'],
+            'further_instructions' => $request->order['further_instructions'],
+            'receiver_name' => $request->order['receiver']['name'],
+            'receiver_mobile' => $request->order['receiver']['mobile'],
+        ]);
+
+        // sms to user and farm official number
+
+        // success message
+        return response()->json(['message' => 'Your order has been Update Successfully.']);
+        
+    }
+
     public function trackOrder(Request $request)
     {
         # code...RWP0001001HBD
@@ -237,5 +291,11 @@ class OrderController extends Controller
         $cartItem = CartItem::find($id);
         $cartItem->delete();
         return response()->json(['message' => 'Cart Item Deleted']);
+    }
+
+    public function orderItems($order_id)
+    {
+        $orderItems = OrderItem::with('farmProduct.product')->where('order_id', $order_id)->get();
+        return response()->json($orderItems);
     }
 }

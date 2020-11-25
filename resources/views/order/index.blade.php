@@ -33,7 +33,8 @@
                         <td>{{ $order->processing_option }}</td>
                         <td>
                             <div class="d-flex">
-                                <button class="btn btn-primary btn-sm mr-1">Edit</button> <button class="btn btn-danger btn-sm mr-1">Delete</button>
+                                <edit-order :order_prop="{{ json_encode($order) }}" :users="{{ json_encode($users) }}" :farms="{{ json_encode($farms) }}" :regions="{{ json_encode($regions) }}"></edit-order>
+                                <button class="btn btn-danger btn-sm mr-1">Delete</button>
                             </div>
                         </td>
                     </tr>
