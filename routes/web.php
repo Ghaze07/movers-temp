@@ -50,6 +50,8 @@ Route::get('getCartItems/{user_id}', 'OrderController@getCartItems')->name('getC
 Route::post('addToCart', 'OrderController@addToCart')->name('addToCart');
 Route::delete('removeFromCart/{id}', 'OrderController@removeFromCart')->name('removeFromCart');
 Route::post('adminCreateOrder', 'OrderController@adminCreateOrder')->name('adminCreateOrder');
+Route::put('adminUpdateOrder/{order_id}', 'OrderController@adminUpdateOrder')->name('adminUpdateOrder');
+Route::get('orderItems/{order_id}', 'OrderController@orderItems')->name('orderItems');
 // Route::get('', '@')->name('');
 
 // Authenticated Users

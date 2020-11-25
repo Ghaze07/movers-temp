@@ -48,7 +48,7 @@ class Order extends Model
             $sms->save();
 
             // get all cart items for this user
-            $cart_items = CartItem::where('user_id', $order->user->id)->with('farmProduct')->get();
+            $cart_items = CartItem::where('user_id', $order->user->id)->get();
 
             // create order items against each cart item
             foreach ($cart_items as $cart_item) {
@@ -64,6 +64,39 @@ class Order extends Model
             }
         
             Mail::send(new OrderPlaced($order));
+        });
+        Order::updated(function ($order)
+        {
+            # code...
+            $sms = new \App\Sms();
+            $sms->user_id = $order->user->id;
+            $sms->to = $order->user->mobile;
+            $sms->body = "your order! Order ". $order->order_number ." has been updated and will arrive shortly.";
+            $sms->save();
+
+            // get all cart items for this user
+            $cart_items = CartItem::where('user_id', $order->user->id)->get();
+
+            if($cart_items){
+                $order_items = OrderItem::where('order_id', $order->id)->get();
+                foreach ($order_items as $order_item) {
+                    // delete order_items
+                    $order_item->delete();
+                }
+                // create order items against each cart item
+                foreach ($cart_items as $cart_item) {
+                    OrderItem::create([
+                        'user_id' => $cart_item->user_id,
+                        'order_id' => $order->id,
+                        'farm_product_id' => $cart_item->farm_product_id,
+                        'quantity' => $cart_item->quantity,
+                    ]);
+            
+                    // delete cart items
+                    $cart_item->delete();
+                }
+            } 
+                        
         });
     }
 
