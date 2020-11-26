@@ -2659,6 +2659,7 @@ __webpack_require__.r(__webpack_exports__);
             buttons: false,
             timer: 3000
           });
+          location.reload();
         } else {
           console.warn(response.data);
         }
@@ -2937,12 +2938,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     order_prop: Object,
     users: Array,
     farms: Array,
-    regions: Array
+    regions: Array,
+    order_statuses: Array
   },
   data: function data() {
     return {
@@ -2992,6 +3005,7 @@ __webpack_require__.r(__webpack_exports__);
       order: {
         user_id: '',
         farm_id: '',
+        order_status_id: '',
         address_id: '',
         processing_option: 'Clean and Make Regular Slices',
         further_instructions: '',
@@ -3037,6 +3051,7 @@ __webpack_require__.r(__webpack_exports__);
       this.order = {
         user_id: this.order_prop.user_id,
         farm_id: this.order_prop.farm_id,
+        order_status_id: this.order_prop.order_status_id,
         address_id: this.order_prop.address_id,
         processing_option: this.order_prop.processing_option,
         further_instructions: this.order_prop.further_instructions,
@@ -3107,6 +3122,7 @@ __webpack_require__.r(__webpack_exports__);
       this.order = {
         user_id: '',
         farm_id: '',
+        order_status_id: '',
         address_id: '',
         processing_option: 'Clean and Make Regular Slices',
         further_instructions: '',
@@ -3338,6 +3354,7 @@ __webpack_require__.r(__webpack_exports__);
             buttons: false,
             timer: 3000
           });
+          location.reload();
         } else {
           console.warn(response.data);
         }
@@ -43034,6 +43051,76 @@ var render = function() {
                               ]
                             )
                           : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("div", { staticClass: "input-group mb-3" }, [
+                          _vm._m(10),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.order.order_status_id,
+                                  expression: "order.order_status_id"
+                                }
+                              ],
+                              staticClass: "custom-select",
+                              attrs: { id: "farm_statuses" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.order,
+                                    "order_status_id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            _vm._l(_vm.order_statuses, function(
+                              order_status,
+                              index
+                            ) {
+                              return _c(
+                                "option",
+                                {
+                                  key: index,
+                                  domProps: { value: order_status.id }
+                                },
+                                [_vm._v(_vm._s(order_status.status))]
+                              )
+                            }),
+                            0
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm.orderErrors["order.order_status_id"]
+                          ? _c(
+                              "div",
+                              { staticClass: "invalid-feedback d-block" },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.orderErrors["order.order_status_id"][0]
+                                  )
+                                )
+                              ]
+                            )
+                          : _vm._e()
                       ])
                     ])
                   : _vm._e(),
@@ -43042,7 +43129,7 @@ var render = function() {
                   ? _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-md-5" }, [
                         _c("div", { staticClass: "input-group mb-3" }, [
-                          _vm._m(10),
+                          _vm._m(11),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -43101,7 +43188,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-4" }, [
                         _c("div", { staticClass: "input-group mb-3" }, [
-                          _vm._m(11),
+                          _vm._m(12),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -43231,7 +43318,7 @@ var render = function() {
                       _c("div", { staticClass: "row" }, [
                         _c("div", { staticClass: "col-md-6" }, [
                           _c("div", { staticClass: "input-group mb-2" }, [
-                            _vm._m(12),
+                            _vm._m(13),
                             _vm._v(" "),
                             _c("input", {
                               directives: [
@@ -43280,7 +43367,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-6" }, [
                           _c("div", { staticClass: "input-group mb-2" }, [
-                            _vm._m(13),
+                            _vm._m(14),
                             _vm._v(" "),
                             _c("input", {
                               directives: [
@@ -43336,7 +43423,7 @@ var render = function() {
                   ? _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-md-8" }, [
                         _c("div", { staticClass: "input-group mb-3" }, [
-                          _vm._m(14),
+                          _vm._m(15),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -43610,6 +43697,21 @@ var staticRenderFns = [
         "label",
         { staticClass: "input-group-text", attrs: { for: "regions" } },
         [_c("i", { staticClass: "fas fa-map-marked-alt" }), _vm._v("Farm")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c(
+        "label",
+        { staticClass: "input-group-text", attrs: { for: "farm_statuses" } },
+        [
+          _c("i", { staticClass: "fas fa-map-marked-alt" }),
+          _vm._v("Farm Status")
+        ]
       )
     ])
   },

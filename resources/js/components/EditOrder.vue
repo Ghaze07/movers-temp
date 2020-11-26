@@ -133,6 +133,17 @@
                                     </div>
                                     <div class="invalid-feedback d-block" v-if="orderErrors['order.farm_id']">{{ orderErrors['order.farm_id'][0] }}</div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                          <label class="input-group-text" for="farm_statuses"><i class="fas fa-map-marked-alt"></i>Farm Status</label>
+                                        </div>
+                                        <select class="custom-select" id="farm_statuses" v-model="order.order_status_id">
+                                            <option v-for="(order_status, index) in order_statuses" :key="index" :value="order_status.id">{{ order_status.status }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="invalid-feedback d-block" v-if="orderErrors['order.order_status_id']">{{ orderErrors['order.order_status_id'][0] }}</div>
+                                </div>
                             </div>
                             <div class="row" v-if="show_farm_products">
                                 <div class="col-md-5">
@@ -251,7 +262,8 @@ export default {
         order_prop: Object,
         users: Array,
         farms: Array,
-        regions: Array
+        regions: Array,
+        order_statuses: Array
     },
 
     data() {
@@ -313,6 +325,7 @@ export default {
             order: {
                 user_id: '',
                 farm_id: '',
+                order_status_id: '',
                 address_id: '',
                 processing_option: 'Clean and Make Regular Slices',
                 further_instructions: '',
@@ -365,6 +378,7 @@ export default {
             this.order = {
                 user_id: this.order_prop.user_id,
                 farm_id: this.order_prop.farm_id,
+                order_status_id: this.order_prop.order_status_id,
                 address_id: this.order_prop.address_id,
                 processing_option: this.order_prop.processing_option,
                 further_instructions: this.order_prop.further_instructions,
@@ -440,6 +454,7 @@ export default {
             this.order = {
                 user_id: '',
                 farm_id: '',
+                order_status_id: '',
                 address_id: '',
                 processing_option: 'Clean and Make Regular Slices',
                 further_instructions: '',
@@ -644,6 +659,7 @@ export default {
                         buttons: false,
                         timer: 3000
                     });
+                    location.reload();
                 } else {
                     console.warn(response.data);
                 }

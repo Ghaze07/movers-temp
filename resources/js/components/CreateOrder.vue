@@ -645,6 +645,7 @@ export default {
                         buttons: false,
                         timer: 3000
                     });
+                    location.reload();
                 } else {
                     console.warn(response.data);
                 }
