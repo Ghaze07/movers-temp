@@ -31,11 +31,13 @@ class OrderController extends Controller
         $users = User::all();
         $farms = Farm::where('status', 1)->get();
         $regions = Region::where('status', 1)->get();
+        $order_statuses = OrderStatus::all();
         return view('order.index')->with([
             'orders' => $orders,
             'users' => $users,
             'farms' => $farms,
             'regions' => $regions,
+            'order_statuses' => $order_statuses,
         ]);
     }
     public function setReceiver()
@@ -161,7 +163,7 @@ class OrderController extends Controller
         
         // get all cart items for this user
         $cart_items = CartItem::where('user_id', $request->order['user_id'])->with('farmProduct')->get();
-        if(!$cart_items){
+        if(count($cart_items) == 0){
             $cart_items = OrderItem::where('order_id', $order_id)->with('farmProduct')->get();
         }
         // sum up all cart items   
@@ -177,10 +179,6 @@ class OrderController extends Controller
         // get delivery_rate for delivery_charges
         $farm_city = FarmCity::where('farm_id', $farm_id)->where('city_id', $address->city_id)->first();
 
-        // get order_status for order_status_id 
-        // later can be update and for order tracking
-        // $order_status = OrderStatus::where('status', 'New')->first();
-
         // create order
         $order = Order::find($order_id);
 
@@ -188,6 +186,7 @@ class OrderController extends Controller
             'user_id' => $request->order['user_id'],
             'farm_id' => $farm_id,
             'address_id' => $address->id,
+            'order_status_id' => $request->order['order_status_id'],
             'order_total' => $order_total,
             'delivery_charges' => $farm_city->delivery_rate,
             'cash_on_delivery' => $order_total + $farm_city->delivery_rate,

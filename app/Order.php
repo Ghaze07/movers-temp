@@ -77,7 +77,7 @@ class Order extends Model
             // get all cart items for this user
             $cart_items = CartItem::where('user_id', $order->user->id)->get();
 
-            if($cart_items){
+            if(count($cart_items) > 0){
                 $order_items = OrderItem::where('order_id', $order->id)->get();
                 foreach ($order_items as $order_item) {
                     // delete order_items

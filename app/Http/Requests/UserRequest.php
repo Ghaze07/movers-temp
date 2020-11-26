@@ -25,8 +25,7 @@ class UserRequest extends FormRequest
     {
         return [
             'user.name' => 'required',
-            'user.email' => 'email',
-            // email must be email
+            'user.email' => 'nullable|email|unique:users,email',
             'user.mobile' => 'required|unique:users,mobile|int|regex:/[0-9]{10}/|digits:10',
         ];
     }
@@ -41,8 +40,9 @@ class UserRequest extends FormRequest
     {
         return [
             'user.name.required' => 'Your name is required',
-            'user.email.email' => 'Your email must be an email',
             'user.mobile.required' => 'Your Mobile number is required',
+            'user.email.email' => 'Your email must be an email',
+            'user.email.unique' => 'This Email is already Taken',
             'user.mobile.unique' => 'This Mobile number is already Taken',
             'user.mobile.integer' => 'Receiver Mobile Number must be an integer like 3335812345',
             'user.mobile.regex' => 'Receiver Mobile Number is not in proper format Enter number like 3335812345',
