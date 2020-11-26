@@ -36,6 +36,7 @@ Route::delete('cartItem/{cartItem}','CartItemController@destroy')->name('cartIte
 Route::get('setCities/{region}', 'RegionController@setCities')->name('setCities');
 Route::post('address', 'AddressController@store')->name('address.store');
 Route::get('setSavedAddresses', 'AddressController@setSavedAddresses')->name('setSavedAddresses');
+Route::get('setDeliveryCharges/{address_id}', 'AddressController@setDeliveryCharges')->name('setDeliveryCharges');
 Route::resource('order', 'OrderController');
 Route::post('processingOptions', 'OrderController@processingOptions')->name('processingOptions');
 Route::get('setReceiver', 'OrderController@setReceiver')->name('setReceiver');
@@ -44,6 +45,7 @@ Route::post('trackOrder', 'OrderController@trackOrder')->name('trackOrder');
 Route::get('getCities/{region_id}', 'OrderController@getCities')->name('getCities');
 Route::post('createUser', 'OrderController@createUser')->name('createUser');
 Route::post('createAddress', 'OrderController@createAddress')->name('createAddress');
+Route::post('createAddressUser', 'OrderController@createAddressUser')->name('createAddressUser');
 Route::get('getAddresses/{user_id}', 'OrderController@getAddresses')->name('getAddresses');
 Route::get('getFarmProducts/{farm_id}', 'OrderController@getFarmProducts')->name('getFarmProducts');
 Route::get('getCartItems/{user_id}', 'OrderController@getCartItems')->name('getCartItems');

@@ -3861,6 +3861,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     farmProducts: Array,
@@ -3880,6 +3902,10 @@ __webpack_require__.r(__webpack_exports__);
       },
       cartTotal: 0,
       buttons: {
+        createAddress: {
+          text: "Create Address",
+          disabled: false
+        },
         addToCart: {
           text: "Add to Cart",
           disabled: false
@@ -3898,7 +3924,7 @@ __webpack_require__.r(__webpack_exports__);
       displayProcessingOptions: false,
       address: {
         region: 2,
-        city: 5,
+        city_id: 5,
         complete_address: ""
       },
       processing_options: [{
@@ -3914,10 +3940,12 @@ __webpack_require__.r(__webpack_exports__);
           mobile: ""
         },
         address_id: "",
-        processing_option: "",
+        processing_option: "Clean and Make Regular Slices",
         further_instructions: ""
       },
       orderErrors: {},
+      addressErrors: {},
+      delivery_rate: 0,
       addresses: [],
       cities: [],
       add_new_address: false
@@ -3950,6 +3978,43 @@ __webpack_require__.r(__webpack_exports__);
 
       this.setCities();
     },
+    createAddress: function createAddress() {
+      var _this2 = this;
+
+      this.buttons.createAddress.text = 'Creating...';
+      this.buttons.createAddress.disabled = true;
+      ;
+      axios.post('createAddressUser', {
+        address: this.address
+      }).then(function (response) {
+        _this2.buttons.createAddress.text = 'Create Address';
+        _this2.buttons.createAddress.disabled = false;
+
+        if (response.status == 200) {
+          console.log(response.data);
+
+          _this2.addresses.push(response.data);
+
+          _this2.order.address_id = response.data.id;
+
+          _this2.setDeliveryCharges();
+
+          _this2.address = {
+            region: 2,
+            city_id: 5,
+            complete_address: ""
+          };
+          _this2.add_new_address = false;
+        } else {
+          console.warn(response.data);
+        }
+      })["catch"](function (error) {
+        _this2.buttons.createAddress.text = 'Create Address';
+        _this2.buttons.createAddress.disabled = false;
+        console.error(error);
+        _this2.addressErrors = error.response.data.errors;
+      });
+    },
     setCartItems: function setCartItems() {
       this.cart_items = this.cartItems;
     },
@@ -3966,7 +4031,7 @@ __webpack_require__.r(__webpack_exports__);
       return quantities;
     },
     setQuantities: function setQuantities() {
-      var _this2 = this;
+      var _this3 = this;
 
       var minimum = "";
       var maximum = "";
@@ -3979,7 +4044,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.farmProducts.forEach(function (farmProduct) {
-        if (farmProduct.product.name == _this2.item.name) {
+        if (farmProduct.product.name == _this3.item.name) {
           minimum = farmProduct.minimum_order_quantity - quantity_added;
 
           if (farmProduct.minimum_order_quantity <= quantity_added) {
@@ -3999,22 +4064,22 @@ __webpack_require__.r(__webpack_exports__);
       this.item.quantity = minimum;
     },
     sumQuantities: function sumQuantities(items) {
-      var _this3 = this;
+      var _this4 = this;
 
       var quantity_added = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
       items.forEach(function (item) {
-        if (item.farm_product.product.name == _this3.item.name) {
+        if (item.farm_product.product.name == _this4.item.name) {
           quantity_added += item.quantity;
         }
       });
       return quantity_added;
     },
     doCartTotal: function doCartTotal(items) {
-      var _this4 = this;
+      var _this5 = this;
 
       items.forEach(function (item) {
         var total = item.farm_product.unit_price * item.quantity;
-        _this4.cartTotal += total;
+        _this5.cartTotal += total;
       });
     },
     setCartTotal: function setCartTotal() {
@@ -4027,13 +4092,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     addToCart: function addToCart() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.buttons.addToCart.text = "Adding...";
       this.buttons.addToCart.disable = true;
       var farm_product_id = 0;
       this.farmProducts.forEach(function (farmProduct) {
-        if (farmProduct.product.name == _this5.item.name) {
+        if (farmProduct.product.name == _this6.item.name) {
           farm_product_id = farmProduct.id;
         }
       });
@@ -4044,30 +4109,30 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/cartItem", {
         cartItem: cartItem
       }).then(function (response) {
-        _this5.buttons.addToCart.text = "Add to Cart";
-        _this5.buttons.addToCart.disable = false;
+        _this6.buttons.addToCart.text = "Add to Cart";
+        _this6.buttons.addToCart.disable = false;
 
         if (response.status == 200) {
-          _this5.cartEmptyMessage = ""; // authenticated user
+          _this6.cartEmptyMessage = ""; // authenticated user
 
-          if (_this5.authenticated) {
-            _this5.updateOrderSummary(_this5.cartItems, response.data);
+          if (_this6.authenticated) {
+            _this6.updateOrderSummary(_this6.cartItems, response.data);
 
-            _this5.setCartItems();
+            _this6.setCartItems();
           } else {
             var session_item = {
               farm_product: response.data[0],
               quantity: response.data[1]
             };
 
-            _this5.updateOrderSummary(_this5.sessionItems, session_item);
+            _this6.updateOrderSummary(_this6.sessionItems, session_item);
 
-            _this5.setSessionItems();
+            _this6.setSessionItems();
           }
 
-          _this5.setQuantities();
+          _this6.setQuantities();
 
-          _this5.setCartTotal();
+          _this6.setCartTotal();
         } else {
           console.warn(response.data);
         }
@@ -4086,7 +4151,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     removeFromCart: function removeFromCart(id) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.buttons.removeFromCart.disable = true;
       console.log(id);
@@ -4094,27 +4159,27 @@ __webpack_require__.r(__webpack_exports__);
         if (response.status == 200) {
           console.log(response.data);
 
-          if (_this6.authenticated) {
-            _this6.cartItems.forEach(function (item, index, object) {
+          if (_this7.authenticated) {
+            _this7.cartItems.forEach(function (item, index, object) {
               if (item.id == id) {
                 object.splice(index, 1);
               }
             });
 
-            _this6.setCartItems();
+            _this7.setCartItems();
           } else {
-            _this6.sessionItems.forEach(function (item, index, object) {
+            _this7.sessionItems.forEach(function (item, index, object) {
               if (item.farm_product.id == id) {
                 object.splice(index, 1);
               }
             });
 
-            _this6.setSessionItems();
+            _this7.setSessionItems();
           }
 
-          _this6.setQuantities();
+          _this7.setQuantities();
 
-          _this6.setCartTotal();
+          _this7.setCartTotal();
         } else {
           console.warn(response.data);
         }
@@ -4157,11 +4222,11 @@ __webpack_require__.r(__webpack_exports__);
       $("#signupOrlogin").modal("hide");
     },
     setCities: function setCities() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.get("setCities/" + this.address.region).then(function (response) {
         if (response.status == 200) {
-          _this7.cities = response.data;
+          _this8.cities = response.data;
         } else {
           console.warn(response.data);
         }
@@ -4170,12 +4235,27 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     setSavedAddresses: function setSavedAddresses() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.get("setSavedAddresses").then(function (response) {
         if (response.status == 200) {
           console.log(response.data);
-          _this8.addresses = response.data;
+          _this9.addresses = response.data;
+        } else {
+          console.warn(response.data);
+        }
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    setDeliveryCharges: function setDeliveryCharges() {
+      var _this10 = this;
+
+      // later farm_id will also be required if more farms added.
+      axios.get("setDeliveryCharges/" + this.order.address_id).then(function (response) {
+        if (response.status == 200) {
+          console.log(response.data);
+          _this10.delivery_rate = response.data.delivery_rate;
         } else {
           console.warn(response.data);
         }
@@ -4184,7 +4264,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     placeOrder: function placeOrder() {
-      var _this9 = this;
+      var _this11 = this;
 
       this.orderErrors = {};
       this.buttons.order.text = "Processing Order...";
@@ -4202,8 +4282,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       axios.post("placeOrder", data).then(function (response) {
-        _this9.buttons.order.text = "Place Order";
-        _this9.buttons.order.disabled = false;
+        _this11.buttons.order.text = "Place Order";
+        _this11.buttons.order.disabled = false;
 
         if (response.status == 200) {
           console.log(response.data);
@@ -4215,22 +4295,31 @@ __webpack_require__.r(__webpack_exports__);
             timer: 3000
           }); // resets
 
-          _this9.proceed_checkout = false;
-          _this9.cartItems = [];
+          _this11.order = {
+            receiver: {
+              name: "",
+              mobile: ""
+            },
+            address_id: "",
+            processing_option: "Clean and Make Regular Slices",
+            further_instructions: ""
+          };
+          _this11.proceed_checkout = false;
+          _this11.cartItems = [];
 
-          _this9.setCartItems();
+          _this11.setCartItems();
 
-          _this9.setQuantities();
+          _this11.setQuantities();
 
-          _this9.setCartTotal();
+          _this11.setCartTotal();
         } else {
           console.warn(response.data);
         }
       })["catch"](function (error) {
-        _this9.buttons.order.text = "Place Order";
-        _this9.buttons.order.disabled = false;
+        _this11.buttons.order.text = "Place Order";
+        _this11.buttons.order.disabled = false;
         console.log(error.response.data);
-        _this9.orderErrors = error.response.data.errors;
+        _this11.orderErrors = error.response.data.errors;
         swal({
           title: "Some Thing Wrong!",
           text: error.response.data.message,
@@ -44391,6 +44480,67 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
+                  _vm.order.address_id
+                    ? _c("div", [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "p-2",
+                            attrs: { id: "delivery_rate" }
+                          },
+                          [
+                            _c("div", { staticClass: "row" }, [
+                              _c(
+                                "div",
+                                { staticClass: "col-6 text-left desc" },
+                                [_vm._v("Delivery Charges")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-6 text-right price" },
+                                [
+                                  _vm._v(
+                                    "\n                      Rs. " +
+                                      _vm._s(_vm.delivery_rate) +
+                                      "\n                    "
+                                  )
+                                ]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "p-2", attrs: { id: "grandTotal" } },
+                          [
+                            _c("div", { staticClass: "row" }, [
+                              _c(
+                                "div",
+                                { staticClass: "col-6 text-left desc" },
+                                [_vm._v("Grand Total")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-6 text-right price" },
+                                [
+                                  _vm._v(
+                                    "\n                      Rs. " +
+                                      _vm._s(
+                                        _vm.delivery_rate + _vm.cartTotal
+                                      ) +
+                                      "\n                    "
+                                  )
+                                ]
+                              )
+                            ])
+                          ]
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
                   _vm.cartEmptyMessage
                     ? _c(
                         "div",
@@ -44445,23 +44595,26 @@ var render = function() {
                         staticClass: "custom-select",
                         attrs: { id: "saved_addresses" },
                         on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.order,
-                              "address_id",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          }
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.order,
+                                "address_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            },
+                            _vm.setDeliveryCharges
+                          ]
                         }
                       },
                       _vm._l(_vm.addresses, function(address, index) {
@@ -44576,8 +44729,8 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.address.city,
-                                  expression: "address.city"
+                                  value: _vm.address.city_id,
+                                  expression: "address.city_id"
                                 }
                               ],
                               staticClass: "custom-select",
@@ -44595,7 +44748,7 @@ var render = function() {
                                     })
                                   _vm.$set(
                                     _vm.address,
-                                    "city",
+                                    "city_id",
                                     $event.target.multiple
                                       ? $$selectedVal
                                       : $$selectedVal[0]
@@ -44620,13 +44773,15 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm.orderErrors["address.city"]
+                        _vm.addressErrors["address.city_id"]
                           ? _c(
                               "div",
                               { staticClass: "invalid-feedback d-block" },
                               [
                                 _vm._v(
-                                  _vm._s(_vm.orderErrors["address.city"][0])
+                                  _vm._s(
+                                    _vm.addressErrors["address.city_id"][0]
+                                  )
                                 )
                               ]
                             )
@@ -44681,14 +44836,14 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm.orderErrors["address.complete_address"]
+                        _vm.addressErrors["address.complete_address"]
                           ? _c(
                               "div",
                               { staticClass: "invalid-feedback d-block" },
                               [
                                 _vm._v(
                                   _vm._s(
-                                    _vm.orderErrors[
+                                    _vm.addressErrors[
                                       "address.complete_address"
                                     ][0]
                                   )
@@ -44697,6 +44852,20 @@ var render = function() {
                             )
                           : _vm._e()
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "d-flex justify-content-end" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success btn-sm mb-3",
+                          attrs: {
+                            disabled: _vm.buttons.createAddress.disabled
+                          },
+                          on: { click: _vm.createAddress }
+                        },
+                        [_vm._v(_vm._s(_vm.buttons.createAddress.text))]
+                      )
                     ])
                   ])
                 : _vm._e(),

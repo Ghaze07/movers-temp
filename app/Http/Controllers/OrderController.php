@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\CartItemRequest;
 use App\Http\Requests\AdminOrderRequest;
+use App\Http\Requests\AddressUserRequest;
 
 class OrderController extends Controller
 {
@@ -241,6 +242,20 @@ class OrderController extends Controller
 
         $address = Address::create([
             'user_id' => $request->address['user_id'],
+            'city_id' => $request->address['city_id'],
+            'complete_address' => $request->address['complete_address'],
+        ]);
+
+        return response()->json($address);
+    }
+
+    public function createAddressUser(AddressUserRequest $request)
+    {
+        # code...
+        $request->validated();
+
+        $address = Address::create([
+            'user_id' => Auth::user()->id,
             'city_id' => $request->address['city_id'],
             'complete_address' => $request->address['complete_address'],
         ]);
