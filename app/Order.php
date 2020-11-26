@@ -68,11 +68,11 @@ class Order extends Model
         Order::updated(function ($order)
         {
             # code...
-            $sms = new \App\Sms();
-            $sms->user_id = $order->user->id;
-            $sms->to = $order->user->mobile;
-            $sms->body = "your order! Order ". $order->order_number ." has been updated and will arrive shortly.";
-            $sms->save();
+            // $sms = new \App\Sms();
+            // $sms->user_id = $order->user->id;
+            // $sms->to = $order->user->mobile;
+            // $sms->body = "your order! Order ". $order->order_number ." has been updated and will arrive shortly.";
+            // $sms->save();
 
             // get all cart items for this user
             $cart_items = CartItem::where('user_id', $order->user->id)->get();
