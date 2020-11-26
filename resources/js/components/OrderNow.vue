@@ -141,7 +141,25 @@
                     </div>
                   </div>
                 </div>
-
+                <div v-if="order.address_id">
+                  <div id="delivery_rate" class="p-2">
+                    <div class="row">
+                      <div class="col-6 text-left desc">Delivery Charges</div>
+                      <div class="col-6 text-right price">
+                        Rs. {{ delivery_rate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div id="grandTotal" class="p-2">
+                    <div class="row">
+                      <div class="col-6 text-left desc">Grand Total</div>
+                      <div class="col-6 text-right price">
+                        Rs. {{ delivery_rate + cartTotal }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               
                 <div
                   class="my-3 text-danger text-center"
                   v-if="cartEmptyMessage"
@@ -174,6 +192,7 @@
                 class="custom-select"
                 id="saved_addresses"
                 v-model="order.address_id"
+                @change="setDeliveryCharges"
               >
                 <option
                   v-for="(address, index) in addresses"
@@ -224,7 +243,7 @@
                     ><i class="fas fa-city"></i> &nbsp; City</label
                   >
                 </div>
-                <select class="custom-select" id="city" v-model="address.city">
+                <select class="custom-select" id="city" v-model="address.city_id">
                   <option
                     v-for="(city, index) in cities"
                     :key="index"
@@ -234,7 +253,7 @@
                   </option>
                 </select>
               </div>
-              <div class="invalid-feedback d-block" v-if="orderErrors['address.city']">{{ orderErrors['address.city'][0] }}</div>
+              <div class="invalid-feedback d-block" v-if="addressErrors['address.city_id']">{{ addressErrors['address.city_id'][0] }}</div>
             </div>
             <div class="col-md-12">
               <div class="input-group mb-2">
@@ -259,8 +278,11 @@
                   ></option>
                 </datalist>
               </div>
-              <div class="invalid-feedback d-block" v-if="orderErrors['address.complete_address']">{{ orderErrors['address.complete_address'][0] }}</div>
+              <div class="invalid-feedback d-block" v-if="addressErrors['address.complete_address']">{{ addressErrors['address.complete_address'][0] }}</div>
             </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-success btn-sm mb-3" @click="createAddress" :disabled="buttons.createAddress.disabled">{{ buttons.createAddress.text }}</button>
           </div>
         </div>
         <div class="mb-3">
@@ -412,6 +434,10 @@ export default {
       cartTotal: 0,
 
       buttons: {
+        createAddress: {
+          text: "Create Address",
+          disabled: false,
+        },
         addToCart: {
           text: "Add to Cart",
           disabled: false,
@@ -431,7 +457,7 @@ export default {
       displayProcessingOptions: false,
       address: {
         region: 2,
-        city: 5,
+        city_id: 5,
         complete_address: "",
       },
       processing_options: [
@@ -451,10 +477,12 @@ export default {
           mobile: "",
         },
         address_id: "",
-        processing_option: "",
+        processing_option: "Clean and Make Regular Slices",
         further_instructions: "",
       },
       orderErrors: {},
+      addressErrors: {},
+      delivery_rate: 0,
       addresses: [],
       cities: [],
 
@@ -489,6 +517,37 @@ export default {
       // set cities at add new address button
       this.setCities();
     },
+    createAddress() {
+      this.buttons.createAddress.text = 'Creating...';
+      this.buttons.createAddress.disabled = true;
+;
+            axios.post('createAddressUser', {
+                address: this.address
+            }).then((response) => {
+                this.buttons.createAddress.text = 'Create Address';
+                this.buttons.createAddress.disabled = false;
+                if (response.status == 200) {
+                    console.log(response.data);
+                    this.addresses.push(response.data);
+                    this.order.address_id = response.data.id;
+                    this.setDeliveryCharges();
+                    
+                    this.address= {
+                      region: 2,
+                      city_id: 5,
+                      complete_address: "",
+                    };
+                    this.add_new_address = false;
+                } else {
+                    console.warn(response.data);
+                }
+            }).catch((error) => {
+                this.buttons.createAddress.text = 'Create Address';
+                this.buttons.createAddress.disabled = false;
+                console.error(error);
+                this.addressErrors = error.response.data.errors;
+            });
+        },
     setCartItems() {
       this.cart_items = this.cartItems;
     },
@@ -701,6 +760,22 @@ export default {
           console.error(error);
         });
     },
+    setDeliveryCharges() {
+      // later farm_id will also be required if more farms added.
+      axios
+        .get("setDeliveryCharges/"+ this.order.address_id)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log(response.data);
+            this.delivery_rate = response.data.delivery_rate;
+          } else {
+            console.warn(response.data);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     placeOrder() {
       this.orderErrors = {};
       this.buttons.order.text = "Processing Order...";
@@ -731,6 +806,15 @@ export default {
               timer: 3000
             });
             // resets
+            this.order= {
+              receiver: {
+                name: "",
+                mobile: "",
+              },
+              address_id: "",
+              processing_option: "Clean and Make Regular Slices",
+              further_instructions: "",
+            };
             this.proceed_checkout = false;
             this.cartItems = [];
             this.setCartItems();
