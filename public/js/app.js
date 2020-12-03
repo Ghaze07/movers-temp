@@ -1953,6 +1953,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     visitor: {
@@ -41163,6 +41164,15 @@ var render = function() {
                       attrs: { href: "/dashboard" }
                     },
                     [_vm._v("Dashboard")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "/myorders" }
+                    },
+                    [_vm._v("My Orders")]
                   ),
                   _vm._v(" "),
                   _c(

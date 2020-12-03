@@ -54,6 +54,8 @@ Route::delete('removeFromCart/{id}', 'OrderController@removeFromCart')->name('re
 Route::post('adminCreateOrder', 'OrderController@adminCreateOrder')->name('adminCreateOrder');
 Route::put('adminUpdateOrder/{order_id}', 'OrderController@adminUpdateOrder')->name('adminUpdateOrder');
 Route::get('orderItems/{order_id}', 'OrderController@orderItems')->name('orderItems');
+Route::get('myorders', 'OrderTrackingController@index')->name('myorders.index');
+Route::get('/orderStatus/{id}','OrderTrackingController@orderStatus')->name('orderStatus');
 // Route::get('', '@')->name('');
 
 // Authenticated Users
