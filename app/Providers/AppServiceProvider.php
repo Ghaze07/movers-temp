@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\SMSService;
+use App\Services\CUTTLYService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,15 @@ class AppServiceProvider extends ServiceProvider
 
             return new SMSService($url, $key, $from);
         });
+
+        $this->app->singleton('cuttly_service', function() {
+
+            $url = config('cuttly.url');
+            $key = config('cuttly.key');
+
+            return new CUTTLYService($url, $key);
+        });
+
     }
 
     /**

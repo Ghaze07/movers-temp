@@ -23,6 +23,7 @@
                     <router-link v-show="!visitor.is_verified" class="dropdown-item" :to="{name: 'mobile_verification', params: {mobile: visitor.mobile}}"><span @click="showModal">Verify Mobile Number</span></router-link>
                     <a class="dropdown-item" href="/dashboard" v-show="isAdmin">Dashboard</a>
                     <a class="dropdown-item" href="/myorders">My Orders</a>
+                    <a class="dropdown-item" href="/settings">Settings</a>
                     <a class="dropdown-item" href="/logout"
                        onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">

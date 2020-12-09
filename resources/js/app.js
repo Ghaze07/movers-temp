@@ -29,7 +29,7 @@ Vue.component('order-now', require('./components/OrderNow.vue').default);
 Vue.component('order-tracking', require('./components/OrderTracking.vue').default);
 Vue.component('create-order', require('./components/CreateOrder.vue').default);
 Vue.component('edit-order', require('./components/EditOrder.vue').default);
-
+Vue.component('addresses', require('./components/Addresses.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

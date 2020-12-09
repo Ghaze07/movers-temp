@@ -26,6 +26,7 @@ Route::post('register', 'Auth\RegisterController@register')->name('register');
 
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::post('password/mobile', 'Auth\ResetPasswordController@sendResetLinkSms')->name('password.sms');
 Route::get('password/reset{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
@@ -34,7 +35,6 @@ Route::put('cartItem','CartItemController@update')->name('cartItem.update');
 Route::delete('cartItem/{cartItem}','CartItemController@destroy')->name('cartItem.destroy');
 
 Route::get('setCities/{region}', 'RegionController@setCities')->name('setCities');
-Route::post('address', 'AddressController@store')->name('address.store');
 Route::get('setSavedAddresses', 'AddressController@setSavedAddresses')->name('setSavedAddresses');
 Route::get('setDeliveryCharges/{address_id}', 'AddressController@setDeliveryCharges')->name('setDeliveryCharges');
 Route::resource('order', 'OrderController');
@@ -57,11 +57,24 @@ Route::get('orderItems/{order_id}', 'OrderController@orderItems')->name('orderIt
 Route::get('myorders', 'OrderTrackingController@index')->name('myorders.index');
 Route::get('/orderStatus/{id}','OrderTrackingController@orderStatus')->name('orderStatus');
 // Route::get('', '@')->name('');
-
 // Authenticated Users
 Route::group(['middleware' => 'auth'], function() {
     Route::get('register/resendOtp', 'UserController@resendOtp');
     Route::post('register/verify', 'UserController@verifyMobile');
+    Route::get('/settings', 'SiteController@settings')->name('settings');
+    
+    Route::get('address', 'AddressController@index')->name('address.index');
+    Route::put('address/{id}', 'AddressController@update')->name('address.update');
+    Route::delete('address/{id}', 'AddressController@destroy')->name('address.destroy');
+    Route::get('get_regions', 'AddressController@getRegions')->name('get_regions');
+    Route::get('get_cities', 'AddressController@getCities')->name('get_cities');
+    Route::get('get_addresses', 'AddressController@getAddresses')->name('get_addresses');
+
+    Route::get('/change-password', 'PasswordController@index')->name('change-password');
+    Route::post('change-password', 'PasswordController@store')->name('change.password');
+    
+    Route::get('/change-mobile', 'UserController@mobile')->name('change-mobile');
+    Route::post('change-mobile', 'UserController@update')->name('change.mobile');
 
     Route::group(['middleware' => 'admin'], function() {
         Route::get('/dashboard', 'SiteController@dashboard')->name('home');
