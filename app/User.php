@@ -50,6 +50,16 @@ class User extends Authenticatable
             $sms->body = "Your Fish Farm Verification Code is: {$user->verification_code}.";
             $sms->save();
         });
+        User::updated(function($user) {
+            if($user->is_verified != 1) {
+            $sms = new \App\Sms();
+            $sms->user_id = $user->id;
+            $sms->to = $user->mobile;
+            $sms->body = "Your Fish Farm Verification Code is: {$user->verification_code}.";
+            $sms->save();
+            }
+        });
+
     }
 
     /**

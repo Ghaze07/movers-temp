@@ -51,4 +51,9 @@ class SiteController extends Controller
     {
         return view('site.dashboard');
     }
+    public function settings()
+    {
+        return view('auth.passwords.changePassword');
+    }
+
 }

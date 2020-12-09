@@ -4,8 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            {{-- Reset password using email --}}
             <div class="card mb-5 mt-5">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+                <div class="card-header">{{ __('Reset Password with Email') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -41,6 +42,42 @@
                     </form>
                 </div>
             </div>
+
+                        {{-- Reset password using mobile number --}}
+                        <div class="card mb-5 mt-5">
+                            <div class="card-header">Reset Password with Mobile Number</div>
+                            @if (session('mobile_number_error_status'))
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ session('mobile_number_error_status') }}
+                                    </div>
+                            @endif
+            
+                            @if ( session('mobilestatus') )
+                                    <div class="alert alert-success" role="alert">
+                                {{ session('mobilestatus')}}
+                            </div>
+                            @endif
+                            <div class="card-body">
+                                <form method="POST" action="{{ route('password.sms') }}">
+                                    @csrf
+            
+                                    <div class="form-group row">
+                                        <label for="mobile" class="col-md-4 col-form-label text-md-right">Mobile Number</label>
+            
+                                        <div class="col-md-6">
+                                            <input type="number" name="mobile" class="form-control" placeholder="Enter Your Mobile Number" required>
+                                        </div>
+                                    </div>
+            
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-6 offset-md-4">
+                                            <button type="submit" class="btn btn-primary">Send Password Reset Link</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+            
         </div>
     </div>
 </div>
