@@ -76,6 +76,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/change-mobile', 'UserController@mobile')->name('change-mobile');
     Route::post('change-mobile', 'UserController@update')->name('change.mobile');
 
+    Route::get('/change-email', 'UserController@email')->name('change-email');
+    Route::post('change-email', 'UserController@updateEmail')->name('change.email');
+
     Route::group(['middleware' => 'admin'], function() {
         Route::get('/dashboard', 'SiteController@dashboard')->name('home');
         Route::get('/farms', 'FarmController@index')->name('farms');

@@ -21,6 +21,9 @@
             <a href="{{ route('change-mobile') }}">Change Mobile Number</a>
         </li>
 
+        <li class="{{ ( $requestPath == route('change-email', [], false) ) ? 'active' : '' }}" style="border-top: solid red; ">
+            <a href="{{ route('change-email') }}">Change Email</a>
+        </li>
 
     </ul>
 </nav>

@@ -222,7 +222,7 @@ class OrderController extends Controller
         $request->validated();
         $last_user = User::orderBy('id', 'desc')->first();
         $password = mt_rand(100000,999999);
-        $email = $request->user['email'] ? $request->user['email'] : 'user'.$last_user->id.'@fishfarm.pk';
+        $email = $request->user['email'] ? $request->user['email'] : $request->user['mobile'].'@fishfarm.pk';
         $user = User::create([
             'name' => $request->user['name'],
             'email' => $email,
