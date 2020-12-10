@@ -11,7 +11,7 @@ class UserController extends Controller
     public function verifyMobile(Request $request)
     {
         $otp = $request->otp;
-        $user = \Auth::user();
+        $user = User::find(Auth::user()->id);
         if ($user->verification_code == $otp) {
             $user->is_verified = true;
             $user->save();
@@ -48,8 +48,25 @@ class UserController extends Controller
         $user->save(); 
         
         return redirect('/');
-    
     }
 
+    public function email()
+    {
+        $user = User::find(Auth::user()->id);
+        return view('email.index')->with([
+            'user' => $user
+        ]);
+    }
 
+    public function updateEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:users',
+        ]);
+        $user = User::find(Auth::user()->id);
+        $user->email = $request->email;
+        $user->save();
+        
+        return redirect()->back()->with('status', 'Your Email has been updated successfully');
+    }
 }
