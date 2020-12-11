@@ -69,7 +69,7 @@ class User extends Authenticatable
                     $sms = new \App\Sms();
                     $sms->user_id = $user->id;
                     $sms->to = $mobile;
-                    $sms->body = "your account has been created on zaynabfishfarm.com and you can set your password using this link  : {$shortlink}";
+                    $sms->body = "your Fish Farm account has been created. Visit this link to set your password. {$shortlink}";
                     $sms->save(); 
             } else {
                 $sms = new \App\Sms();
