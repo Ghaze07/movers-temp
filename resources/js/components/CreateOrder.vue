@@ -472,7 +472,7 @@ export default {
             }).catch((error) => {
                 this.buttons.createUser.text = 'Create User';
                 this.buttons.createUser.disabled = false;
-                console.error(error);
+                console.error(error.response.data.message);
                 this.userErrors = error.response.data.errors;
             });
         },

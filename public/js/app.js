@@ -2681,7 +2681,7 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this3.buttons.createUser.text = 'Create User';
         _this3.buttons.createUser.disabled = false;
-        console.error(error);
+        console.error(error.response.data.message);
         _this3.userErrors = error.response.data.errors;
       });
     },
