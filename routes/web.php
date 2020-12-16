@@ -38,6 +38,9 @@ Route::get('setCities/{region}', 'RegionController@setCities')->name('setCities'
 Route::get('setSavedAddresses', 'AddressController@setSavedAddresses')->name('setSavedAddresses');
 Route::get('setDeliveryCharges/{address_id}', 'AddressController@setDeliveryCharges')->name('setDeliveryCharges');
 Route::resource('order', 'OrderController');
+// Export order to excel route
+Route::get('/export', 'OrderController@export')->name('order.excel');
+
 Route::post('processingOptions', 'OrderController@processingOptions')->name('processingOptions');
 Route::get('setReceiver', 'OrderController@setReceiver')->name('setReceiver');
 Route::post('placeOrder', 'OrderController@placeOrder')->name('placeOrder');
@@ -57,6 +60,7 @@ Route::get('orderItems/{order_id}', 'OrderController@orderItems')->name('orderIt
 Route::get('myorders', 'OrderTrackingController@index')->name('myorders.index');
 Route::get('/orderStatus/{id}','OrderTrackingController@orderStatus')->name('orderStatus');
 // Route::get('', '@')->name('');
+
 // Authenticated Users
 Route::group(['middleware' => 'auth'], function() {
     Route::get('register/resendOtp', 'UserController@resendOtp');
@@ -79,6 +83,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/change-email', 'UserController@email')->name('change-email');
     Route::post('change-email', 'UserController@updateEmail')->name('change.email');
 
+
+    // admin
     Route::group(['middleware' => 'admin'], function() {
         Route::get('/dashboard', 'SiteController@dashboard')->name('home');
         Route::get('/farms', 'FarmController@index')->name('farms');
@@ -101,5 +107,6 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::resource('/product/sources', 'ProductSourcesController');
         Route::get('/product/sources', 'ProductSourcesController@index')->name('product.sources');
+        Route::post('/updateOrderStatus', 'OrderController@updateOrderStatus')->name('order.updateStatus');
     });
 });

@@ -14,6 +14,8 @@ use App\OrderItem;
 use App\FarmProduct;
 use App\OrderStatus;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Excel;
+use App\Exports\OrdersExport;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Auth;
@@ -26,9 +28,19 @@ use App\Http\Requests\AddressUserRequest;
 class OrderController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with(['user', 'farm', 'address', 'orderStatus'])->orderBy('created_at', 'desc')->paginate(20);
+        if($request->status && ($request->from && $request->to))
+        {
+            $orders = Order::where('order_status_id', $request->status)
+                ->whereDate('created_at','>=', $request->from)
+                ->whereDate('created_at','<=', $request->to)
+                ->with(['user', 'farm', 'address', 'orderStatus', 'orderItems'])
+                ->orderBy('created_at', 'desc')->paginate(50);
+            
+        } else {
+            $orders = Order::with(['user', 'farm', 'address', 'orderStatus', 'orderItems'])->orderBy('created_at', 'desc')->paginate(50);
+        }
         $users = User::all();
         $farms = Farm::where('status', 1)->get();
         $regions = Region::where('status', 1)->get();
@@ -220,7 +232,6 @@ class OrderController extends Controller
     public function createUser(UserRequest $request)
     {
         $request->validated();
-        $last_user = User::orderBy('id', 'desc')->first();
         $password = mt_rand(100000,999999);
         $email = $request->user['email'] ? $request->user['email'] : $request->user['mobile'].'@fishfarm.pk';
         $user = User::create([
@@ -312,4 +323,36 @@ class OrderController extends Controller
         $orderItems = OrderItem::with('farmProduct.product')->where('order_id', $order_id)->get();
         return response()->json($orderItems);
     }
+
+    public function export(Request $request, Excel $excel)
+    {
+        if($request->status && $request->from && $request->to)
+        {
+            $status = $request->status;
+            $from = $request->from;
+            $to = $request->to;
+            return $excel->download(new OrdersExport($status, $from, $to), 'Orders.xlsx');
+        }
+           
+        else {
+            return redirect()->back()->with('error', 'Select Status, From Date and To Date first, then Click Export.');
+        }
+
+    }
+    public function updateOrderStatus(Request $request)
+    {
+
+        if( $request->ids && $request->status)
+        {
+            $ids = $request->get('ids');
+        
+            Order::whereIn('id', $ids)->update(['order_status_id' => $request->status]);
+
+            return redirect()->back()->with('status', 'Order status has been updated successfully');
+        }
+        else {
+            return redirect()->back()->with('error', 'Select orders first, then change status.');
+        }
+    }
+
 }
