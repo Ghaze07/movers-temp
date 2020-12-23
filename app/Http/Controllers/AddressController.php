@@ -49,7 +49,7 @@ class AddressController extends Controller
         $farm_city = FarmCity::where('city_id',$address->city_id)->where('farm_id', 1)->first();
         return response()->json($farm_city);
     }
-    public function getRegions()
+    public function getActiveRegions()
     {
         $regions = Region::where(['status' => 1])->orderBy('name', 'asc')->get();
         return response()->json($regions);

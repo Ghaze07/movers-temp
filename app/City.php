@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class City extends Model
 {
+    protected $guarded = [];
     public function region()
     {
         return $this->belongsTo('App\Region', 'region_id', 'id');

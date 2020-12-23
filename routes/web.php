@@ -70,7 +70,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('address', 'AddressController@index')->name('address.index');
     Route::put('address/{id}', 'AddressController@update')->name('address.update');
     Route::delete('address/{id}', 'AddressController@destroy')->name('address.destroy');
-    Route::get('get_regions', 'AddressController@getRegions')->name('get_regions');
+    Route::get('get_active_regions', 'AddressController@getActiveRegions')->name('regions.active');
     Route::get('get_cities', 'AddressController@getCities')->name('get_cities');
     Route::get('get_addresses', 'AddressController@getAddresses')->name('get_addresses');
 
@@ -95,8 +95,13 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/blogs', 'BlogController@list')->name('blogs.list');
         Route::get('/users', 'UserController@index')->name('users');
         Route::resource('/countries', 'CountryController');
+        Route::get('get_countries', 'CountryController@getCountries')->name('get_countries');
         Route::resource('/regions', 'RegionController');
+        Route::get('get_regions', 'RegionController@getRegions')->name('get_regions');
+        Route::get('get_active_countries', 'RegionController@getActiveCountries')->name('countries.active');
+
         Route::resource('/cities', 'CityController');
+        Route::get('get_all_cities', 'CityController@getAllCities')->name('get_all_cities');
         Route::get('/measuring_units', 'MeasuringUnitController@index')->name('measuringUnits');
 
         Route::resource('/products', 'ProductsController');
@@ -108,5 +113,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('/product/sources', 'ProductSourcesController');
         Route::get('/product/sources', 'ProductSourcesController@index')->name('product.sources');
         Route::post('/updateOrderStatus', 'OrderController@updateOrderStatus')->name('order.updateStatus');
+        Route::get('/generate-labels', 'OrderController@generateLabels')->name('orders.labels');
     });
 });

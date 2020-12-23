@@ -355,4 +355,25 @@ class OrderController extends Controller
         }
     }
 
+    public function generateLabels(Request $request)
+    {
+        if($request->status && ($request->from && $request->to))
+        {
+            $orders = Order::where('order_status_id', $request->status)
+                ->whereDate('created_at','>=', $request->from)
+                ->whereDate('created_at','<=', $request->to)
+                ->with(['user', 'farm', 'address', 'orderStatus', 'orderItems'])
+                ->orderBy('created_at', 'desc')->get();
+        }
+        else {
+            return redirect()->back()->with('error', 'Select Status, From Date and To Date first, then Generate Labels.');
+        }    
+        
+        return view('order.labels')->with([
+                    'orders' => $orders,
+                ]);    
+    
+    }
+
+
 }
