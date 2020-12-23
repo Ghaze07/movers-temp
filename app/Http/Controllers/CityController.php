@@ -18,16 +18,13 @@ class CityController extends Controller
      */
     public function index()
     {
-        $cities = City::with('region')->orderBy('region_id', 'asc')
-                        ->orderBy('name', 'asc')->paginate(20);
-        $regions = Region::where(['status' => 1])->orderBy('name', 'asc')->get();
-        $countries = Country::where(['status' => 1])->orderBy('name', 'asc')->get();
+        return view('city.index');
+    }
 
-        return view('city.index')->with([
-            'cities' => $cities,
-            'regions' => $regions,
-            'countries' => $countries
-        ]);
+    public function getAllCities()
+    {
+        $cities = City::with('region')->orderBy('region_id', 'asc')->orderBy('name', 'asc')->get();
+        return response()->json($cities);
     }
 
     /**
@@ -48,21 +45,15 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->validate($request, [
-            'country' => 'required',
-            'region' => 'required',
-            'name' => 'required',
-            'status' => 'required',
+        $request->validate([
+            'name' => ['required'],
+            'name_abbreviation' => ['required'],
+            'region_id' => ['required'],
+            'status' => ['required'],
         ]);
+        City::create($request->all());
+        return response()->json(['message' => 'City has been Added.']);
 
-        $city = new City;
-        $city->name = $data['name'];
-        $city->status = $data['status'];
-        $city->region_id = $data['region'];
-        $city->save();
-
-        Session::flash('statuscode', 'success');
-        return redirect('/cities')->with('status', 'City has been added successfully.');
     }
 
     /**
@@ -94,22 +85,16 @@ class CityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(Request $request, $id)
     {
-        $data = $this->validate($request, [
-            'name' => 'required',
-            'region' => 'required',
-            'country' => 'required',
-            'status' => 'required',
+        $request->validate([
+            'name' => ['required'],
+            'name_abbreviation' => ['required'],
+            'region_id' => ['required'],
+            'status' => ['required'],
         ]);
-
-        $city->name = $data['name'];
-        $city->region_id = $data['region'];
-        $city->status = $data['status'];
-        $city->update();
-
-        Session::flash('statuscode', 'success');
-        return redirect('/cities')->with('status', 'City has been updated.');
+        City::find($id)->update($request->all());
+        return response()->json(['message' => 'City has been Updated.']);
     }
 
     /**
@@ -120,10 +105,8 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        $city = City::findorfail($id);
-        $city->delete();
-
-        return redirect('/cities')->with('status', 'City has been deleted.');
+        City::find($id)->delete();
+        return response()->json(['message' => 'City has been Deleted.']);
     }
 
 }

@@ -39,7 +39,7 @@
                     
                         <button type="submit"  class="btn btn-primary mb-2" onclick="Filter(this)">Filter</button>
                         <button type="submit"  class="btn btn-primary mb-2 ml-1" onclick="Export(this)">Export to Bykea</button>
-  
+                        <button type="submit"  class="btn btn-primary mb-2 ml-1" onclick="Labels(this)">Generate Labels</button>
                 </form> 
                 <span>   
                 <a href="{{route('order.index')}}" class="btn btn-danger ml-1">Clear Filter</a>     
@@ -125,6 +125,10 @@
 
     function Filter(event) {
         event.form.action = "{{route('order.index')}}";
+    }
+
+    function Labels(event) {
+        event.form.action = "{{route('orders.labels')}}";
     }
 
     $(document).ready(function () {

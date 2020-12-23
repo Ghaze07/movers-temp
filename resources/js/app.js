@@ -30,6 +30,9 @@ Vue.component('order-tracking', require('./components/OrderTracking.vue').defaul
 Vue.component('create-order', require('./components/CreateOrder.vue').default);
 Vue.component('edit-order', require('./components/EditOrder.vue').default);
 Vue.component('addresses', require('./components/Addresses.vue').default);
+Vue.component('countries', require('./components/Countries.vue').default);
+Vue.component('regions', require('./components/Regions.vue').default);
+Vue.component('cities', require('./components/Cities.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

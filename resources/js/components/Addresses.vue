@@ -165,7 +165,7 @@ export default {
             },        
 
         getRegions: function(){
-                axios.get('/get_regions')
+                axios.get('/get_active_regions')
                     .then((response) => {
                        if (response.status == 200) {
                            this.regions = response.data;

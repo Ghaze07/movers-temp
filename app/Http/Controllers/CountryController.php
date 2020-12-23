@@ -15,10 +15,12 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $countries = Country::orderBy('name', 'asc')->paginate(20);
-        return view('country.index')->with([
-            'countries' => $countries
-        ]);
+        return view('country.index');
+    }
+    public function getCountries()
+    {
+        $countries = Country::orderBy('name', 'asc')->get();
+        return response()->json($countries);
     }
 
     /**
@@ -39,20 +41,14 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->validate($request,[
-            'name' => 'required',
-            'short_name' => 'required',
-            'status' => 'required',
+        $request->validate([
+            'name' => ['required'],
+            'short_name' => ['required'],
+            'status' => ['required'],
         ]);
+        Country::create($request->all());
+        return response()->json(['message' => 'Country has been Added.']);
 
-        $country = new Country;
-        $country->name = $data['name'];
-        $country->short_name = $data['short_name'];
-        $country->status = $data['status'];
-        $country->save();
-
-        Session::flash('statuscode', 'success');
-        return redirect('/countries')->with('status', 'Country Added Successfully.');
     }
 
     /**
@@ -84,21 +80,16 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Country $country)
+    public function update(Request $request, $id)
     {
-        $data = $this->validate($request,[
-            'name' => 'required',
-            'short_name' => 'required',
-            'status' => 'required',
+        $request->validate([
+            'name' => ['required'],
+            'short_name' => ['required'],
+            'status' => ['required'],
         ]);
+        Country::find($id)->update($request->all());
+        return response()->json(['message' => 'Country has been Updated.']);
 
-        $country->name = $data['name'];
-        $country->short_name = $data['short_name'];
-        $country->status = $data['status'];
-        $country->update();
-
-        Session::flash('statuscode', 'success');
-        return redirect('/countries')->with('status', 'Country has been updated.');
     }
 
     /**
@@ -109,9 +100,7 @@ class CountryController extends Controller
      */
     public function destroy($id)
     {
-        $country = Country::findorfail($id);
-        $country->delete();
-
-        return redirect('/countries')->with('status', 'Country has been deleted');
+        Country::find($id)->delete();
+        return response()->json(['message' => 'Country has been Deleted.']);
     }
 }
