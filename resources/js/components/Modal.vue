@@ -29,7 +29,7 @@
         animation-duration: 0.1s;
     }
     #editing_pane {
-        background: #6c9ea9;
+        background: #20374f;
         color: black;
         top: 0px;
         right: 0px;
@@ -39,6 +39,8 @@
         max-height: 100vh;
         overflow: scroll;
         z-index: 100;
+        border: solid wheat;
+        border-radius: 40px;
     }
 
     #close_button {
@@ -47,6 +49,7 @@
         right: 15px;
         font-size: 30px;
         cursor: pointer;
+        color: wheat;
     }
 
     @media (max-width: 768px) {

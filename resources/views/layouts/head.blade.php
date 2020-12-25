@@ -6,15 +6,15 @@
     <meta name="author" content="Asaheeb Est, Riyadh">
 
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
+    {{-- <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@buypangasiusfish">
     <meta name="twitter:creator" content="@buypangasiusfish">
     <meta name="twitter:title" content="Zaynab Fish Farm">
     <meta name="twitter:description" content="@yield('description', 'Zaynab Fish Farm - Hassan Abdal. The organic farm fresh Pangasius fish producer in Pakistan.')">
-    <meta name="twitter:image" content="{{ asset('pix/logo_full.png') }}">
+    <meta name="twitter:image" content="{{ asset('pix/logo_full.png') }}"> --}}
 
     <!-- Facebook -->
-    <meta property="og:url" content="https://zaynabfishfarm.com">
+    {{-- <meta property="og:url" content="https://zaynabfishfarm.com">
     <meta property="og:site_name" content="Zaynab Fish Farm">
     <meta property="og:title" content="Zaynab Fish Farm">
     <meta property="og:description" content="@yield('description', 'Zaynab Fish Farm - Hassan Abdal. The organic farm fresh Pangasius fish producer in Pakistan.')">
@@ -22,21 +22,21 @@
     <meta property="og:image" itemprop="image" content="{{ asset('pix/logo_full.png') }}">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="500">
-    <meta property="og:image:height" content="500">
+    <meta property="og:image:height" content="500"> --}}
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicons/apple-touch-icon.png') }}">
+    {{-- <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('favicons/site.webmanifest') }}">
     <link rel="mask-icon" href="{{ asset('favicons/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#ffffff"> --}}
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', config('app.name', 'Zaynab Fish Farm'))</title>
+    <title>@yield('title', config('app.name', 'Small Haul'))</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">

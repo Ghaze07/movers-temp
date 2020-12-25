@@ -2,19 +2,19 @@
     <div class="expand navbar-expand" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-white" href="/blog">
-                    <i class="fas fa-bullhorn"></i><span class="pl-2">Blog</span>
+                <a class="nav-link" href="" style="color: black !important">
+                    <i class="fas fa-truck-moving"></i><span class="pl-2">Small Haul</span>
                 </a>
             </li>
-            <li class="nav-item"><span class="nav-link">|</span></li>
+            <li class="nav-item"><span class="nav-link" style="color: black !important">|</span></li>
             <li class="nav-item" v-if="guest">
-                <router-link class="nav-link" to="signin"><span @click="showModal">Sign In</span></router-link>
+                <router-link class="nav-link" to="signin" style="color: black !important"><span @click="showModal">Sign In</span></router-link>
             </li>
 
-            <li class="nav-item" v-if="guest"><span class="nav-link">|</span></li>
+            <li class="nav-item" v-if="guest"><span class="nav-link" style="color: black !important">|</span></li>
 
             <li class="nav-item" v-if="guest">
-                <router-link class="nav-link" to="signup"><span @click="showModal">Sign Up</span></router-link>
+                <router-link class="nav-link" to="signup" style="color: black !important"><span @click="showModal">Sign Up</span></router-link>
             </li>
 
             <li class="nav-item dropdown" v-if="!guest">

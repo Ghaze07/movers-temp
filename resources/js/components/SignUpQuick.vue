@@ -1,7 +1,7 @@
 <template>
     <section id="signup">
         <a name="signup"></a>
-        <div class="container-fluid wrapper">
+        <div class="container-fluid wrapper" style="background: #0f1941 !important">
             <div class="container">
                 <form action="#" method="post">
                     <div class="row align-items-center content">

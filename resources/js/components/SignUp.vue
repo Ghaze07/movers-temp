@@ -2,8 +2,8 @@
     <div class="container">
         <div class="w-100">
             <div class="card">
-                <div class="card-body">
-                    <h3 class="mb-3">Sign Up</h3>
+                <div class="card-body" id="card_body">
+                    <h3 class="mb-3" style="color: black;">Sign Up</h3>
                     <div v-show="hasError">
                         <p class="text-danger"><small>{{ errorMessage }}</small></p>
                     </div>
@@ -151,3 +151,8 @@
         },
     }
 </script>
+<style scoped>
+    #card_body{
+        background-color: #fbdb44;
+    }
+</style>

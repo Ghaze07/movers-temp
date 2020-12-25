@@ -1,9 +1,9 @@
 <!-- Header -->
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #fbe36b !important">
         <div class="container">
             <a href="{{ url('/') }}" class="navbar-brand">
-                <img src="{{ asset('svg/logo.svg') }}" />
+                <img src="{{ asset('svg/smallhaul.svg') }}" />
             </a>
             <div class="text-right">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="true" aria-label="Toggle navigation">

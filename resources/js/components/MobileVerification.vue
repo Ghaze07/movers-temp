@@ -2,8 +2,8 @@
     <div class="container mt-auto">
         <div class="w-100">
             <div class="card">
-                <div class="card-body">
-                    <h2 class="text-center text-success">Verification Code</h2>
+                <div class="card-body" id="card_body">
+                    <h2 class="text-center text-success" style="color: black;">Verification Code</h2>
                     <p class="text-center">We have send you a verification code on your moibile number +92 {{ mobile }} </p>
                     <div class="text-center">
                         <input @keyup="onKeyUp" :disabled="disabled" class="animate__animated" :class="{'animate__shakeX border border-danger': wrongCode}" id="verification_code" autocomplete="off" type="number" v-model="form.otp" />
@@ -106,5 +106,9 @@
 
     input#verification_code:selection {
         background: transparent;
+    }
+
+    #card_body{
+        background-color: #fbdb44;
     }
 </style>
