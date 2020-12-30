@@ -47,45 +47,18 @@ class User extends Authenticatable
     {
         parent::boot();
         User::created(function($user) {
-            if($user->is_verified){
-                DB::table('password_resets')->insert([
-                    'email' => $user->email,
-                    'mobile' => $user->mobile,
-                    'token' => Str::random(10),
-                ]);
-        
-                $tokenData = DB::table('password_resets')->where('mobile', $user->mobile)->first();
-                $token = $tokenData->token;
-                $mobile = $tokenData->mobile;
-                $email = $tokenData->email;
-        
-                $user = User::where('mobile', $mobile)->first();
-                $link = url('password/reset'. $token).'?email='.$email;
-        
-                // cuttly api for making short link 
-                $shortlink = CUTTLYFacade::getShortLink($link);
-                
-                //generating sms which will carry password reset link
-                    $sms = new \App\Sms();
-                    $sms->user_id = $user->id;
-                    $sms->to = $mobile;
-                    $sms->body = "your Fish Farm account has been created. Visit this link to set your password. {$shortlink}";
-                    $sms->save(); 
-            } else {
-                $sms = new \App\Sms();
+               $sms = new \App\Sms();
                 $sms->user_id = $user->id;
                 $sms->to = $user->mobile;
-                $sms->body = "Your Fish Farm Verification Code is: {$user->verification_code}.";
+                $sms->body = "Your Verification Code for small haul is: {$user->verification_code}.";
                 $sms->save();
-            }
-
         });
         User::updated(function($user) {
             if($user->is_verified != 1) {
             $sms = new \App\Sms();
             $sms->user_id = $user->id;
             $sms->to = $user->mobile;
-            $sms->body = "Your Fish Farm Verification Code is: {$user->verification_code}.";
+            $sms->body = "Your Verification Code for small haul is: {$user->verification_code}.";
             $sms->save();
             }
         });

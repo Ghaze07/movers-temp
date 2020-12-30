@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Blog;
-use App\CartItem;
-use App\Product;
-use App\FarmProduct;
 use App\Region;
+use App\Product;
+use App\Service;
+use App\CartItem;
+use App\FarmProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,7 @@ class SiteController extends Controller
     public function index()
     {
         // $blogs = Blog::topFive();
-        // $farmProducts = FarmProduct::with('product')->where('status', 1)->where('in_stock', 1)->get();
+        $services = Service::where('status', 1)->get();
         // $cartItems = array();
         // $sessionItems = array();
         // $regions = Region::where('status', 1)->get();
@@ -37,15 +38,10 @@ class SiteController extends Controller
         //     }
         // }
 
-        return view('site.index');
-        //         ->with([
-        //     'blogs' => $blogs,
-        //     'farmProducts' => $farmProducts,
-        //     'cartItems' => $cartItems,
-        //     'authenticated' => $authenticated,
-        //     'sessionItems' => $sessionItems,
-        //     'regions' => $regions
-        // ]);
+        return view('site.index')->with([
+        
+            'services' => $services
+        ]);
     }
 
     public function dashboard()

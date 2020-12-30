@@ -6,7 +6,7 @@
         @include('sections.settingsidebar')
 
         <div id="content" class="w-100">
-            <nav class="navbar navbar-expand" style="background-color: #212529 !important;">
+            <nav class="navbar navbar-expand" style="background-color: #20374f !important;">
                 <div class="container-fluid">
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
@@ -15,7 +15,7 @@
 
                 <ul class="navbar-nav right">
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: wheat !important;">{{ Auth::user()->name }}</a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="/logout"
                                onclick="event.preventDefault();

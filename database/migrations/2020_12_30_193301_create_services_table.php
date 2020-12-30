@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ProductSource extends Migration
+class CreateServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class ProductSource extends Migration
      */
     public function up()
     {
-        Schema::create('product_sources', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('source');
+            $table->string('name');
+            $table->string('image_title');
+            $table->string('first_trait');
+            $table->string('second_trait');
+            $table->string('third_trait');
+            $table->string('fourth_trait')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
@@ -28,6 +33,6 @@ class ProductSource extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_sources');
+        Schema::dropIfExists('services');
     }
 }
