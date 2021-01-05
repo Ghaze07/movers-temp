@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-12 col-md-4 pt-3 pb-3">
                     <div id="copyright" class="text-white" style="line-height: 30px;">
-                        <span><img src="{{ asset('pix/bird.png') }}" height="25" /> <a href="http://www.intercraftsol.com" target="_blank">www.intercraftsol.com</a></span>
+                        <span><img src="{{ asset('pix/bird.png') }}" height="25" /> <a href="#" target="_blank">www.smallhaul.com</a></span>
                         <br/>
                         <small>&copy;{{ date('Y', time()) }} <a href="#">Small Haul</a> All rights reserved.</small>
                     </div>

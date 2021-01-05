@@ -33,8 +33,7 @@
         <script src="{{ asset('js/app-rtl.js') }}" defer></script>
     @endif
     <script src="{{ asset('js/site.js') }}" defer></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176826469-3"></script>
+    
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}

@@ -13,11 +13,11 @@
             <a href="{{ route('change-password') }}">Change Password</a>
         </li>
 
-        <li class="{{ ( $requestPath == route('change-mobile', [], false) ) ? 'active' : '' }}">
+        <li class="{{ ( $requestPath == route('change-mobile', [], false) ) ? 'active' : '' }}" style="border-top: solid #f9c909; ">
             <a href="{{ route('change-mobile') }}">Change Mobile Number</a>
         </li>
 
-        <li class="{{ ( $requestPath == route('change-email', [], false) ) ? 'active' : '' }}" style="border-top: solid red; ">
+        <li class="{{ ( $requestPath == route('change-email', [], false) ) ? 'active' : '' }}" style="border-top: solid #f9c909; ">
             <a href="{{ route('change-email') }}">Change Email</a>
         </li>
 

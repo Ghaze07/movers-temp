@@ -12,11 +12,11 @@
             <a href="{{ route('users') }}">Users</a>
         </li>
 
-        <li>
+        <li style="border-top: solid #f9c909; ">
         <a href="">Moves</a>
         </li>
         
-        <li class="{{ ( $requestPath == route('services.index', [], false) ) ? 'active' : '' }}">
+        <li class="{{ ( $requestPath == route('services.index', [], false) ) ? 'active' : '' }}" style="border-top: solid #f9c909; ">
         <a href="{{ route('services.index') }}">Services</a>
         </li>
 
@@ -24,7 +24,7 @@
             route('countries.index', [], false),
             route('regions.index', [], false),
             route('cities.index', [], false),
-                                    ]) ) ? 'active' : '' }}">
+                                    ]) ) ? 'active' : '' }}" style="border-top: solid #f9c909; ">
             <a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Settings</a>
             <ul class="collapse list-unstyled" id="settingsSubmenu">
                 <li>

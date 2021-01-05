@@ -3,7 +3,17 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="" style="color: black !important">
-                    <i class="fas fa-truck-moving"></i><span class="pl-2">Small Haul</span>
+                    <i class="fas fa-truck-moving"></i><span class="pl-2">Our Services</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="" style="color: black !important">
+                    <i class="far fa-question-circle"></i><span class="pl-2">Why Small Haul</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="" style="color: black !important">
+                    <i class="fab fa-stack-overflow"></i><span class="pl-2">Booking Process</span>
                 </a>
             </li>
             <li class="nav-item"><span class="nav-link" style="color: black !important">|</span></li>

@@ -1,15 +1,26 @@
 <!-- About Zaynab Fish Farm -->
-<section id="about">
-    <div class="container-fluid wrapper">
+<!-- Banner -->
+<section id="banner">
+    <div class="container-fluid wrapper" style="background: #20374f !important">
         <div class="container">
-            <div class="row align-items-center content">
-                <div class="col-md-6">
-                    <iframe src="https://player.vimeo.com/video/316254133" width="100%" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            <div class="row align-items-center">
+                <div class="col-12 justify-content-around text-center pt-5 pb-1 pr-4" data-aos="fade-right" data-aos-duration="1500" data-aos-easing="ease-in-sine">
+                    <h1 style="color: wheat" data-aos="fade-down" data-aos-duration="1500" data-aos-easing="ease-in-sine">WHY Small Haul?</h1>
                 </div>
-                <div class="col-md-6">
-                    <h2>About Us</h2>
-                    <p><span style="font-weight: bold; color: rgb(0, 154, 191);">Zaynab Fish Farm (ZFF)</span> established late 2016 in beautiful village of <i>Ganga Pind</i> near historical city <em>Hasan Abdal - Attock</em>. For last couple of years, at Zaynab Fish Farm (ZFF) we are farming common Indian carps including <em>Rahoo, Silver, Grass etc</em> and in 2018 we had successfully cultured Hybrid African CatFish.</p>
-                    <p>We aim to produce high quality prime fish organically and supply directly to our customers and make sure that you get farm fresh healthy fish protein in affordable price.</p>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-12 justify-content-around text-center pt-5 pb-1 pr-4" data-aos="fade-right" data-aos-duration="1500" data-aos-easing="ease-in-sine">
+                    <h5 style="color: wheat"><i class="fas fa-truck-moving"></i><span class="pl-2">One-stop-shop for all your moving needs.</h5>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-12 justify-content-around text-center pt-5 pb-1 pr-4" data-aos="fade-right" data-aos-duration="1500" data-aos-easing="ease-in-sine">
+                    <h5 style="color: wheat"><i class="fas fa-hammer"></i><span class="pl-2">Twelve years of professional experience.</h5>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-12 justify-content-around text-center pt-5 pb-1 pr-4" data-aos="fade-right" data-aos-duration="1500" data-aos-easing="ease-in-sine">
+                    <h5 style="color: wheat"><i class="fas fa-route"></i><span class="pl-2">Here to simplify the moving process.</h5>
                 </div>
             </div>
         </div>

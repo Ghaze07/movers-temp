@@ -21,4 +21,10 @@
         <link href="{{ asset('css/app-rtl.css') }}" rel="stylesheet">
     @endif
 
+    <style>
+        html {
+            
+        }
+    </style>
+
 </head>

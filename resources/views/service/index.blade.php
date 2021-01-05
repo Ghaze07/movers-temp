@@ -72,7 +72,6 @@
                             <th>First Trait</th>
                             <th>Second Trait</th>
                             <th>Third Trait</th>
-                            <th>Fourth Trait</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -85,7 +84,6 @@
                             <td>{{ $service->first_trait }}</td>
                             <td>{{ $service->second_trait }}</td>
                             <td>{{ $service->third_trait }}</td>
-                            <td>{{ $service->fourth_trait }}</td>
                             <td>{{( $service->status) ? 'Active' : 'Inactive' }}</td>
                             <td>                               
                                 <button type="button"  class="btn btn-primary btn-sm mr-1">Edit</button> 
