@@ -13,7 +13,8 @@
                         <h5 class="card-header border border-success" style="background: #fbe36b !important; color: black !important;">
                            {{$service->name}}
                         </h5>
-                        {{-- <img class="card-img-top" src="{{ asset('pix/{{$service->micro_moves}}.png') }}" alt="Card image cap" style="max-height: 177px !important;"> --}}
+                        {{-- <img class="card-img-top" src="{{ asset('pix/micro_moves.png') }}" alt="Card image cap" style="max-height: 177px !important;"> --}}
+                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
                         <div class="card-body" style="background: #0f1941 !important;">
                           <ul class="list-group mb-2">
                             <li class="list-group-item">{{$service->first_trait}}</li>
@@ -42,7 +43,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          ...
+                          Coming soon...
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

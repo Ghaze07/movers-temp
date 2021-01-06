@@ -11,20 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call(UserSeeder::class);
-        //$this->call(AuthorSeeder::class);
-        //$this->call(BlogSeeder::class);
-        //$this->call(CountrySeeder::class);
-        //$this->call(RegionSeeder::class);
-        //$this->call(CitySeeder::class);
-        //$this->call(MeasuringUnitSeeder::class);
-        //$this->call(FarmSeeder::class);
-        //$this->call(ProductCategorySeeder::class);
-        //$this->call(ProductSeeder::class);
-        //$this->call(ProductSourceSeeder::class);
-        //$this->call(FarmProductSeeder::class);
-        //$this->call(FarmCitySeeder::class);
-        //$this->call(OrderStatusSeeder::class);
-        //$this->call(AddressSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(CountrySeeder::class);
+        $this->call(RegionSeeder::class);
+        $this->call(CitySeeder::class);
+        $this->call(ServiceSeeder::class);
     }
 }

@@ -66,16 +66,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the cartItems for the user.
+     * Get the services for the user.
      */
-    public function cartItems()
-    {
-        return $this->hasMany('App\CartItem');
-    }
 
-    public function orders()
+    public function services()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany('App\Service');
     }
 
     public function addresses()

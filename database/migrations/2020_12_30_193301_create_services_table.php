@@ -20,7 +20,6 @@ class CreateServicesTable extends Migration
             $table->string('first_trait');
             $table->string('second_trait');
             $table->string('third_trait');
-            $table->string('fourth_trait')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
