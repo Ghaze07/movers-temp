@@ -9,6 +9,7 @@
         @include('sections.signup')
     @endguest
     @include('sections.contacts')
+    @include('sections.contact_us')
 @endsection
 
 

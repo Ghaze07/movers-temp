@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'SiteController@index')->name('welcome');
+
 Route::get('/all_services', 'ServiceController@allServices')->name('get_all_services');
+
+Route::post('/contact', 'ContactFormController@submit')->name('contact');
 //Auth::routes();
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
