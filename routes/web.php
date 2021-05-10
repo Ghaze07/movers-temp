@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'SiteController@index')->name('welcome');
-
+Route::get('/all_services', 'ServiceController@allServices')->name('get_all_services');
 //Auth::routes();
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
@@ -60,5 +60,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('get_all_cities', 'CityController@getAllCities')->name('get_all_cities');
 
         Route::resource('/services', 'ServiceController');
+        Route::post('/update_service', 'ServiceController@updateService')->name('update_service');
     });
 });

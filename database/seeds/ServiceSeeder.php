@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ServiceSeeder extends Seeder
 {
@@ -14,7 +15,7 @@ class ServiceSeeder extends Seeder
         $data = [
             [
                 'name' => 'Item Removal',
-                'image_title' => 'item_removal',
+                'image' => '/uploads/item_removal.png',
                 'first_trait' => 'Recycling',
                 'second_trait' => 'Upcycling',
                 'third_trait' => 'Donations',
@@ -22,7 +23,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'name' => 'Labor Only',
-                'image_title' => 'labor_only',
+                'image' => '/uploads/labor_only.png',
                 'first_trait' => 'In-Home Moves',
                 'second_trait' => 'Rearrangment',
                 'third_trait' => 'In-Building Moves',
@@ -30,7 +31,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'name' => 'Large Moves',
-                'image_title' => 'large_moves',
+                'image' => '/uploads/large_move.png',
                 'first_trait' => '1 Large Bedroom',
                 'second_trait' => '2 Bedroom',
                 'third_trait' => 'Specialty Items',
@@ -38,7 +39,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'name' => 'Micro Moves',
-                'image_title' => 'micro_moves',
+                'image' => '/uploads/micro_move.png',
                 'first_trait' => 'Courier Service',
                 'second_trait' => '1 Hauler + You',
                 'third_trait' => 'Extra Muscle',
@@ -46,7 +47,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'name' => 'Small Moves',
-                'image_title' => 'small_moves',
+                'image' => '/uploads/small_move.png',
                 'first_trait' => '1-3 Large Items',
                 'second_trait' => 'Studio - 1 Bedroom',
                 'third_trait' => 'Extra Muscle',
@@ -54,7 +55,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'name' => 'Storage Services',
-                'image_title' => 'storage_services',
+                'image' => '/uploads/storage_service.png',
                 'first_trait' => 'Pickup/Store',
                 'second_trait' => 'Unit Set-Up',
                 'third_trait' => 'Redelivery',

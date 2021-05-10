@@ -192,7 +192,7 @@ AOS.init();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\smallhaul.com\resources\js\site.js */"./resources/js/site.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\movers-temp\resources\js\site.js */"./resources/js/site.js");
 
 
 /***/ })

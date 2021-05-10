@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Service;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreServiceRequest;
+use App\Http\Requests\UpdateServiceRequest;
 
 class ServiceController extends Controller
 {
@@ -14,10 +16,14 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::orderBy('name', 'asc')->paginate(20);
-        return view('service.index')->with([
-            'services' => $services
-        ]);
+        return view('service.index');
+    }
+
+    public function allServices()
+    {
+        $services = Service::latest()->get();
+        
+        return response()->json($services);
     }
 
     /**
@@ -36,21 +42,66 @@ class ServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Service $service)
+    public function store(StoreServiceRequest $request)
     {
-        // dd($request->all());
-        $service->name = $request->input('name');
-        $service->image_title = $request->input('image_title');
-        $service->first_trait = $request->input('first_trait');
-        $service->second_trait = $request->input('second_trait');
-        $service->third_trait = $request->input('third_trait');
-        $service->fourth_trait = $request->input('fourth_trait');
-        $service->status = $request->input('status');
+        if ($request->hasFile('image')) 
+        {
+            $image = request()->file('image');
+            $imageName = $image->getClientOriginalName();
+            $path ='/uploads/'.$imageName;
+                // storing an image
+                $image->move(public_path('/uploads'), $imageName);
 
-        $service->save();
+                $service = Service::create([
+                    'name' => $request->input('name'),
+                    'first_trait' => $request->input('first_trait'),
+                    'second_trait' => $request->input('second_trait'),
+                    'third_trait' => $request->input('third_trait'),
+                    'status' => $request->input('status'),
+                    'image' => $path,
+                ]);
+                
+            $service = Service::where('id', $service->id)->first();
+            return response()->json($service);
+        }  
+    }
 
-        return redirect('/services');
+    public function updateService(UpdateServiceRequest $request)
+    {
+        $service = Service::find($request->id);
 
+        if ($request->hasFile('image')) 
+        {
+            $image = request()->file('image');
+            $imageName = $image->getClientOriginalName();
+            $path ='/uploads/'.$imageName;
+                // storing an image
+                $image->move(public_path('/uploads'), $imageName);
+
+                $service->update([
+                    'name' => $request->input('name'),
+                    'first_trait' => $request->input('first_trait'),
+                    'second_trait' => $request->input('second_trait'),
+                    'third_trait' => $request->input('third_trait'),
+                    'status' => $request->input('status'),
+                    'image' => $path,
+                ]);
+                
+            $service = Service::where('id', $service->id)->first();
+            return response()->json($service);
+        }
+        else {
+            $service->update([
+                'name' => $request->input('name'),
+                'first_trait' => $request->input('first_trait'),
+                'second_trait' => $request->input('second_trait'),
+                'third_trait' => $request->input('third_trait'),
+                'status' => $request->input('status'),
+            ]);
+            
+            $service = Service::where('id', $service->id)->first();
+            return response()->json($service);
+        }  
     }
 
     /**
@@ -95,6 +146,7 @@ class ServiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Service::find($id)->delete();
+        return response()->json(['message' => 'Service has been Deleted.']);
     }
 }
