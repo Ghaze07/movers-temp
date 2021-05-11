@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,5 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RegionSeeder::class);
         $this->call(CitySeeder::class);
         $this->call(ServiceSeeder::class);
+        $this->call(FlightSeeder::class);
+        $this->call(ParkingSeeder::class);
     }
 }

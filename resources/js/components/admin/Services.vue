@@ -20,26 +20,31 @@
                           <div class="form-group col-md-6">
                             <label for="name">Service Name</label>
                             <input type="text" v-model="new_service.name" class="form-control" placeholder="Enter Service Name">
+                            <small v-if="errors.name" class="form-text text-danger">{{ errors.name[0] }}</small>
                           </div>
                           <div class="form-group col-md-6">
                             <label for="image">Image</label>
                             <input type="file" @change="imageSelected" accept="image/*" class="form-control">
+                            <small v-if="errors.image" class="form-text text-danger">{{ errors.image[0] }}</small>
                           </div>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-6">
                             <label for="first_trait">First Trait</label>
                             <input type="text" v-model="new_service.first_trait" class="form-control" placeholder="Enter First Trait">
+                            <small v-if="errors.first_trait" class="form-text text-danger">{{ errors.first_trait[0] }}</small>
                           </div>
                           <div class="form-group col-md-6">
                             <label for="second_trait">Second Trait</label>
                             <input type="text" v-model="new_service.second_trait" class="form-control" placeholder="Enter Second Trait">
+                            <small v-if="errors.second_trait" class="form-text text-danger">{{ errors.second_trait[0] }}</small>
                           </div>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-6">
                             <label for="third_trait">Third Trait</label>
                             <input type="text" v-model="new_service.third_trait" class="form-control" placeholder="Enter Third Trait">
+                            <small v-if="errors.third_trait" class="form-text text-danger">{{ errors.third_trait[0] }}</small>
                           </div>
                           <div class="form-group col-md-6">
                             <label for="status">Select Status</label>
@@ -47,6 +52,14 @@
                                 <option value="1">active</option>
                                 <option value="0">Inactive</option>
                             </select>
+                            <small v-if="errors.status" class="form-text text-danger">{{ errors.status[0] }}</small>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="charges">Charges</label>
+                            <input type="number" v-model="new_service.charges" class="form-control" placeholder="Enter Charges">
+                            <small v-if="errors.charges" class="form-text text-danger">{{ errors.charges[0] }}</small>
                           </div>
                         </div>
                     </div>
@@ -67,6 +80,7 @@
                             <th>First Trait</th>
                             <th>Second Trait</th>
                             <th>Third Trait</th>
+                            <th>Charges</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -78,6 +92,7 @@
                            <td>{{ service.first_trait}}</td>
                            <td>{{ service.second_trait}}</td>
                            <td>{{ service.third_trait}}</td>
+                           <td>{{ service.charges}}</td>
                            <td>{{ (service.status) ? 'Active' : 'Inactive'}}</td>
                            <td>                               
                                 <button type="button" @click="editService( service )"  class="btn btn-primary btn-sm mr-1">Edit</button> 
@@ -101,26 +116,31 @@
                           <div class="form-group col-md-6">
                             <label for="name">Service Name</label>
                             <input type="text" v-model="edit_service.name" class="form-control" placeholder="Enter Service Name">
+                            <small v-if="errors.name" class="form-text text-danger">{{ errors.name[0] }}</small>
                           </div>
                           <div class="form-group col-md-6">
                             <label for="image">Image</label>
                             <input type="file" @change="update_imageSelected" accept="image/*" class="form-control">
+                            <small v-if="errors.image" class="form-text text-danger">{{ errors.image[0] }}</small>
                           </div>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-6">
                             <label for="first_trait">First Trait</label>
                             <input type="text" v-model="edit_service.first_trait" class="form-control" placeholder="Enter First Trait">
+                            <small v-if="errors.first_trait" class="form-text text-danger">{{ errors.first_trait[0] }}</small>
                           </div>
                           <div class="form-group col-md-6">
                             <label for="second_trait">Second Trait</label>
                             <input type="text" v-model="edit_service.second_trait" class="form-control" placeholder="Enter Second Trait">
+                            <small v-if="errors.second_trait" class="form-text text-danger">{{ errors.second_trait[0] }}</small>
                           </div>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-6">
                             <label for="third_trait">Third Trait</label>
                             <input type="text" v-model="edit_service.third_trait" class="form-control" placeholder="Enter Third Trait">
+                            <small v-if="errors.third_trait" class="form-text text-danger">{{ errors.third_trait[0] }}</small>
                           </div>
                           <div class="form-group col-md-6">
                             <label for="status">Select Status</label>
@@ -128,6 +148,14 @@
                                 <option value="1">active</option>
                                 <option value="0">Inactive</option>
                             </select>
+                            <small v-if="errors.status" class="form-text text-danger">{{ errors.status[0] }}</small>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="charges">Charges</label>
+                            <input type="number" v-model="edit_service.charges" class="form-control" placeholder="Enter Charges">
+                            <small v-if="errors.charges" class="form-text text-danger">{{ errors.charges[0] }}</small>
                           </div>
                         </div>
                     </div>
@@ -146,8 +174,9 @@ export default {
     data() {
         return {
             services: [],
-            new_service: {'name': '', 'image': '', 'first_trait': '', 'second_trait': '', 'third_trait': '', 'status': ''},
-            edit_service: {'name': '', 'image': '', 'first_trait': '', 'second_trait': '', 'third_trait': '', 'status': '', 'id': ''},
+            new_service: {'name': '', 'image': '', 'first_trait': '', 'second_trait': '', 'third_trait': '', 'charges': '', 'status': ''},
+            edit_service: {'name': '', 'image': '', 'first_trait': '', 'second_trait': '', 'third_trait': '', 'charges': '', 'status': '', 'id': ''},
+            errors: {},
         }
     },
     created() {

@@ -23,7 +23,7 @@ class CityController extends Controller
 
     public function getAllCities()
     {
-        $cities = City::with('region')->orderBy('region_id', 'asc')->orderBy('name', 'asc')->get();
+        $cities = City::where('status', true)->with('region')->latest()->get();
         return response()->json($cities);
     }
 

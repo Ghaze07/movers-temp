@@ -28,6 +28,7 @@ class UpdateServiceRequest extends FormRequest
             'first_trait'=>  'required',
             'second_trait'=> 'required',
             'third_trait' => 'required',
+            'charges' => 'required|numeric',
             'status' => 'required',
         ];
     }
@@ -44,6 +45,8 @@ class UpdateServiceRequest extends FormRequest
             'first_trait.required' => 'first trait is required',
             'second_trait.required' => 'Second trait is required',
             'third_trait.required' => 'Third trait is required',
+            'charges.required' => 'Enter charges for service',
+            'charges.numeric' => 'Charges must be in number',
             'status.required' => 'Select status',
         ];
     }    

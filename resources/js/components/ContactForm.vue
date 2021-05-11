@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row content">
                 <div class="col-sm-6 col-lg-4">
-                    
+                    <img src="/pix/contact.png" alt="contact" style="height: 14rem;">
                 </div>
                 <div class="col-sm-6 col-lg-8">
                     <form>

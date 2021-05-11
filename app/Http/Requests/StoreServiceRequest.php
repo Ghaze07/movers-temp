@@ -29,6 +29,7 @@ class StoreServiceRequest extends FormRequest
             'second_trait'=> 'required',
             'third_trait' => 'required',
             'status' => 'required',
+            'charges' => 'required|numeric',
             'image' => 'required|image',
         ];
     }
@@ -46,6 +47,8 @@ class StoreServiceRequest extends FormRequest
             'second_trait.required' => 'Second trait is required',
             'third_trait.required' => 'Third trait is required',
             'status.required' => 'Select status',
+            'charges.required' => 'Enter charges for service',
+            'charges.numeric' => 'Charges must be in number',
             'image.image' => 'Image must be in jpeg, png or jpg format',
         ];
     }    

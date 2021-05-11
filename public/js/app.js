@@ -3098,14 +3098,107 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    flights_prop: Array,
+    parkings_prop: Array
+  },
   data: function data() {
     return {
-      services: []
+      services: [],
+      cities: [],
+      flights: [],
+      parkings: [],
+      booking_form: false,
+      booking: {
+        'service_name': '',
+        'from_city_id': 0,
+        'to_city_id': 0,
+        'date': '',
+        'address': '',
+        'flight_id': 0,
+        'parking_id': 0,
+        'image': ''
+      },
+      errors: {}
     };
   },
   created: function created() {
     this.getServices();
+    this.getCities();
+    this.setFlights();
+    this.setParkings();
   },
   methods: {
     getServices: function getServices() {
@@ -3120,6 +3213,35 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error.response.data);
       });
+    },
+    getCities: function getCities() {
+      var _this2 = this;
+
+      axios.get('get_all_cities').then(function (response) {
+        if (response.status == 200) {
+          _this2.cities = response.data;
+        } else {
+          console.warn(response.data);
+        }
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    setFlights: function setFlights() {
+      this.flights = this.flights_prop;
+    },
+    setParkings: function setParkings() {
+      this.parkings = this.parkings_prop;
+    },
+    bookingModal: function bookingModal(service) {
+      this.booking.service_name = service.name;
+      $("#booking_modal").modal('show');
+    },
+    bookingForm: function bookingForm() {
+      this.booking_form = true;
+    },
+    imageSelected: function imageSelected(e) {
+      this.booking.image = e.target.files[0];
     }
   }
 });
@@ -3889,6 +4011,34 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3899,6 +4049,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         'first_trait': '',
         'second_trait': '',
         'third_trait': '',
+        'charges': '',
         'status': ''
       },
       edit_service: {
@@ -3907,9 +4058,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         'first_trait': '',
         'second_trait': '',
         'third_trait': '',
+        'charges': '',
         'status': '',
         'id': ''
-      }
+      },
+      errors: {}
     };
   },
   created: function created() {
@@ -63028,7 +63181,7 @@ var render = function() {
     [
       _c("div", { staticClass: "container" }, [
         _c("div", { staticClass: "row content" }, [
-          _c("div", { staticClass: "col-sm-6 col-lg-4" }),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "col-sm-6 col-lg-8" }, [
             _c("form", [
@@ -63164,7 +63317,19 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-6 col-lg-4" }, [
+      _c("img", {
+        staticStyle: { height: "14rem" },
+        attrs: { src: "/pix/contact.png", alt: "contact" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -64402,10 +64567,11 @@ var render = function() {
                           {
                             staticClass: "btn btn-lg",
                             staticStyle: { background: "#F9C909" },
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "modal",
-                              "data-target": "#exampleModal"
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.bookingModal(service)
+                              }
                             }
                           },
                           [_vm._v("Book")]
@@ -64418,7 +64584,505 @@ var render = function() {
             )
           }),
           _vm._v(" "),
-          _vm._m(1)
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              attrs: { id: "booking_modal", role: "dialog" }
+            },
+            [
+              _c("div", { staticClass: "modal-dialog modal-lg" }, [
+                _c("div", { staticClass: "modal-content" }, [
+                  _c("div", { staticClass: "modal-header bg-warning" }, [
+                    _c("h4", { staticClass: "modal-title" }, [
+                      _vm._v(_vm._s(_vm.booking.service_name))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [_vm._v("×")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body bg-light" }, [
+                    !_vm.booking_form
+                      ? _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "card-body bg-warning" }, [
+                            _c("h5", { staticClass: "card-title" }, [
+                              _vm._v("Small Haul Move Request Form")
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "card-text" }, [
+                              _vm._v(
+                                "\n                          This request form will allow us to assess the details of your move \n                          and to give you an estimate that is based on volume, time, and complexity.\n                      "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "card-text" }, [
+                              _vm._v(
+                                "\n                          We tier our pricing based on a combination of these factors. Not all moves are the same.\n                      "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "card-text" }, [
+                              _vm._v(
+                                "\n                          Please be as accurate as possible with the information provided, \n                          and supply photos of any large items, stairs, or anything of note.\n                      "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("h5", { staticClass: "card-title" }, [
+                              _vm._v("Thank You!")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-success",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.bookingForm()
+                                  }
+                                }
+                              },
+                              [_vm._v("Proceed")]
+                            )
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.booking_form
+                      ? _c("form", [
+                          _c("div", { staticClass: "form-row" }, [
+                            _c("div", { staticClass: "form-group col-md-6" }, [
+                              _c(
+                                "label",
+                                { attrs: { for: "exampleFormControlSelect1" } },
+                                [_vm._v("Select From City")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.booking.from_city_id,
+                                      expression: "booking.from_city_id"
+                                    }
+                                  ],
+                                  staticClass: "custom-select",
+                                  attrs: { id: "city" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.booking,
+                                        "from_city_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "0" } }, [
+                                    _vm._v("Select City")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.cities, function(city, index) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: index,
+                                        domProps: { value: city.id }
+                                      },
+                                      [_vm._v(_vm._s(city.name))]
+                                    )
+                                  })
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.name
+                                ? _c(
+                                    "small",
+                                    { staticClass: "form-text text-danger" },
+                                    [_vm._v(_vm._s(_vm.errors.name[0]))]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group col-md-6" }, [
+                              _c("label", { attrs: { for: "to_city_id" } }, [
+                                _vm._v("Select To City")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.booking.to_city_id,
+                                      expression: "booking.to_city_id"
+                                    }
+                                  ],
+                                  staticClass: "custom-select",
+                                  attrs: { id: "city" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.booking,
+                                        "to_city_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "0" } }, [
+                                    _vm._v("Select City")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.cities, function(city, index) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: index,
+                                        domProps: { value: city.id }
+                                      },
+                                      [_vm._v(_vm._s(city.name))]
+                                    )
+                                  })
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.image
+                                ? _c(
+                                    "small",
+                                    { staticClass: "form-text text-danger" },
+                                    [_vm._v(_vm._s(_vm.errors.image[0]))]
+                                  )
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-row" }, [
+                            _c("div", { staticClass: "form-group col-md-6" }, [
+                              _c("label", { attrs: { for: "date" } }, [
+                                _vm._v("Select Date")
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.booking.date,
+                                    expression: "booking.date"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "date" },
+                                domProps: { value: _vm.booking.date },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.booking,
+                                      "date",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.first_trait
+                                ? _c(
+                                    "small",
+                                    { staticClass: "form-text text-danger" },
+                                    [_vm._v(_vm._s(_vm.errors.first_trait[0]))]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group col-md-6" }, [
+                              _c("label", { attrs: { for: "address" } }, [
+                                _vm._v("What is Pick up Address?")
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.booking.address,
+                                    expression: "booking.address"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "Enter complete address"
+                                },
+                                domProps: { value: _vm.booking.address },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.booking,
+                                      "address",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.second_trait
+                                ? _c(
+                                    "small",
+                                    { staticClass: "form-text text-danger" },
+                                    [_vm._v(_vm._s(_vm.errors.second_trait[0]))]
+                                  )
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-row" }, [
+                            _c("div", { staticClass: "form-group col-md-6" }, [
+                              _c(
+                                "label",
+                                { attrs: { for: "exampleFormControlSelect1" } },
+                                [
+                                  _vm._v(
+                                    "How many flights of stairs are the items at going up/down?"
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.booking.flight_id,
+                                      expression: "booking.flight_id"
+                                    }
+                                  ],
+                                  staticClass: "custom-select",
+                                  attrs: { id: "city" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.booking,
+                                        "flight_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "0" } }, [
+                                    _vm._v("Select Flight")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.flights, function(flight, index) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: index,
+                                        domProps: { value: flight.id }
+                                      },
+                                      [_vm._v(_vm._s(flight.name))]
+                                    )
+                                  })
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.third_trait
+                                ? _c(
+                                    "small",
+                                    { staticClass: "form-text text-danger" },
+                                    [_vm._v(_vm._s(_vm.errors.third_trait[0]))]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group col-md-6" }, [
+                              _c("label", { attrs: { for: "parking_id" } }, [
+                                _vm._v("What is the parking situation?")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.booking.parking_id,
+                                      expression: "booking.parking_id"
+                                    }
+                                  ],
+                                  staticClass: "custom-select",
+                                  attrs: { id: "city" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.booking,
+                                        "parking_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "0" } }, [
+                                    _vm._v("Select Parking")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.parkings, function(
+                                    parking,
+                                    index
+                                  ) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: index,
+                                        domProps: { value: parking.id }
+                                      },
+                                      [_vm._v(_vm._s(parking.name))]
+                                    )
+                                  })
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _vm.errors.status
+                                ? _c(
+                                    "small",
+                                    { staticClass: "form-text text-danger" },
+                                    [_vm._v(_vm._s(_vm.errors.status[0]))]
+                                  )
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-row" }, [
+                            _c("div", { staticClass: "form-group col-md-6" }, [
+                              _c("label", { attrs: { for: "image" } }, [
+                                _vm._v("Upload Image If any")
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticClass: "form-control",
+                                attrs: { type: "file", accept: "image/*" },
+                                on: { change: _vm.imageSelected }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.charges
+                                ? _c(
+                                    "small",
+                                    { staticClass: "form-text text-danger" },
+                                    [_vm._v(_vm._s(_vm.errors.charges[0]))]
+                                  )
+                                : _vm._e()
+                            ])
+                          ])
+                        ])
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _vm.booking_form
+                    ? _c("div", { staticClass: "modal-footer" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            attrs: { type: "button", "data-dismiss": "modal" }
+                          },
+                          [_vm._v("Close")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" }
+                          },
+                          [_vm._v("Submit")]
+                        )
+                      ])
+                    : _vm._e()
+                ])
+              ])
+            ]
+          )
         ],
         2
       )
@@ -64433,84 +65097,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row" }, [
       _c("h2", [_vm._v("Our Services")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "exampleModal",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "exampleModalLabel",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "exampleModalLabel" }
-                  },
-                  [_vm._v("Small Move")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close"
-                    }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _vm._v(
-                  "\n                      Coming soon...\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
-                  },
-                  [_vm._v("Close")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
-                  [_vm._v("Submit")]
-                )
-              ])
-            ])
-          ]
-        )
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -65878,7 +66464,13 @@ var render = function() {
                           _vm.$set(_vm.new_service, "name", $event.target.value)
                         }
                       }
-                    })
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.name
+                      ? _c("small", { staticClass: "form-text text-danger" }, [
+                          _vm._v(_vm._s(_vm.errors.name[0]))
+                        ])
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
@@ -65888,7 +66480,13 @@ var render = function() {
                       staticClass: "form-control",
                       attrs: { type: "file", accept: "image/*" },
                       on: { change: _vm.imageSelected }
-                    })
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.image
+                      ? _c("small", { staticClass: "form-text text-danger" }, [
+                          _vm._v(_vm._s(_vm.errors.image[0]))
+                        ])
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
@@ -65922,7 +66520,13 @@ var render = function() {
                           )
                         }
                       }
-                    })
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.first_trait
+                      ? _c("small", { staticClass: "form-text text-danger" }, [
+                          _vm._v(_vm._s(_vm.errors.first_trait[0]))
+                        ])
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
@@ -65957,7 +66561,13 @@ var render = function() {
                           )
                         }
                       }
-                    })
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.second_trait
+                      ? _c("small", { staticClass: "form-text text-danger" }, [
+                          _vm._v(_vm._s(_vm.errors.second_trait[0]))
+                        ])
+                      : _vm._e()
                   ])
                 ]),
                 _vm._v(" "),
@@ -65991,7 +66601,13 @@ var render = function() {
                           )
                         }
                       }
-                    })
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.third_trait
+                      ? _c("small", { staticClass: "form-text text-danger" }, [
+                          _vm._v(_vm._s(_vm.errors.third_trait[0]))
+                        ])
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
@@ -66041,7 +66657,53 @@ var render = function() {
                           _vm._v("Inactive")
                         ])
                       ]
-                    )
+                    ),
+                    _vm._v(" "),
+                    _vm.errors.status
+                      ? _c("small", { staticClass: "form-text text-danger" }, [
+                          _vm._v(_vm._s(_vm.errors.status[0]))
+                        ])
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-row" }, [
+                  _c("div", { staticClass: "form-group col-md-6" }, [
+                    _c("label", { attrs: { for: "charges" } }, [
+                      _vm._v("Charges")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_service.charges,
+                          expression: "new_service.charges"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", placeholder: "Enter Charges" },
+                      domProps: { value: _vm.new_service.charges },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.new_service,
+                            "charges",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errors.charges
+                      ? _c("small", { staticClass: "form-text text-danger" }, [
+                          _vm._v(_vm._s(_vm.errors.charges[0]))
+                        ])
+                      : _vm._e()
                   ])
                 ])
               ]),
@@ -66097,6 +66759,8 @@ var render = function() {
                 _c("td", [_vm._v(_vm._s(service.second_trait))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(service.third_trait))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(service.charges))]),
                 _vm._v(" "),
                 _c("td", [
                   _vm._v(_vm._s(service.status ? "Active" : "Inactive"))
@@ -66177,7 +66841,13 @@ var render = function() {
                         _vm.$set(_vm.edit_service, "name", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.name
+                    ? _c("small", { staticClass: "form-text text-danger" }, [
+                        _vm._v(_vm._s(_vm.errors.name[0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group col-md-6" }, [
@@ -66187,7 +66857,13 @@ var render = function() {
                     staticClass: "form-control",
                     attrs: { type: "file", accept: "image/*" },
                     on: { change: _vm.update_imageSelected }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.image
+                    ? _c("small", { staticClass: "form-text text-danger" }, [
+                        _vm._v(_vm._s(_vm.errors.image[0]))
+                      ])
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),
@@ -66221,7 +66897,13 @@ var render = function() {
                         )
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.first_trait
+                    ? _c("small", { staticClass: "form-text text-danger" }, [
+                        _vm._v(_vm._s(_vm.errors.first_trait[0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group col-md-6" }, [
@@ -66253,7 +66935,13 @@ var render = function() {
                         )
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.second_trait
+                    ? _c("small", { staticClass: "form-text text-danger" }, [
+                        _vm._v(_vm._s(_vm.errors.second_trait[0]))
+                      ])
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),
@@ -66287,7 +66975,13 @@ var render = function() {
                         )
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.third_trait
+                    ? _c("small", { staticClass: "form-text text-danger" }, [
+                        _vm._v(_vm._s(_vm.errors.third_trait[0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group col-md-6" }, [
@@ -66337,7 +67031,53 @@ var render = function() {
                         _vm._v("Inactive")
                       ])
                     ]
-                  )
+                  ),
+                  _vm._v(" "),
+                  _vm.errors.status
+                    ? _c("small", { staticClass: "form-text text-danger" }, [
+                        _vm._v(_vm._s(_vm.errors.status[0]))
+                      ])
+                    : _vm._e()
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-row" }, [
+                _c("div", { staticClass: "form-group col-md-6" }, [
+                  _c("label", { attrs: { for: "charges" } }, [
+                    _vm._v("Charges")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.edit_service.charges,
+                        expression: "edit_service.charges"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", placeholder: "Enter Charges" },
+                    domProps: { value: _vm.edit_service.charges },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.edit_service,
+                          "charges",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.charges
+                    ? _c("small", { staticClass: "form-text text-danger" }, [
+                        _vm._v(_vm._s(_vm.errors.charges[0]))
+                      ])
+                    : _vm._e()
                 ])
               ])
             ]),
@@ -66405,6 +67145,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Second Trait")]),
         _vm._v(" "),
         _c("th", [_vm._v("Third Trait")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Charges")]),
         _vm._v(" "),
         _c("th", [_vm._v("Status")]),
         _vm._v(" "),

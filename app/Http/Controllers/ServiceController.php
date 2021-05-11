@@ -58,6 +58,7 @@ class ServiceController extends Controller
                     'second_trait' => $request->input('second_trait'),
                     'third_trait' => $request->input('third_trait'),
                     'status' => $request->input('status'),
+                    'charges' => $request->input('charges'),
                     'image' => $path,
                 ]);
                 
@@ -84,6 +85,7 @@ class ServiceController extends Controller
                     'second_trait' => $request->input('second_trait'),
                     'third_trait' => $request->input('third_trait'),
                     'status' => $request->input('status'),
+                    'charges' => $request->input('charges'),
                     'image' => $path,
                 ]);
                 
@@ -96,6 +98,7 @@ class ServiceController extends Controller
                 'first_trait' => $request->input('first_trait'),
                 'second_trait' => $request->input('second_trait'),
                 'third_trait' => $request->input('third_trait'),
+                'charges' => $request->input('charges'),
                 'status' => $request->input('status'),
             ]);
             
