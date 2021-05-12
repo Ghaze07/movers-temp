@@ -21,10 +21,17 @@ class SiteController extends Controller
         $flights = Flight::get();
         $parkings = Parking::get();
 
+        if (Auth::user()) {
+            $authenticated = 1;
+        } else {
+            $authenticated = 0;
+        }
+
         return view('site.index')->with([
             'services' => $services,
             'flights' => $flights,
             'parkings' => $parkings,
+            'authenticated' => $authenticated,
         ]);
     }
 

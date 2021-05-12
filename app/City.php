@@ -19,4 +19,9 @@ class City extends Model
     {
         return $this->hasMany('App\Address');
     }
+
+    public function bookings()
+    {
+        return $this->hasMany('App\Booking');
+    }
 }

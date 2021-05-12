@@ -21,7 +21,7 @@
                         </div>
                     </div>
                 </div>         
-                <!-- Modal -->
+                <!-- Booking Form Modal -->
                 <div class = "modal fade" id = "booking_modal" role = "dialog">
                   <div class = "modal-dialog modal-lg">
                     <div class = "modal-content">
@@ -57,6 +57,7 @@
                                 <option  v-for="(city, index) in cities" :key="index" :value="city.id">{{ city.name }}</option>
                             </select>
                             <small v-if="errors.name" class="form-text text-danger">{{ errors.name[0] }}</small>
+                            <small v-if="from_city_error" class="form-text text-danger">Select City Please</small>
                           </div>
                           <div class="form-group col-md-6">
                             <label for="to_city_id">Select To City</label>
@@ -65,6 +66,7 @@
                                 <option  v-for="(city, index) in cities" :key="index" :value="city.id">{{ city.name }}</option>
                             </select>
                             <small v-if="errors.image" class="form-text text-danger">{{ errors.image[0] }}</small>
+                            <small v-if="to_city_error" class="form-text text-danger">Select City Please</small>
                           </div>
                         </div>
                         <div class="form-row">
@@ -108,11 +110,30 @@
                       </div>
                       <div v-if="booking_form" class = "modal-footer">
                           <button type ="button" class = "btn btn-danger" data-dismiss = "modal">Close</button>
-                          <button type="button" class="btn btn-primary">Submit</button>
+                          <button @click="submitBooking()" type="button" class="btn btn-primary">Submit</button>
                       </div>
                     </div>
                   </div>
                 </div>
+                <!-- End Booking Form Modal -->
+
+                <!-- Start Login Prompt Modal -->
+                <div class="modal fade" id="logIn_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Log In</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body bg-danger text-white">
+                        You Need To SignIn/SignUp First!
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End LogIn Prompt Modal -->
             </div>
         </div>
     </div>
@@ -122,6 +143,7 @@ export default {
     props: {
           flights_prop: Array,
           parkings_prop: Array,
+          authenticated: Number,
     },
     data() {
         return {
@@ -130,7 +152,9 @@ export default {
             flights: [],
             parkings: [],
             booking_form: false,
-            booking: {'service_name': '', 'from_city_id': 0, 'to_city_id': 0, 'date': '', 'address': '', 'flight_id': 0 , 'parking_id': 0, 'image': ''},
+            booking: {'service_name': '', 'service_id': '', 'from_city_id': 0, 'to_city_id': 0, 'date': '', 'address': '', 'flight_id': 0 , 'parking_id': 0, 'image': ''},
+            from_city_error: false,
+            to_city_error: false,
             errors:{},
         }
     },
@@ -170,8 +194,13 @@ export default {
           this.parkings = this.parkings_prop;
         },
         bookingModal(service) {
-          this.booking.service_name = service.name;
-          $("#booking_modal").modal('show');
+          if (this.authenticated) {
+            this.booking.service_name = service.name;
+            this.booking.service_id = service.id;
+            $("#booking_modal").modal('show');
+          } else {
+            $("#logIn_modal").modal("show");
+          }
         },
         bookingForm() {
           this.booking_form = true;
@@ -179,6 +208,61 @@ export default {
         imageSelected(e){
             this.booking.image = e.target.files[0];
         },
+        submitBooking() {
+          if(this.booking.from_city_id != 0 && this.booking.to_city_id != 0)
+          {
+            if (this.authenticated) {
+            let data = new FormData;
+            Object.entries(this.booking).forEach(([key, value]) => {
+              data.append(key, value);
+            });
+            axios.post('/booking', data).then( (response) => {
+              if (response.status == 200) {
+                  console.log(response.data);
+                   $('#booking_modal').modal('hide');
+                  swal({
+                      title: "Move Submitted",
+                      text: response.data.message,
+                      icon: "success",
+                      buttons: false,
+                      timer: 10000
+                  });
+                  this.booking  = {
+                    service_id: '',
+                    from_city_id: '',
+                    to_city_id: '',
+                    date: '',
+                    address: '',
+                    flight_id: '',
+                    parking_id: '',
+                    image: '',
+                  }                
+              } else {
+                  console.warn(response.data);
+              }
+              }).catch( (error)=> {
+                  var message = '';
+                  if(error.response.status == 500) {
+                  message = error.response.statusText;
+                  } else {
+                  message = error.response.data.message;
+                  this.errors = error.response.data.errors;
+                  }
+                  swal({
+                      title: "Some Thing Wrong!",
+                      text: error.response.data.message,
+                      icon: "error",
+                      buttons: false,
+                      timer: 2000
+                  });
+              })
+          }
+          } else {
+            this.from_city_error = true;
+            this.to_city_error = true;
+          }
+          
+        }
     }    
 }
 </script>

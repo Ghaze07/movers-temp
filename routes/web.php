@@ -46,6 +46,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/change-email', 'UserController@email')->name('change-email');
     Route::post('change-email', 'UserController@updateEmail')->name('change.email');
 
+    // Route for storing booking form
+    Route::post('/booking', 'BookingController@store')->name('booking.store');
+
 
     // admin
     Route::group(['middleware' => 'admin'], function() {
