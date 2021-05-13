@@ -166,7 +166,7 @@
                </div>
             </div>
             </div>
-            <!-- End Edit Service Modal -->
+        <!-- End Edit Service Modal -->
     </div>
 </template>
 <script>

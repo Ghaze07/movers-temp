@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Mail\BookingApproveMail;
+use App\Mail\BookingRequestMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
@@ -28,8 +31,29 @@ class Booking extends Model
             $sms->to = $booking->user->mobile;
             $sms->body = "Thank you for Booking a Move!, Your Booking Number is:". $booking->booking_number;
             $sms->save();
+
+            $data = ([
+                'name' => $booking->user->name,
+                'booking_number' => $booking->booking_number,
+            ]);
+            Mail::to($booking->user->email)->send(new BookingRequestMail($data));
         
-            // Mail::send(new OrderPlaced($booking));
+        });
+
+        Booking::updated(function ($booking)
+        {
+            $sms = new \App\Sms();
+            $sms->user_id = $booking->user->id;
+            $sms->to = $booking->user->mobile;
+            $sms->body = "Your Move request has been approved, our representative will approach you soon";
+            $sms->save();
+            
+            $data = ([
+                'name' => $booking->user->name,
+                'estimated_cost' => $booking->total,
+                'booking_number' => $booking->booking_number,
+            ]);
+            Mail::to($booking->user->email)->send(new BookingApproveMail($data));
         });
     }
     public function flight()

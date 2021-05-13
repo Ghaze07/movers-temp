@@ -30,6 +30,7 @@ Vue.component('regions', require('./components/Regions.vue').default);
 Vue.component('cities', require('./components/Cities.vue').default);
 Vue.component('users', require('./components/Users.vue').default);
 Vue.component('admin-services', require('./components/admin/Services.vue').default);
+Vue.component('admin-bookings', require('./components/admin/Bookings.vue').default);
 
 Vue.component('services', require('./components/Services.vue').default);
 Vue.component('contact-us', require('./components/ContactForm.vue').default);

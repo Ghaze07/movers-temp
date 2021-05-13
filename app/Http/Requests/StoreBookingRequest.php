@@ -33,6 +33,7 @@ class StoreBookingRequest extends FormRequest
                 'address' => 'required',
                 'flight_id' => 'required',
                 'parking_id' => 'required',
+                'distance' => 'required|numeric',
                 'image' => 'required|image|mimes:jpeg,png,jpg',
             ];
         } else {
@@ -44,6 +45,7 @@ class StoreBookingRequest extends FormRequest
                 'address' => 'required',
                 'flight_id' => 'required',
                 'parking_id' => 'required',
+                'distance' => 'required|numeric',
             ];
         }
     }
@@ -63,6 +65,8 @@ class StoreBookingRequest extends FormRequest
             'address.required' => 'Enter Complete Address',
             'flight_id.required' => 'Select Flight',
             'parking_id.required' => 'Select parking',
+            'distance.required' => 'Enter approximate distance in killometers',
+            'distance.numeric' => 'Distance must be in number',
             'image.image' => 'Image must be in jpeg, png or jpg format',
         ];
     }    

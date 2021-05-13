@@ -17,6 +17,8 @@ Route::get('/', 'SiteController@index')->name('welcome');
 
 Route::get('/all_services', 'ServiceController@allServices')->name('get_all_services');
 
+Route::get('get_all_cities', 'CityController@getAllCities')->name('get_all_cities');
+
 Route::post('/contact', 'ContactFormController@submit')->name('contact');
 //Auth::routes();
 Route::post('login', 'Auth\LoginController@login')->name('login');
@@ -63,9 +65,13 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('get_active_regions', 'AddressController@getActiveRegions')->name('regions.active');
         
         Route::resource('/cities', 'CityController');
-        Route::get('get_all_cities', 'CityController@getAllCities')->name('get_all_cities');
+        
 
         Route::resource('/services', 'ServiceController');
         Route::post('/update_service', 'ServiceController@updateService')->name('update_service');
+
+        Route::get('/bookings', 'BookingController@index')->name('bookings.index');
+        Route::get('/all_bookings', 'BookingController@getAllBookings')->name('all_bookings');
+        Route::put('/bookings/{booking}', 'BookingController@update')->name('bookings.update');
     });
 });

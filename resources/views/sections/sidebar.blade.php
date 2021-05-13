@@ -12,8 +12,8 @@
             <a href="{{ route('users') }}">Users</a>
         </li>
 
-        <li style="border-top: solid #f9c909; ">
-        <a href="">Moves</a>
+        <li class="{{ ( $requestPath == route('bookings.index', [], false) ) ? 'active' : '' }}" style="border-top: solid #f9c909; ">
+            <a href="{{ route('bookings.index') }}">Moves</a>
         </li>
         
         <li class="{{ ( $requestPath == route('services.index', [], false) ) ? 'active' : '' }}" style="border-top: solid #f9c909; ">

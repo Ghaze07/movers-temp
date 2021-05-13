@@ -26,6 +26,8 @@ class CreateBookingsTable extends Migration
             $table->string('image')->nullable();
             $table->string('booking_number')->default("");
             $table->string('status')->default("");
+            $table->integer('distance')->default(0);
+            $table->float('total')->default(0.0);
             $table->timestamps();
         });
     }

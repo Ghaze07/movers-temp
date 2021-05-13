@@ -88,7 +88,8 @@
                                 <option value="0">Select Flight</option>
                                 <option  v-for="(flight, index) in flights" :key="index" :value="flight.id">{{ flight.name }}</option>
                             </select>
-                            <small v-if="errors.third_trait" class="form-text text-danger">{{ errors.third_trait[0] }}</small>
+                            <small v-if="flight_error" class="form-text text-danger">Select Flight Please</small>
+                            <small v-if="errors.flight_id" class="form-text text-danger">{{ errors.flight_id[0] }}</small>
                           </div>
                           <div class="form-group col-md-6">
                             <label for="parking_id">What is the parking situation?</label>
@@ -96,14 +97,23 @@
                                 <option value="0">Select Parking</option>
                                 <option  v-for="(parking, index) in parkings" :key="index" :value="parking.id">{{ parking.name }}</option>
                             </select>
-                            <small v-if="errors.status" class="form-text text-danger">{{ errors.status[0] }}</small>
+                            <small v-if="parking_error" class="form-text text-danger">Select Parking Please</small>
+                            <small v-if="errors.parking_id" class="form-text text-danger">{{ errors.parking_id[0] }}</small>
                           </div>
                         </div>
+                        <label for="distance">What is Approximate Distance?</label>
                         <div class="form-row">
+                          <div class="input-group col-md-6" style="margin-bottom: 3rem;">
+                            <input type="number" class="form-control" placeholder="Enter approximate distance in Kilometer" v-model="booking.distance" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                              <span class="input-group-text" id="basic-addon2">KM</span>
+                            </div>
+                          </div>
+                          <small v-if="errors.distance" class="form-text text-danger">{{ errors.distance[0] }}</small>
                           <div class="form-group col-md-6">
                              <label for="image">Upload Image If any</label>
                             <input type="file" @change="imageSelected" accept="image/*" class="form-control">
-                            <small v-if="errors.charges" class="form-text text-danger">{{ errors.charges[0] }}</small>
+                            <small v-if="errors.image" class="form-text text-danger">{{ errors.image[0] }}</small>
                           </div>
                         </div>
                         </form>
@@ -152,9 +162,11 @@ export default {
             flights: [],
             parkings: [],
             booking_form: false,
-            booking: {'service_name': '', 'service_id': '', 'from_city_id': 0, 'to_city_id': 0, 'date': '', 'address': '', 'flight_id': 0 , 'parking_id': 0, 'image': ''},
+            booking: {'service_name': '', 'service_id': '', 'from_city_id': 0, 'to_city_id': 0, 'date': '', 'address': '', 'flight_id': 0 , 'parking_id': 0, 'distance': '', 'image': ''},
             from_city_error: false,
             to_city_error: false,
+            flight_error: false,
+            parking_error: false,
             errors:{},
         }
     },
@@ -211,52 +223,59 @@ export default {
         submitBooking() {
           if(this.booking.from_city_id != 0 && this.booking.to_city_id != 0)
           {
-            if (this.authenticated) {
-            let data = new FormData;
-            Object.entries(this.booking).forEach(([key, value]) => {
-              data.append(key, value);
-            });
-            axios.post('/booking', data).then( (response) => {
-              if (response.status == 200) {
-                  console.log(response.data);
-                   $('#booking_modal').modal('hide');
-                  swal({
-                      title: "Move Submitted",
-                      text: response.data.message,
-                      icon: "success",
-                      buttons: false,
-                      timer: 10000
-                  });
-                  this.booking  = {
-                    service_id: '',
-                    from_city_id: '',
-                    to_city_id: '',
-                    date: '',
-                    address: '',
-                    flight_id: '',
-                    parking_id: '',
-                    image: '',
-                  }                
-              } else {
-                  console.warn(response.data);
+            if(this.booking.flight_id != 0 && this.booking.parking_id != 0)
+            {
+              if (this.authenticated) {
+              let data = new FormData;
+              Object.entries(this.booking).forEach(([key, value]) => {
+                data.append(key, value);
+              });
+              axios.post('/booking', data).then( (response) => {
+                if (response.status == 200) {
+                    console.log(response.data);
+                     $('#booking_modal').modal('hide');
+                    swal({
+                        title: "Move Submitted",
+                        text: response.data.message,
+                        icon: "success",
+                        buttons: false,
+                        timer: 10000
+                    });
+                    this.booking  = {
+                      service_id: '',
+                      from_city_id: '',
+                      to_city_id: '',
+                      date: '',
+                      address: '',
+                      flight_id: '',
+                      parking_id: '',
+                      image: '',
+                    }                
+                } else {
+                    console.warn(response.data);
+                }
+                }).catch( (error)=> {
+                    var message = '';
+                    if(error.response.status == 500) {
+                    message = error.response.statusText;
+                    } else {
+                    message = error.response.data.message;
+                    this.errors = error.response.data.errors;
+                    }
+                    swal({
+                        title: "Some Thing Wrong!",
+                        text: error.response.data.message,
+                        icon: "error",
+                        buttons: false,
+                        timer: 2000
+                    });
+                })
               }
-              }).catch( (error)=> {
-                  var message = '';
-                  if(error.response.status == 500) {
-                  message = error.response.statusText;
-                  } else {
-                  message = error.response.data.message;
-                  this.errors = error.response.data.errors;
-                  }
-                  swal({
-                      title: "Some Thing Wrong!",
-                      text: error.response.data.message,
-                      icon: "error",
-                      buttons: false,
-                      timer: 2000
-                  });
-              })
-          }
+            
+            } else {
+              this.flight_error = true;
+              this.parking_error = true;
+            }
           } else {
             this.from_city_error = true;
             this.to_city_error = true;

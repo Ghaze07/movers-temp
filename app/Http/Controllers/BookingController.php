@@ -16,7 +16,14 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        return view('bookings.index');
+    }
+
+    public function getAllBookings()
+    {
+        $bookings = Booking::with('user', 'flight', 'parking', 'service', 'from_city', 'to_city')->latest()->get();
+        
+        return response()->json($bookings);
     }
 
     /**
@@ -54,6 +61,7 @@ class BookingController extends Controller
                     'address' => $request->input('address'),
                     'flight_id' => $request->input('flight_id'),
                     'parking_id' => $request->input('parking_id'),
+                    'distance' => $request->input('distance'),
                     'image' => $path,
                 ]);
         } else {
@@ -66,6 +74,7 @@ class BookingController extends Controller
                 'address' => $request->input('address'),
                 'flight_id' => $request->input('flight_id'),
                 'parking_id' => $request->input('parking_id'),
+                'distance' => $request->input('distance'),
             ]);
         }
         
@@ -101,9 +110,16 @@ class BookingController extends Controller
      * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Booking $booking)
+    public function update(Request $request, $id)
     {
-        //
+        $booking = Booking::find($id);
+        $updated_status = "Booking Request approved";
+        $booking->update([
+            'total' => $request->input('total'),
+            'status' => $updated_status,
+        ]);
+
+        return response()->json(['message' => 'Booking request approved']);
     }
 
     /**
