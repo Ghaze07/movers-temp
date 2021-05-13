@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth'], function() {
     // Route for storing booking form
     Route::post('/booking', 'BookingController@store')->name('booking.store');
 
-
+    Route::post('trackBooking', 'BookingController@trackBooking')->name('trackBooking');
     // admin
     Route::group(['middleware' => 'admin'], function() {
         Route::get('/dashboard', 'SiteController@dashboard')->name('home');

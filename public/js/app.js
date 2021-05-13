@@ -2754,6 +2754,149 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/OrderTracking.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/OrderTracking.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    authenticated: Number
+  },
+  data: function data() {
+    return {
+      booking_number: '',
+      booking: {
+        'status': '',
+        'updated_at': ''
+      }
+    };
+  },
+  filters: {
+    localTime: function localTime(date) {
+      return moment(date).format('llll');
+    }
+  },
+  methods: {
+    trackBooking: function trackBooking() {
+      var _this = this;
+
+      console.log(this.order_number);
+
+      if (this.authenticated) {
+        axios.post('trackBooking', {
+          booking_number: this.booking_number
+        }).then(function (response) {
+          if (response.status == 200) {
+            console.log(response.data);
+            _this.booking.status = response.data.status;
+            _this.booking.updated_at = response.data.updated_at;
+            $('#trackingModal').modal('show');
+          } else {
+            console.log(response.data);
+          }
+        })["catch"](function (error) {
+          console.error(error.response.data);
+          swal({
+            title: "Sorry! We couldn't find order with this number",
+            icon: "error",
+            buttons: false,
+            timer: 3000
+          });
+        });
+      } else {
+        console.log('test');
+        $("#logIn_modal").modal("show");
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Regions.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Regions.vue?vue&type=script&lang=js& ***!
@@ -3977,6 +4120,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -64310,6 +64455,287 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/OrderTracking.vue?vue&type=template&id=63565d4a&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/OrderTracking.vue?vue&type=template&id=63565d4a& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("section", { attrs: { id: "tracking" } }, [
+      _c("a", { attrs: { name: "tracking" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "container-fluid wrapper" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row align-items-center content" }, [
+            _c(
+              "div",
+              {
+                staticClass: "col-md-2 bg_tracking",
+                attrs: {
+                  "data-aos": "flip-left",
+                  "data-aos-duration": "600",
+                  "data-aos-easing": "ease-in-sine"
+                }
+              },
+              [_vm._v("\r\n                         \r\n                    ")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-10" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-9" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.booking_number,
+                        expression: "booking_number"
+                      }
+                    ],
+                    staticClass: "form-control-lg text-center text-lg-left",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Enter Booking Number"
+                    },
+                    domProps: { value: _vm.booking_number },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.booking_number = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-md-3 mt-3 mb-3 mt-md-0 mb-md-0" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-warning btn-block btn-lg",
+                        on: {
+                          click: function($event) {
+                            return _vm.trackBooking()
+                          }
+                        }
+                      },
+                      [_vm._v("TRACK YOUR MOVE")]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "trackingModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "trackingModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header bg-warning text-black" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "trackingModalLabel" }
+                  },
+                  [
+                    _vm._v(
+                      "Move Tracking ( Booking # " +
+                        _vm._s(_vm.booking_number) +
+                        " )"
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(0)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "table-wrapper" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped table-hover" },
+                    [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", [
+                          _c("td", [_vm._v(_vm._s(_vm.booking.status))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(
+                                _vm._f("localTime")(_vm.booking.updated_at)
+                              )
+                            )
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(2)
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _vm._m(3)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [
+        _c(
+          "span",
+          { staticStyle: { color: "wheat" }, attrs: { "aria-hidden": "true" } },
+          [_vm._v("×")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Date")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger btn-sm ",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "logIn_modal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Log In")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body bg-danger text-white" }, [
+                _vm._v(
+                  "\r\n                You Need To SignIn/SignUp First!\r\n                "
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Regions.vue?vue&type=template&id=7b37c9e4&":
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Regions.vue?vue&type=template&id=7b37c9e4& ***!
@@ -66956,6 +67382,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(booking.service.name))]),
                 _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(booking.booking_number))]),
+                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(booking.status))]),
                 _vm._v(" "),
                 _c("td", [
@@ -67209,6 +67637,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Date")]),
         _vm._v(" "),
         _c("th", [_vm._v("Moving Service")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Booking Number")]),
         _vm._v(" "),
         _c("th", [_vm._v("Status")]),
         _vm._v(" "),
@@ -83997,6 +84427,7 @@ Vue.component('admin-services', __webpack_require__(/*! ./components/admin/Servi
 Vue.component('admin-bookings', __webpack_require__(/*! ./components/admin/Bookings.vue */ "./resources/js/components/admin/Bookings.vue")["default"]);
 Vue.component('services', __webpack_require__(/*! ./components/Services.vue */ "./resources/js/components/Services.vue")["default"]);
 Vue.component('contact-us', __webpack_require__(/*! ./components/ContactForm.vue */ "./resources/js/components/ContactForm.vue")["default"]);
+Vue.component('order-tracking', __webpack_require__(/*! ./components/OrderTracking.vue */ "./resources/js/components/OrderTracking.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -84414,6 +84845,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileVerification_vue_vue_type_template_id_07d88b08___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MobileVerification_vue_vue_type_template_id_07d88b08___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/OrderTracking.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/OrderTracking.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _OrderTracking_vue_vue_type_template_id_63565d4a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OrderTracking.vue?vue&type=template&id=63565d4a& */ "./resources/js/components/OrderTracking.vue?vue&type=template&id=63565d4a&");
+/* harmony import */ var _OrderTracking_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OrderTracking.vue?vue&type=script&lang=js& */ "./resources/js/components/OrderTracking.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _OrderTracking_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _OrderTracking_vue_vue_type_template_id_63565d4a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _OrderTracking_vue_vue_type_template_id_63565d4a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/OrderTracking.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/OrderTracking.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/OrderTracking.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OrderTracking_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./OrderTracking.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/OrderTracking.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_OrderTracking_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/OrderTracking.vue?vue&type=template&id=63565d4a&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/OrderTracking.vue?vue&type=template&id=63565d4a& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OrderTracking_vue_vue_type_template_id_63565d4a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./OrderTracking.vue?vue&type=template&id=63565d4a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/OrderTracking.vue?vue&type=template&id=63565d4a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OrderTracking_vue_vue_type_template_id_63565d4a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OrderTracking_vue_vue_type_template_id_63565d4a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -120,6 +121,15 @@ class BookingController extends Controller
         ]);
 
         return response()->json(['message' => 'Booking request approved']);
+    }
+
+    public function trackBooking(Request $request)
+    {
+        $user = User::find(Auth::user()->id); //for retrieving order related to the logged-in user
+        $booking = Booking::where('booking_number', $request->booking_number)
+                            ->where('user_id', $user->id)->latest()->first();
+
+        return response()->json($booking);
     }
 
     /**

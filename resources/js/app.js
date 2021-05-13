@@ -34,6 +34,7 @@ Vue.component('admin-bookings', require('./components/admin/Bookings.vue').defau
 
 Vue.component('services', require('./components/Services.vue').default);
 Vue.component('contact-us', require('./components/ContactForm.vue').default);
+Vue.component('order-tracking', require('./components/OrderTracking.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

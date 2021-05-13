@@ -13,6 +13,7 @@
                             <th>TO</th>
                             <th>Date</th>
                             <th>Moving Service</th>
+                            <th>Booking Number</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -25,6 +26,7 @@
                            <td>{{ booking.to_city.name}}</td>
                            <td>{{ booking.date}}</td>
                            <td>{{ booking.service.name}}</td>
+                           <td>{{ booking.booking_number}}</td>
                            <td>{{ booking.status}}</td>
                            <td>                               
                                 <button @click="viewBooking( booking )" type="button" class="btn btn-outline-primary btn-sm mr-1"><i class="fas fa-eye"></i></button>                         

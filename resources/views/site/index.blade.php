@@ -14,5 +14,7 @@
 
 
 @section('comment')
-    @include('sections.track')
+    {{-- @include('sections.track') --}}
+
+    <order-tracking :authenticated="{{ $authenticated }}"></order-tracking>
 @endsection
