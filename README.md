@@ -59,3 +59,20 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Commands
+composer install, npm install, php artisan key:generate, php artisan migrate --seed
+
+## Mail
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=8d2d2c7e5a576
+MAIL_PASSWORD=953a02024ae270
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=admin@smallhaul.com
+MAIL_FROM_NAME="${APP_NAME}"
+
+## cutly
+CUTTLY_API_URL=https://cutt.ly/api/api.php
+CUTTLY_GATEWAY_KEY=6ac14a3441fb4d619c9e57f7666e600bec41
