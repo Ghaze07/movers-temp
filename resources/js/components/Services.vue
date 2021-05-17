@@ -56,7 +56,7 @@
                                 <option value="0">Select City</option>
                                 <option  v-for="(city, index) in cities" :key="index" :value="city.id">{{ city.name }}</option>
                             </select>
-                            <small v-if="errors.name" class="form-text text-danger">{{ errors.name[0] }}</small>
+                            <small v-if="errors.from_city_id" class="form-text text-danger">{{ errors.from_city_id[0] }}</small>
                             <small v-if="from_city_error" class="form-text text-danger">Select City Please</small>
                           </div>
                           <div class="form-group col-md-6">
@@ -65,7 +65,7 @@
                                 <option value="0">Select City</option>
                                 <option  v-for="(city, index) in cities" :key="index" :value="city.id">{{ city.name }}</option>
                             </select>
-                            <small v-if="errors.image" class="form-text text-danger">{{ errors.image[0] }}</small>
+                            <small v-if="errors.to_city_id" class="form-text text-danger">{{ errors.to_city_id[0] }}</small>
                             <small v-if="to_city_error" class="form-text text-danger">Select City Please</small>
                           </div>
                         </div>
@@ -73,12 +73,12 @@
                           <div class="form-group col-md-6">
                             <label for="date">Select Date</label>
                             <input type="date" class="form-control" v-model="booking.date">
-                            <small v-if="errors.first_trait" class="form-text text-danger">{{ errors.first_trait[0] }}</small>
+                            <small v-if="errors.date" class="form-text text-danger">{{ errors.date[0] }}</small>
                           </div>
                           <div class="form-group col-md-6">
                             <label for="address">What is Pick up Address?</label>
                             <input type="text" class="form-control" placeholder="Enter complete address" v-model="booking.address">
-                            <small v-if="errors.second_trait" class="form-text text-danger">{{ errors.second_trait[0] }}</small>
+                            <small v-if="errors.address" class="form-text text-danger">{{ errors.address[0] }}</small>
                           </div>
                         </div>
                         <div class="form-row">

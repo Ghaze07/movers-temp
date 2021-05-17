@@ -2349,6 +2349,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -63685,8 +63688,10 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "container" }, [
+        _vm._m(0),
+        _vm._v(" "),
         _c("div", { staticClass: "row content" }, [
-          _vm._m(0),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "col-sm-6 col-lg-8" }, [
             _c("form", [
@@ -63799,21 +63804,25 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row" }, [
-                _c("div", { staticClass: "col-sm-10" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.submit()
+                _c(
+                  "div",
+                  { staticClass: "col-sm-10", attrs: { align: "center" } },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.submit()
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Send Message")]
-                  )
-                ])
+                      },
+                      [_vm._v("Send Message")]
+                    )
+                  ]
+                )
               ])
             ])
           ])
@@ -63823,6 +63832,14 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("h2", { staticStyle: { color: "wheat" } }, [_vm._v("Contact Us")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -65506,11 +65523,11 @@ var render = function() {
                                 2
                               ),
                               _vm._v(" "),
-                              _vm.errors.name
+                              _vm.errors.from_city_id
                                 ? _c(
                                     "small",
                                     { staticClass: "form-text text-danger" },
-                                    [_vm._v(_vm._s(_vm.errors.name[0]))]
+                                    [_vm._v(_vm._s(_vm.errors.from_city_id[0]))]
                                   )
                                 : _vm._e(),
                               _vm._v(" "),
@@ -65583,11 +65600,11 @@ var render = function() {
                                 2
                               ),
                               _vm._v(" "),
-                              _vm.errors.image
+                              _vm.errors.to_city_id
                                 ? _c(
                                     "small",
                                     { staticClass: "form-text text-danger" },
-                                    [_vm._v(_vm._s(_vm.errors.image[0]))]
+                                    [_vm._v(_vm._s(_vm.errors.to_city_id[0]))]
                                   )
                                 : _vm._e(),
                               _vm._v(" "),
@@ -65633,11 +65650,11 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
-                              _vm.errors.first_trait
+                              _vm.errors.date
                                 ? _c(
                                     "small",
                                     { staticClass: "form-text text-danger" },
-                                    [_vm._v(_vm._s(_vm.errors.first_trait[0]))]
+                                    [_vm._v(_vm._s(_vm.errors.date[0]))]
                                   )
                                 : _vm._e()
                             ]),
@@ -65676,11 +65693,11 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
-                              _vm.errors.second_trait
+                              _vm.errors.address
                                 ? _c(
                                     "small",
                                     { staticClass: "form-text text-danger" },
-                                    [_vm._v(_vm._s(_vm.errors.second_trait[0]))]
+                                    [_vm._v(_vm._s(_vm.errors.address[0]))]
                                   )
                                 : _vm._e()
                             ])

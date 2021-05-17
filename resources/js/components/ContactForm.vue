@@ -1,6 +1,9 @@
 <template>
     <div class="container-fluid wrapper pt-1" style="background: #20374f !important">
         <div class="container">
+            <div class="row">
+                <h2 style="color: wheat">Contact Us</h2>
+            </div>
             <div class="row content">
                 <div class="col-sm-6 col-lg-4">
                     <img src="/pix/contact.png" alt="contact" style="height: 14rem;">
@@ -26,7 +29,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                          <div class="col-sm-10">
+                          <div class="col-sm-10" align="center">
                             <button type="button" @click="submit()" class="btn btn-primary">Send Message</button>
                           </div>
                         </div>
